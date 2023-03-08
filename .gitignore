@@ -3,3 +3,5 @@ backend/settings/dev.py
 __pycache__/
 venv/
 .DS_Store
+client/.env
+client/node_modules
