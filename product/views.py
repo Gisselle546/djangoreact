@@ -21,6 +21,7 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     
 class ProductItemList(generics.ListCreateAPIView):
     queryset = ProductItem.objects.all()
+    paginate_by = 10
     serializer_class = ProductItemSerializer
     
 class ProductItemDetail(generics.RetrieveUpdateDestroyAPIView):

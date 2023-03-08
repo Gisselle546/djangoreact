@@ -69,7 +69,7 @@ class ProductOption(models.Model):
         return f"{self.product.name} - {self.price}"
 
 class ProductOptionSize(models.Model):
-    product_option = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
+    product_option = models.ForeignKey(ProductOption, related_name='size', on_delete=models.CASCADE)
     size = models.CharField(max_length=255)
     inventory = models.IntegerField(default=0)
 
@@ -81,7 +81,7 @@ class ProductOptionSize(models.Model):
 
 
 class ProductOptionColor(models.Model):
-    product_option = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
+    product_option = models.ForeignKey(ProductOption, related_name='color', on_delete=models.CASCADE)
     color = models.CharField(max_length=255)
     inventory = models.IntegerField(default=0)
     
