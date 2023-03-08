@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import ProductItem, ProductImage, ProductOptions, ProductOptionColor, ProductOptionSize
+from .models import ProductItem, ProductImage, ProductOption, ProductOptionColor, ProductOptionSize
 
 @admin.register(ProductItem)
 class ProductAdmin(admin.ModelAdmin):
@@ -22,7 +22,7 @@ class ProductImageAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(ProductOptions)
+@admin.register(ProductOption)
 class ProductOptionsAdmin(admin.ModelAdmin):
     """
     Display the list of Product Options

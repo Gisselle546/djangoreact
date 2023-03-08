@@ -11,7 +11,8 @@ class UserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             password=password,
-            is_staff= True
+            is_staff= True,
+            is_admin= True
         )
         return user
 

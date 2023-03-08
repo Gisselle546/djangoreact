@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Brand, Category, ProductItem, ProductImage, ProductOptions, ProductOptionColor, ProductOptionSize, Review
+from .models import Brand, Category, ProductItem, ProductImage, ProductOption, ProductOptionColor, ProductOptionSize, Review
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class ProductOptionsSerializer(serializers.ModelSerializer):
     product_option_color = ProductOptionColorSerializer(many=True)
 
     class Meta:
-        model = ProductOptions
+        model = ProductOption
         fields = '__all__'
 
 

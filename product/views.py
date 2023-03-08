@@ -1,6 +1,6 @@
 from rest_framework import generics
 
-from .models import Brand, Category, ProductItem, ProductImage, ProductOptions, ProductOptionColor, ProductOptionSize, Review
+from .models import Brand, Category, ProductItem, ProductImage, ProductOption, ProductOptionColor, ProductOptionSize, Review
 from .serializers import BrandSerializer, CategorySerializer, ProductItemSerializer, ProductImageSerializer, ProductOptionSerializer, ProductOptionColorSerializer, ProductOptionSizeSerializer, ReviewSerializer
 
 class BrandList(generics.ListCreateAPIView):
@@ -36,11 +36,11 @@ class ProductImageDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProductImageSerializer
     
 class ProductOptionList(generics.ListCreateAPIView):
-    queryset = ProductOptions.objects.all()
+    queryset = ProductOption.objects.all()
     serializer_class = ProductOptionSerializer
     
 class ProductOptionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProductOptions.objects.all()
+    queryset = ProductOption.objects.all()
     serializer_class = ProductOptionSerializer
     
 class ProductOptionColorList(generics.ListCreateAPIView):

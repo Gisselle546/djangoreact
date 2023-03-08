@@ -56,7 +56,7 @@ class ProductImage(models.Model):
     
 
 
-class ProductOptions(models.Model):
+class ProductOption(models.Model):
     product   = models.ForeignKey(ProductItem, related_name='product_options', on_delete=models.CASCADE)
     price     = models.DecimalField(max_digits=10, decimal_places=2)
     sku       = models.CharField(max_length=255, blank=True, null=True)
@@ -69,7 +69,7 @@ class ProductOptions(models.Model):
         return f"{self.product.name} - {self.price}"
 
 class ProductOptionSize(models.Model):
-    product_option = models.ForeignKey(ProductOptions, on_delete=models.CASCADE)
+    product_option = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
     size = models.CharField(max_length=255)
     inventory = models.IntegerField(default=0)
 
@@ -81,7 +81,7 @@ class ProductOptionSize(models.Model):
 
 
 class ProductOptionColor(models.Model):
-    product_option = models.ForeignKey(ProductOptions, on_delete=models.CASCADE)
+    product_option = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
     color = models.CharField(max_length=255)
     inventory = models.IntegerField(default=0)
     
