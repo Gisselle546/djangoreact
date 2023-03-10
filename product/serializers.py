@@ -27,6 +27,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductOptionColorSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
+    size = serializers.SerializerMethodField()
     class Meta:
         model = ProductOptionColor
         fields = '__all__'
@@ -34,6 +35,11 @@ class ProductOptionColorSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         images = ProductImage.objects.filter(product=obj)
         return ProductImageSerializer(images, many=True).data
+    
+    def get_size(self, obj):
+        # Retrieve the related size data for this ProductOption
+        sizes = ProductOptionSize.objects.filter(product_option_color=obj)
+        return ProductOptionSizeSerializer(sizes, many=True).data
 
 
 class ProductOptionSizeSerializer(serializers.ModelSerializer):
@@ -43,7 +49,7 @@ class ProductOptionSizeSerializer(serializers.ModelSerializer):
 
 
 class ProductOptionSerializer(serializers.ModelSerializer):
-    size = serializers.SerializerMethodField()
+   
     color = serializers.SerializerMethodField()
    
 
@@ -51,10 +57,6 @@ class ProductOptionSerializer(serializers.ModelSerializer):
         model = ProductOption
         fields = '__all__'
 
-    def get_size(self, obj):
-        # Retrieve the related size data for this ProductOption
-        sizes = ProductOptionSize.objects.filter(product_option=obj)
-        return ProductOptionSizeSerializer(sizes, many=True).data
 
     def get_color(self, obj):
         # Retrieve the related color data for this ProductOption

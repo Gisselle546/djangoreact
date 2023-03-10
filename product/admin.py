@@ -54,7 +54,7 @@ class ProductOptionColorAdmin(admin.ModelAdmin):
     """
     Display the Product option Color
     """
-    list_display=['color', 'inventory']
+    list_display=['color']
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):

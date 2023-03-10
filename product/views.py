@@ -6,7 +6,7 @@ from .serializers import  ProductSerializer
     
     
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProductItem.objects.prefetch_related('product_options__color', 'product_options__size')
+    queryset = ProductItem.objects.prefetch_related('product_options__color')
     serializer_class = ProductSerializer
     lookup_field = 'product_id'
     lookup_url_kwarg = 'product_id'

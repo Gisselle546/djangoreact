@@ -50,7 +50,7 @@ class ProductItem(models.Model):
         """
         String Method return the product name
         """
-        return f"{self.name} - {self.inventory_total}"
+        return f"{self.name} - {self.price}"
     
 
 
@@ -68,10 +68,26 @@ class ProductOption(models.Model):
         String Method return the product name, color and size
         """
         return f"{self.product.name}"
+    
+class ProductOptionColor(models.Model):
+   
+    product_option = models.ForeignKey(ProductOption, related_name='color', on_delete=models.CASCADE)
+    color = models.CharField(max_length=255)
+    
+    
+    
+    
+    
+    def __str__(self):
+        """
+        String Method return the product name, inventory and color
+        """
+        return f"{self.product_option.product.name} - {self.color}"
+
 
 class ProductOptionSize(models.Model):
    
-    product_option = models.ForeignKey(ProductOption, related_name='size', on_delete=models.CASCADE)
+    product_option_color = models.ForeignKey(ProductOptionColor, related_name='product_option_color', on_delete=models.CASCADE)
     size = models.CharField(max_length=255)
     inventory = models.IntegerField(default=0)
    
@@ -82,23 +98,9 @@ class ProductOptionSize(models.Model):
         """
         String Method return the product name, inventory and size
         """
-        return f"{self.product_option.product.name} - {self.inventory} - {self.size}"
+        return f"{self.product_option_color.color} - {self.inventory} - {self.size}"
 
 
-class ProductOptionColor(models.Model):
-   
-    product_option = models.ForeignKey(ProductOption, related_name='color', on_delete=models.CASCADE)
-    color = models.CharField(max_length=255)
-    inventory = models.IntegerField(default=0)
-    
-    
-    
-    
-    def __str__(self):
-        """
-        String Method return the product name, inventory and color
-        """
-        return f"{self.product_option.product.name} - {self.inventory} - {self.color}"
 
 class ProductImage(models.Model):
    
@@ -110,7 +112,7 @@ class ProductImage(models.Model):
         """
         String Method return the product url
         """
-        return self.url
+        return f"{self.product.product_option.product.name} "
 
 
 class Review(models.Model):
