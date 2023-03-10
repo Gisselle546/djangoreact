@@ -17,9 +17,14 @@ class ProductImageAdmin(admin.ModelAdmin):
     """
     Display the list of product image
     """
-    list_display = ['product', 'url']
+    list_display = ['product_option_color', 'url']
 
-
+    def product_option_color(self, obj):
+        """
+        Method to display the related ProductOption color name
+        """
+        return obj.product.color
+    product_option_color.short_description = 'Product Option Color'
 
 
 @admin.register(ProductOption)
@@ -28,7 +33,14 @@ class ProductOptionsAdmin(admin.ModelAdmin):
     Display the list of Product Options
     """
 
-    list_display=['price', 'sku', 'inventory']
+    list_display=['sku',  'product']
+    
+    def product(self, obj):
+        """
+        Return the name of the related product
+        """
+        return obj.product.name   
+   
 
 @admin.register(ProductOptionSize)
 class ProductOptionSizeAdmin(admin.ModelAdmin):

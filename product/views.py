@@ -1,69 +1,16 @@
-from rest_framework import generics
+from rest_framework import generics, viewsets, filters, status
+from rest_framework.response import Response
+from .models import Brand, Category, ProductItem
+from .serializers import  ProductSerializer
 
-from .models import Brand, Category, ProductItem, ProductImage, ProductOption, ProductOptionColor, ProductOptionSize, Review
-from .serializers import BrandSerializer, CategorySerializer, ProductItemSerializer, ProductImageSerializer, ProductOptionSerializer, ProductOptionColorSerializer, ProductOptionSizeSerializer, ReviewSerializer
+    
+    
+class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ProductItem.objects.prefetch_related('product_options__color', 'product_options__size')
+    serializer_class = ProductSerializer
+    lookup_field = 'product_id'
+    lookup_url_kwarg = 'product_id'
 
-class BrandList(generics.ListCreateAPIView):
-    queryset = Brand.objects.all()
-    serializer_class = BrandSerializer
-
-class BrandDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Brand.objects.all()
-    serializer_class = BrandSerializer
-    
-class CategoryList(generics.ListCreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    
-class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    
-class ProductItemList(generics.ListCreateAPIView):
+class ProductViewSet(viewsets.ModelViewSet):
     queryset = ProductItem.objects.all()
-    paginate_by = 10
-    serializer_class = ProductItemSerializer
-    
-class ProductItemDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProductItem.objects.all()
-    serializer_class = ProductItemSerializer
-    
-class ProductImageList(generics.ListCreateAPIView):
-    queryset = ProductImage.objects.all()
-    serializer_class = ProductImageSerializer
-    
-class ProductImageDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProductImage.objects.all()
-    serializer_class = ProductImageSerializer
-    
-class ProductOptionList(generics.ListCreateAPIView):
-    queryset = ProductOption.objects.all()
-    serializer_class = ProductOptionSerializer
-    
-class ProductOptionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProductOption.objects.all()
-    serializer_class = ProductOptionSerializer
-    
-class ProductOptionColorList(generics.ListCreateAPIView):
-    queryset = ProductOptionColor.objects.all()
-    serializer_class = ProductOptionColorSerializer
-    
-class ProductOptionColorDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProductOptionColor.objects.all()
-    serializer_class = ProductOptionColorSerializer
-    
-class ProductOptionSizeList(generics.ListCreateAPIView):
-    queryset = ProductOptionSize.objects.all()
-    serializer_class = ProductOptionSizeSerializer
-    
-class ProductOptionSizeDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProductOptionSize.objects.all()
-    serializer_class = ProductOptionSizeSerializer
-    
-class ReviewList(generics.ListCreateAPIView):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
-    
-class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+    serializer_class = ProductSerializer

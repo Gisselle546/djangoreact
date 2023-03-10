@@ -5,9 +5,9 @@ def random_string_generator(size=8, chars=string.ascii_lowercase + string.digits
     return ''.join(random.choice(chars) for _ in range(size)).upper()
 
 def unique_reference_generator(instance, size=8):
-    reference = random_string_generator(size)
+    product_id = random_string_generator(size)
     Klass = instance.__class__
-    qs_exists = Klass.objects.filter(reference=reference).exists()
+    qs_exists = Klass.objects.filter(product_id=product_id).exists()
     if qs_exists:
         return unique_reference_generator(instance, size=size)
-    return reference
+    return product_id

@@ -4,28 +4,35 @@ from django.utils import timezone
 
 # Create your models here.
 
+class Category(models.Model):
+    name   = models.CharField(max_length=255)
+    slug   = models.CharField(max_length=255, unique=True)
+   
+   
+    
+    def __str__(self):
+        """
+         String Method return the category name
+        """
+        return f"{self.name}"
+
+
 class Brand(models.Model):
     name   = models.CharField(max_length=255)
     logo   = models.URLField()
+    
+   
 
     def __str__(self):
         """
         String Method return the Brand name
         """
-        return self.name
+        return f"{self.name}"
     
 
-class Category(models.Model):
-    name   = models.CharField(max_length=255)
-    slug   = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        """
-         String Method return the category name
-        """
-        return self.name
 
 class ProductItem(models.Model):
+   
     product_id  = models.CharField(max_length=8, blank=True, null=True, unique=True)
     name        = models.CharField(max_length=255)
     price       = models.DecimalField(max_digits=10, decimal_places=2)
@@ -36,42 +43,41 @@ class ProductItem(models.Model):
     categories  = models.ManyToManyField(Category, blank=True)
     inventory_total = models.IntegerField(default=0)
     created_date = models.DateTimeField(default=timezone.now)
+    
+
+
 
     def __str__(self):
         """
         String Method return the product name
         """
-        return self.name
-    
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(ProductItem, related_name='images', on_delete=models.CASCADE)
-    url     = models.URLField()
-
-    def __str__(self):
-        """
-        String Method return the product url
-        """
-        return self.url
+        return f"{self.name} - {self.inventory_total}"
     
 
 
 class ProductOption(models.Model):
+    
     product   = models.ForeignKey(ProductItem, related_name='product_options', on_delete=models.CASCADE)
-    price     = models.DecimalField(max_digits=10, decimal_places=2)
     sku       = models.CharField(max_length=255, blank=True, null=True)
-    inventory = models.PositiveIntegerField(default=0)
+    
+    
+    
+    
 
     def __str__(self):
         """
         String Method return the product name, color and size
         """
-        return f"{self.product.name} - {self.price}"
+        return f"{self.product.name}"
 
 class ProductOptionSize(models.Model):
+   
     product_option = models.ForeignKey(ProductOption, related_name='size', on_delete=models.CASCADE)
     size = models.CharField(max_length=255)
     inventory = models.IntegerField(default=0)
+   
+  
+   
 
     def __str__(self):
         """
@@ -81,24 +87,43 @@ class ProductOptionSize(models.Model):
 
 
 class ProductOptionColor(models.Model):
+   
     product_option = models.ForeignKey(ProductOption, related_name='color', on_delete=models.CASCADE)
     color = models.CharField(max_length=255)
     inventory = models.IntegerField(default=0)
+    
+    
+    
     
     def __str__(self):
         """
         String Method return the product name, inventory and color
         """
         return f"{self.product_option.product.name} - {self.inventory} - {self.color}"
-    
+
+class ProductImage(models.Model):
+   
+    product = models.ForeignKey(ProductOptionColor, related_name='images', on_delete=models.CASCADE)
+    url     = models.URLField()
+
+
+    def __str__(self):
+        """
+        String Method return the product url
+        """
+        return self.url
+
 
 class Review(models.Model):
-    product   = models.ForeignKey(ProductItem, on_delete=models.SET_NULL, null=True)
+    
+    product   = models.ForeignKey(ProductItem, related_name='review', on_delete=models.SET_NULL, null=True)
     user      = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
     name      = models.CharField(max_length=200, null=True, blank=True)
     rating    = models.IntegerField(null=True, blank=True, default=0)
     comment   = models.TextField(null=True, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
+    
+   
 
     def __str__(self):
         """

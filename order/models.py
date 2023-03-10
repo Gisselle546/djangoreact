@@ -10,6 +10,7 @@ class Order(models.Model):
     customer_email   = models.EmailField()
     shipping_address = models.CharField(max_length=40)
     created_date = models.DateTimeField(default=timezone.now)
+   
 
     def __str__(self):
         """
@@ -22,6 +23,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product_option = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+ 
 
     def __str__(self):
         """
