@@ -41,7 +41,6 @@ class ProductItem(models.Model):
     details     = models.CharField(max_length=255, null=True)
     brand       = models.ForeignKey(Brand, on_delete=models.CASCADE)
     categories  = models.ManyToManyField(Category, blank=True)
-    inventory_total = models.IntegerField(default=0)
     created_date = models.DateTimeField(default=timezone.now)
     
 
@@ -59,7 +58,7 @@ class ProductOption(models.Model):
     
     product   = models.ForeignKey(ProductItem, related_name='product_options', on_delete=models.CASCADE)
     sku       = models.CharField(max_length=255, blank=True, null=True)
-    
+    inventory_total = models.IntegerField(default=0)
     
     
     

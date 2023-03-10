@@ -9,7 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
     Display product list 
     """
 
-    list_display = ['product_id', 'name', 'price', 'description','highlights', 'details',  'inventory_total', 'created_date']
+    list_display = ['product_id', 'name', 'price', 'description','highlights', 'details' , 'created_date']
 
 
 @admin.register(ProductImage)
@@ -33,7 +33,7 @@ class ProductOptionsAdmin(admin.ModelAdmin):
     Display the list of Product Options
     """
 
-    list_display=['sku',  'product']
+    list_display=['sku',  'product', 'inventory_total']
     
     def product(self, obj):
         """
