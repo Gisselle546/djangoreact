@@ -23,9 +23,14 @@ export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>
     }
 
     return(
-        <>
-        {children}
-        </>
+        <ContainerTest>
+             {children}
+        </ContainerTest>
     )
 
 }
+
+/**
+ * Fix all the page template
+ * 
+ */
