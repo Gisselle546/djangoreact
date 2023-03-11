@@ -62,11 +62,18 @@ class ProductOptionSerializer(serializers.ModelSerializer):
         # Retrieve the related color data for this ProductOption
         colors = ProductOptionColor.objects.filter(product_option=obj)
         return ProductOptionColorSerializer(colors, many=True).data
+    
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+
   
 class ProductSerializer(serializers.ModelSerializer):
     brand = BrandSerializer()
     categories = CategorySerializer(many=True)
     product_options = ProductOptionSerializer(many=True, read_only=True)
+    review = ReviewSerializer(many=True)
    
 
     class Meta:
@@ -97,7 +104,3 @@ class ProductSerializer(serializers.ModelSerializer):
         return product
 
 
-class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = '__all__'
