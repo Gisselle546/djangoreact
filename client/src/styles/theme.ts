@@ -35,8 +35,8 @@ const baseColors = {
    },
    blue:{
     base: '#B1DDE4',
-    light1: '#B9E0E7',
-    light2: '#C1E4E9',
+    light1: '#6fc7ed',
+    light2: '#96d6f1',
     light3: '#C8E7EC',
     light4: '#D0EBEF',
     light5: '#D8EEF2',
@@ -44,7 +44,7 @@ const baseColors = {
     dark2: '#8EB1B6',
     dark3: '#7C9BA0',
     dark4: '#6A8589',
-    dark5: '#596f72',
+    dark5: '#072e3f',
    },
    red:{
     base:'#801120',
@@ -113,7 +113,10 @@ const typography = {
     buttonSecondaryHover: baseColors.red.dark1, // recheck
     buttonText: baseColors.white,
     screenBackground: baseColors.white,
-    sidebarHeader: baseColors.grey.dark4,
+    sidebarHeader: baseColors.blue.light5,
+    sidebarBackground: baseColors.blue.base,
+    white: baseColors.white,
+    black: baseColors.black
   }
 
   export const lightTheme: DefaultTheme = {
@@ -145,6 +148,7 @@ const typography = {
       buttonSecondary: baseColors.red.base,
       buttonText: baseColors.blue.base,
       sidebarHeader: baseColors.grey.dark4
+      
   
      },
      name:'dark'

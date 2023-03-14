@@ -1,16 +1,27 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import SideBar from '@/Components/SideBar/SideBar';
 
 type PageTemplateProps = { 
     type?: 'default' | 'auth',
     children: ReactNode
 }
 
-const ContainerTest = styled.div`
-    height: 20rem;
-    background-color: red;
-
+const Container = styled.div`
+   
+    display: flex;
+   
+   
 `;
+
+const SideBarWrapper = styled.div`
+    width: 7rem;
+`
+
+const ChildrenWrapper = styled.div`
+    flex: 1;
+
+`
 
 export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>{
 
@@ -23,9 +34,14 @@ export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>
     }
 
     return(
-        <ContainerTest>
-             {children}
-        </ContainerTest>
+       <Container>
+            <SideBarWrapper>
+                <SideBar/>
+            </SideBarWrapper>
+            <ChildrenWrapper>
+                 {children}
+            </ChildrenWrapper>
+       </Container>
     )
 
 }

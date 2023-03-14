@@ -9,6 +9,11 @@ export const GlobalStyle = createGlobalStyle(
     transition: all 250ms ease-in;
     transition-property: background, color, border;
     }
+
+    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
+
+
     body {
         margin: 0;
         background: ${color.screenBackground};

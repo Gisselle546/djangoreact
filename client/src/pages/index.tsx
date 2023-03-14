@@ -1,17 +1,52 @@
 import Head from 'next/head'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import logo from '../assets/images/logo-grey.png'
+import styled, {css} from 'styled-components';
 import { PageTemplate } from '@/templates/PageTemplate'
+import NotificationBar from '@/Components/NotificationBar/NotificationBar';
+import Banner from '@/Components/Banner/Banner';
+import first from '../assets/images/X_SPEEDPORTAL_MESSI.jpeg'
+import second from '../assets/images/NikeMercurialDream.png';
+import third from '../assets/images/M181.jpeg';
+import Slider from '@/Components/Slider/Slider';
 
 const inter = Inter({ subsets: ['latin'] })
+
+
+const bannerarr = [
+  {name: 'X SPEEDPORTAL MESSI FG', heading: 'Gets the new messi kicks', image: first},
+  {name: 'NIKE MERCURIAL DREAM SPEED 6 ', heading : 'get the new ronaldo', image: second},
+  {name: 'FUTURE ULTIMATE CREATIVITY FG/AG', heading: 'Go crazy with Neymars creativity', image: third }
+]
+
+const Spacing = styled.div`
+  margin-bottom: 4.5rem;
+`
+
+const Container = styled.div`
+
+display: flex;
+flex-direction: column;
+
+`;
 
 export default function Home() {
   return (
     <>
-      <PageTemplate>
-        hihh
-      </PageTemplate>
+    <PageTemplate>
+      <NotificationBar notification='30% off with promo code CLASICO'/>
+      <Banner data={bannerarr}/>
+      <Spacing/>
+      <Container>
+        <h1 style={{fontFamily:'Cairo, sans-serif', textAlign: 'center', width:'100%', textTransform:'capitalize'}}> best sellers</h1>
+        <Spacing/>
+        <Slider/>
+      </Container>
+    </PageTemplate>
+
+       
+     
     </>
   )
 }
