@@ -10,6 +10,7 @@ import first from '../assets/images/X_SPEEDPORTAL_MESSI.jpeg'
 import second from '../assets/images/NikeMercurialDream.png';
 import third from '../assets/images/M181.jpeg';
 import Slider from '@/Components/Slider/Slider';
+import Searchbar from '@/Components/Searchbar/Searchbar';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,6 +37,7 @@ export default function Home() {
     <>
     <PageTemplate>
       <NotificationBar notification='30% off with promo code CLASICO'/>
+      <Searchbar/>
       <Banner data={bannerarr}/>
       <Spacing/>
       <Container>
