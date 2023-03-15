@@ -6,7 +6,7 @@ import styled, {css} from 'styled-components';
 import { PageTemplate } from '@/templates/PageTemplate'
 import NotificationBar from '@/Components/NotificationBar/NotificationBar';
 import Banner from '@/Components/Banner/Banner';
-import first from '../assets/images/X_SPEEDPORTAL_MESSI.jpeg'
+import first from '../assets/images/messi-1-min.jpg'
 import second from '../assets/images/NikeMercurialDream.png';
 import third from '../assets/images/M181.jpeg';
 import Slider from '@/Components/Slider/Slider';
@@ -23,6 +23,10 @@ const bannerarr = [
 
 const Spacing = styled.div`
   margin-bottom: 4.5rem;
+`
+
+const SmallSpacing = styled.div`
+  margin-bottom: 1rem;
 `
 
 const Container = styled.div`
@@ -42,7 +46,7 @@ export default function Home() {
       <Spacing/>
       <Container>
         <h1 style={{fontFamily:'Cairo, sans-serif', textAlign: 'center', width:'100%', textTransform:'capitalize'}}> best sellers</h1>
-        <Spacing/>
+        <SmallSpacing/>
         <Slider/>
       </Container>
     </PageTemplate>

@@ -6,7 +6,7 @@ export const SearchbarWrapper = styled.div`
     justify-content: center;
     align-items: center;
     height: 3rem;
-
+    
 
 `;
 

@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import ProductItem, ProductImage, ProductOption, ProductOptionColor, ProductOptionSize, Brand, Category
+from .models import Product, ProductImage, ProductOption, ProductColor, ProductSize, Brand, Category, ProductVariant
 
-@admin.register(ProductItem)
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     """
     Display product list 
@@ -33,28 +33,34 @@ class ProductOptionsAdmin(admin.ModelAdmin):
     Display the list of Product Options
     """
 
-    list_display=['sku',  'product', 'inventory_total']
+    list_display=['product', 'inventory_total']
     
     def product(self, obj):
         """
         Return the name of the related product
         """
         return obj.product.name   
-   
 
-@admin.register(ProductOptionSize)
-class ProductOptionSizeAdmin(admin.ModelAdmin):
+@admin.register(ProductVariant)
+class ProductVariantAdmin(admin.ModelAdmin):
+    """
+    Display the product variant list
+    """
+    list_display = [ 'size', 'inventory']
+
+@admin.register(ProductSize)
+class ProductSizeAdmin(admin.ModelAdmin):
     """
     Display the Product option Size
     """
-    list_display=['size', 'inventory']
+    list_display=['size']
 
-@admin.register(ProductOptionColor)
-class ProductOptionColorAdmin(admin.ModelAdmin):
+@admin.register(ProductColor)
+class ProductColorAdmin(admin.ModelAdmin):
     """
     Display the Product option Color
     """
-    list_display=['color']
+    list_display=['name']
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):

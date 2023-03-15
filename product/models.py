@@ -31,7 +31,7 @@ class Brand(models.Model):
     
 
 
-class ProductItem(models.Model):
+class Product(models.Model):
    
     product_id  = models.CharField(max_length=8, blank=True, null=True, unique=True)
     name        = models.CharField(max_length=255)
@@ -51,17 +51,30 @@ class ProductItem(models.Model):
         String Method return the product name
         """
         return f"{self.name} - {self.price}"
+
+class ProductColor(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ProductSize(models.Model):
+    size=  models.PositiveIntegerField(default=0)
+    slug = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return str(self.size)
     
 
 
 class ProductOption(models.Model):
     
-    product   = models.ForeignKey(ProductItem, related_name='product_options', on_delete=models.CASCADE)
-    sku       = models.CharField(max_length=255, blank=True, null=True)
-    inventory_total = models.IntegerField(default=0)
-    
-    
-    
+    product = models.ForeignKey(Product, related_name='product_options', on_delete=models.CASCADE)
+    colors = models.ManyToManyField(ProductColor, related_name='product_options_colors', blank=True)
+    sizes = models.ManyToManyField(ProductSize, related_name='product_options_sizes', blank=True)
+    inventory_total = models.IntegerField(default=0)    
 
     def __str__(self):
         """
@@ -69,42 +82,22 @@ class ProductOption(models.Model):
         """
         return f"{self.product.name}"
     
-class ProductOptionColor(models.Model):
-   
-    product_option = models.ForeignKey(ProductOption, related_name='color', on_delete=models.CASCADE)
-    color = models.CharField(max_length=255)
-    
-    
-    
-    
-    
-    def __str__(self):
-        """
-        String Method return the product name, inventory and color
-        """
-        return f"{self.product_option.product.name} - {self.color}"
 
-
-class ProductOptionSize(models.Model):
-   
-    product_option_color = models.ForeignKey(ProductOptionColor, related_name='product_option_color', on_delete=models.CASCADE)
-    size = models.CharField(max_length=255)
+class ProductVariant(models.Model):
+    product_option = models.ForeignKey(ProductOption, related_name='product_variants', on_delete=models.CASCADE)
+    color = models.ManyToManyField(ProductColor, related_name='product_variants_colors', blank=True)
+    size = models.ForeignKey(ProductSize, related_name='product_variants_sizes', on_delete=models.CASCADE)
     inventory = models.IntegerField(default=0)
-   
-  
-   
 
     def __str__(self):
-        """
-        String Method return the product name, inventory and size
-        """
-        return f"{self.product_option_color.color} - {self.inventory} - {self.size}"
+        return f"{self.product_option} - {self.color} - {self.size}"
+
 
 
 
 class ProductImage(models.Model):
    
-    product = models.ForeignKey(ProductOptionColor, related_name='images', on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductOption, related_name='images', on_delete=models.CASCADE)
     url     = models.URLField()
 
 
@@ -112,12 +105,12 @@ class ProductImage(models.Model):
         """
         String Method return the product url
         """
-        return f"{self.product.product_option.product.name} "
+        return f"{self.product.colors} "
 
 
 class Review(models.Model):
     
-    product   = models.ForeignKey(ProductItem, related_name='review', on_delete=models.SET_NULL, null=True)
+    product   = models.ForeignKey(Product, related_name='review', on_delete=models.SET_NULL, null=True)
     user      = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
     name      = models.CharField(max_length=200, null=True, blank=True)
     rating    = models.IntegerField(null=True, blank=True, default=0)

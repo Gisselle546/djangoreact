@@ -1,11 +1,23 @@
 from rest_framework import serializers
-from .models import Brand, Category, ProductItem, ProductImage, ProductOption, ProductOptionColor, ProductOptionSize, Review
+from .models import Brand, Category, Product, ProductImage, ProductOption, ProductColor, ProductSize, ProductVariant, Review
 
 
 class BrandSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Brand
+        fields = '__all__'
+
+class ProductColorSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = ProductColor
+        fields = '__all__'
+
+class ProductSizeSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = ProductSize
         fields = '__all__'
       
 
@@ -25,48 +37,29 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProductOptionColorSerializer(serializers.ModelSerializer):
-    images = serializers.SerializerMethodField()
-    size = serializers.SerializerMethodField()
+class ProductVariantSerializer(serializers.ModelSerializer):
+    color = ProductColorSerializer(many=True)
+    size = ProductSizeSerializer()
+  
     class Meta:
-        model = ProductOptionColor
+        model = ProductVariant
         fields = '__all__'
-
-    def get_images(self, obj):
-        images = ProductImage.objects.filter(product=obj)
-        return ProductImageSerializer(images, many=True).data
-    
-    def get_size(self, obj):
-        # Retrieve the related size data for this ProductOption
-        sizes = ProductOptionSize.objects.filter(product_option_color=obj)
-        return ProductOptionSizeSerializer(sizes, many=True).data
-
-
-class ProductOptionSizeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductOptionSize
-        fields = '__all__'
-
 
 class ProductOptionSerializer(serializers.ModelSerializer):
-   
-    color = serializers.SerializerMethodField()
-   
-
+    colors = ProductColorSerializer(many=True)
+    sizes = ProductSizeSerializer(many=True)
+    product_variants = ProductVariantSerializer(many=True)
     class Meta:
         model = ProductOption
         fields = '__all__'
 
 
-    def get_color(self, obj):
-        # Retrieve the related color data for this ProductOption
-        colors = ProductOptionColor.objects.filter(product_option=obj)
-        return ProductOptionColorSerializer(colors, many=True).data
-    
+
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
+
 
   
 class ProductSerializer(serializers.ModelSerializer):
@@ -74,10 +67,11 @@ class ProductSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True)
     product_options = ProductOptionSerializer(many=True, read_only=True)
     review = ReviewSerializer(many=True)
+    
    
 
     class Meta:
-        model = ProductItem
+        model = Product
         fields = '__all__'
 
     def create(self, validated_data):
@@ -91,7 +85,7 @@ class ProductSerializer(serializers.ModelSerializer):
         except Brand.DoesNotExist:
             raise serializers.ValidationError("Brand not found")
         # Make sure _id field is present in validated_data
-        product = ProductItem.objects.create(brand=brand, _id=validated_data['_id'], **validated_data)
+        product = Product.objects.create(brand=brand, _id=validated_data['_id'], **validated_data)
         for category_data in categories_data:
             try:
                 # Make sure _id field is present in category_data

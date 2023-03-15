@@ -1,8 +1,13 @@
 import React from 'react'
+import { SliderWrapper } from './Slider.style'
 
 function Slider() {
   return (
-    <div style={{border:'2px solid red'}}>Slider</div>
+    <>
+    <SliderWrapper>
+        Slider
+    </SliderWrapper>
+    </>
   )
 }
 

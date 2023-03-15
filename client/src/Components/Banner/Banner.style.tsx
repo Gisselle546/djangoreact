@@ -36,6 +36,17 @@ export const BannerItem = styled.li<{img: any}>`
 `;
 
 export const BannerHeading = styled.div`
+      position: absolute;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      bottom: 0;
+      left: 0%;
+      width: 100%;
       color: blue;
+      height: 4rem;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+      color: ${({theme: {color} }) => (color.white)};
      
 `;
