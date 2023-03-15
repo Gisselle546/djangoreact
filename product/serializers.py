@@ -40,6 +40,8 @@ class ProductImageSerializer(serializers.ModelSerializer):
 class ProductVariantSerializer(serializers.ModelSerializer):
     color = ProductColorSerializer(many=True)
     size = ProductSizeSerializer()
+    images = ProductImageSerializer(many=True)
+
   
     class Meta:
         model = ProductVariant

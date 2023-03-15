@@ -41,16 +41,17 @@ class Product(models.Model):
     details     = models.CharField(max_length=255, null=True)
     brand       = models.ForeignKey(Brand, on_delete=models.CASCADE)
     categories  = models.ManyToManyField(Category, blank=True)
-    created_date = models.DateTimeField(default=timezone.now)
+    created_date  = models.DateTimeField(default=timezone.now)
+    primary_image = models.URLField(blank=True, null=True)
     
-
-
 
     def __str__(self):
         """
         String Method return the product name
         """
         return f"{self.name} - {self.price}"
+    
+
 
 class ProductColor(models.Model):
     name = models.CharField(max_length=255)
@@ -61,7 +62,7 @@ class ProductColor(models.Model):
 
 
 class ProductSize(models.Model):
-    size=  models.PositiveIntegerField(default=0)
+    size = models.CharField(max_length=255, unique=True)
     slug = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
@@ -80,7 +81,7 @@ class ProductOption(models.Model):
         """
         String Method return the product name, color and size
         """
-        return f"{self.product.name}"
+        return f"{self.product.name} - {self.colors.name}- {self.sizes} - {self.inventory_total}"
     
 
 class ProductVariant(models.Model):
@@ -90,14 +91,14 @@ class ProductVariant(models.Model):
     inventory = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.product_option} - {self.color} - {self.size}"
+        return f"{self.product_option.product.name} - {self.color} - {self.size} - {self.inventory}"
 
 
 
 
 class ProductImage(models.Model):
    
-    product = models.ForeignKey(ProductOption, related_name='images', on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductVariant, related_name='images', on_delete=models.CASCADE)
     url     = models.URLField()
 
 
@@ -105,7 +106,7 @@ class ProductImage(models.Model):
         """
         String Method return the product url
         """
-        return f"{self.product.colors} "
+        return f"{self.product.color} - {self.product.product_option.product.name} "
 
 
 class Review(models.Model):
