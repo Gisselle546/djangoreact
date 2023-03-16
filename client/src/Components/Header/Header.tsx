@@ -1,11 +1,13 @@
 import React from 'react'
 import { HeaderContainer, ListItems, LogoContainer, ListItem, AuthContain } from './Header.style'
 import logo from '../../assets/images/logo-grey.png'
+import { useRouter } from 'next/router';
 
 function Header() {
+  const router = useRouter();
   return (
    <HeaderContainer>
-         <LogoContainer img={logo.src}/>
+         <LogoContainer img={logo.src} onClick={()=>router.push('/')}/>
          <ListItems>
             <ListItem>Footwear</ListItem>
             <ListItem>Players</ListItem>
