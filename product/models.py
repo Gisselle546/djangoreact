@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 from account.models import User
 from django.utils import timezone
 
@@ -15,6 +16,7 @@ class Category(models.Model):
          String Method return the category name
         """
         return f"{self.name}"
+
 
 
 class Brand(models.Model):
@@ -81,7 +83,9 @@ class ProductOption(models.Model):
         """
         String Method return the product name, color and size
         """
-        return f"{self.product.name} - {self.colors.name}- {self.sizes} - {self.inventory_total}"
+        colors = ', '.join(color.name for color in self.colors.all())
+      
+        return f"{self.product.name} - {colors} - {self.inventory_total}"
     
 
 class ProductVariant(models.Model):
@@ -91,9 +95,15 @@ class ProductVariant(models.Model):
     inventory = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.product_option.product.name} - {self.color} - {self.size} - {self.inventory}"
+        colors = ', '.join(color.name for color in self.color.all())
+        return f"{self.product_option.product.name} - {colors} - {self.size.size} - {self.inventory}"
 
-
+    def clean(self):
+        total_inventory = self.product_option.inventory_total
+        for variant in self.product_option.product_variants.exclude(id=self.id):
+            total_inventory -= variant.inventory
+        if self.inventory > total_inventory:
+            raise ValidationError("Inventory cannot exceed product option total inventory.")
 
 
 class ProductImage(models.Model):

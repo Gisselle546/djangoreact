@@ -9,7 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
     Display product list 
     """
 
-    list_display = ['product_id', 'name', 'price', 'description','highlights', 'details' , 'created_date']
+    list_display = ['product_id', 'name', 'price', 'description','highlights', 'details' , 'primary_image', 'created_date']
 
 
 @admin.register(ProductImage)
@@ -33,20 +33,47 @@ class ProductOptionsAdmin(admin.ModelAdmin):
     Display the list of Product Options
     """
 
-    list_display=['product', 'inventory_total']
+    list_display=['product', 'inventory_total', 'get_colors']
     
     def product(self, obj):
         """
         Return the name of the related product
         """
-        return obj.product.name   
+        return obj.product.name
+    
+    def get_colors(self, obj):
+        """
+        Return the list of colors for each product option
+        """
+        return ", ".join([color.name for color in obj.colors.all()])
+    
+    get_colors.short_description = "Colors"
 
+    
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
     """
     Display the product variant list
     """
-    list_display = [ 'size', 'inventory']
+    list_display = [ 'size', 'inventory', 'get_color', 'get_product' ]
+
+    def get_color(self, obj):
+        """
+        Return the list of colors for each product option
+        """
+        return ", ".join([color.name for color in obj.color.all()])
+    
+    get_color.short_description = "Colors"
+    
+    def get_product(self, obj):
+        """
+        Return the related product of each product variant
+        """
+        return obj.product_option.product.name
+    
+    get_product.short_description = "Product"
+
+   
 
 @admin.register(ProductSize)
 class ProductSizeAdmin(admin.ModelAdmin):
