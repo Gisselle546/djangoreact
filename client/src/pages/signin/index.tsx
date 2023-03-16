@@ -5,10 +5,10 @@ import { PageTemplate } from '@/templates/PageTemplate'
 function Signin() {
   return (
     <PageTemplate type='auth'>
-         <AuthForm/>
+         <AuthForm type={'Sign In'}/>
     </PageTemplate>
   
   )
 }
 
-export default Signin
+export default Signin;
