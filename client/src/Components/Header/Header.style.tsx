@@ -41,6 +41,6 @@ export const ListItem = styled.li`
 
 export const AuthContain = styled.div`
     display: flex;
-    align-items: flex-end;
+    align-items: center;
   
 `

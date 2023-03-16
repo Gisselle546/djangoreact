@@ -39,7 +39,7 @@ flex-direction: column;
 export default function Home() {
   return (
     <>
-    <PageTemplate>
+    <PageTemplate type="home">
       <NotificationBar notification='30% off with promo code CLASICO'/>
       <Searchbar/>
       <Banner data={bannerarr}/>

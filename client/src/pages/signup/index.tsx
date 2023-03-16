@@ -4,7 +4,7 @@ import { PageTemplate } from '@/templates/PageTemplate'
 
 function Signup() {
     return (
-        <PageTemplate type='auth'>
+        <PageTemplate>
              <AuthForm type={'Register'}/>
         </PageTemplate>
       

@@ -4,7 +4,7 @@ import SideBar from '@/Components/SideBar/SideBar';
 import Header from '@/Components/Header/Header';
 
 type PageTemplateProps = { 
-    type?: 'default' | 'auth',
+    type?: 'default' | 'home',
     children: ReactNode
 }
 
@@ -27,25 +27,26 @@ const ChildrenWrapper = styled.div`
 export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>{
 
     switch(type){
-        case 'auth':
+        case 'home':
             return (
-            <>
-            
-                <Header/>
-                <>{children}</>
-            </>
-            )
+    
+            <Container>
+                <SideBarWrapper>
+                    <SideBar/>
+                </SideBarWrapper>
+                <ChildrenWrapper>
+                    {children}
+                </ChildrenWrapper>
+            </Container>
+        )
     }
 
     return(
-       <Container>
-            <SideBarWrapper>
-                <SideBar/>
-            </SideBarWrapper>
-            <ChildrenWrapper>
-                 {children}
-            </ChildrenWrapper>
-       </Container>
+        <>
+            
+        <Header/>
+        <>{children}</>
+    </>
     )
 
 }

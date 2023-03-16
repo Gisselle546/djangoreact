@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { SideBarContainer, LogoContainer, HeadingContainer, SideBarItemContainers, SidebarHeader, SidebarList, SidebarListBottom, ListItem, ListButton, SidebarBody } from './SideBar.style';
 import styled, {css} from 'styled-components';
 import { CSSTransition } from "react-transition-group";
-import {BiExit} from 'react-icons/bi'
-import logo from '../../assets/images/logo-grey.png'
-import { useRouter } from 'next/router'
+import {BiExit} from 'react-icons/bi';
+import {FiShoppingCart} from 'react-icons/fi';
+import logo from '../../assets/images/logo-grey.png';
+import { useRouter } from 'next/router';
 
 
 type Props ={
@@ -80,6 +81,10 @@ function SideBarItems({show}:Props){
                         <ListItem>Players</ListItem>
                         <ListItem>Clubs</ListItem>
                         <ListItem>National Teams</ListItem>
+                    </SidebarList>
+                    <SidebarList>
+                        <ListItem onClick={()=>handleClick('cart')}>Cart <FiShoppingCart size={18} style={{verticalAlign:'middle', marginRight:'0.2rem'}}/></ListItem>
+                        
                     </SidebarList>
                     <SidebarListBottom onClick={()=>handleClick('signin')}>
                         
