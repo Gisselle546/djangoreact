@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import SideBar from '@/Components/SideBar/SideBar';
+import Header from '@/Components/Header/Header';
 
 type PageTemplateProps = { 
     type?: 'default' | 'auth',
@@ -27,10 +28,13 @@ export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>
 
     switch(type){
         case 'auth':
+            return (
             <>
-                <h1>hi</h1>
+            
+                <Header/>
                 <>{children}</>
             </>
+            )
     }
 
     return(

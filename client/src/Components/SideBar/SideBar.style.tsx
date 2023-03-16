@@ -48,3 +48,40 @@ export const SideBarContainer = styled.div(
     background: ${({theme: {color} }) => (color.sidebarHeader)};
   `
 
+
+  export const SidebarList = styled.ul`
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    align-content: space-evenly;
+    height: 15rem;
+  `
+  export const ListItem = styled.li`
+    font-size: 1.1rem;
+    height: 5rem;
+    cursor: pointer;
+  
+  `
+  export const SidebarBody = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 50rem;
+    justify-content: space-between;
+  `
+
+  export const SidebarListBottom = styled.ul`
+    display: flex;
+    border: 2px solid red;
+    padding: 1rem;
+    cursor: pointer;
+    align-content:center;
+    justify-content: center;
+    list-style-type: none;
+  `
+
+  export const ListButton =styled.li`
+    display: flex;
+    font-size:1.2rem;
+    
+  `
+  

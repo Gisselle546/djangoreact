@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { SideBarContainer, LogoContainer, HeadingContainer, SideBarItemContainers, SidebarHeader } from './SideBar.style';
+import { SideBarContainer, LogoContainer, HeadingContainer, SideBarItemContainers, SidebarHeader, SidebarList, SidebarListBottom, ListItem, ListButton, SidebarBody } from './SideBar.style';
 import styled, {css} from 'styled-components';
 import { CSSTransition } from "react-transition-group";
 import {BiExit} from 'react-icons/bi'
 import logo from '../../assets/images/logo-grey.png'
+import { useRouter } from 'next/router'
 
 
 type Props ={
@@ -11,6 +12,7 @@ type Props ={
 }
 
 function SideBarItems({show}:Props){
+    const router = useRouter()
    
  const Animation = styled.div<{state: any}>`
         position: absolute;
@@ -56,6 +58,10 @@ function SideBarItems({show}:Props){
         box-shadow: ${({theme: {boxShadow}}) => (boxShadow.outerBorder)}
     `;
 
+    const handleClick = (data: string) =>{
+        router.push(`/${data}`);
+    }
+
     return(
         <>
          <CSSTransition in={show} timeout={300} unmountOnExit={false}>
@@ -63,15 +69,23 @@ function SideBarItems({show}:Props){
           <Animation state={state}>
             <SideBarItemContainers>
                 <SidebarHeader>
-                    <h1>Header</h1>
+                    <h1>Strikers</h1>
                     <div style={{margin: '10px 0px 0px 40px'}}>
-                    <BiExit size={32} style = {{ verticalAlign: 'middle' }}/>
+                        <BiExit size={32} style = {{ verticalAlign: 'middle' }}/>
                     </div>
                 </SidebarHeader>
-                <ul>
-                    <li>huh</li>
-                    <li>ij</li>
-                </ul>
+                <SidebarBody>
+                    <SidebarList>
+                        <ListItem>Footwear</ListItem>
+                        <ListItem>Players</ListItem>
+                        <ListItem>Clubs</ListItem>
+                        <ListItem>National Teams</ListItem>
+                    </SidebarList>
+                    <SidebarListBottom onClick={()=>handleClick('signin')}>
+                        
+                        <ListButton>Sign In</ListButton>
+                    </SidebarListBottom>
+                </SidebarBody>
             </SideBarItemContainers>
           </Animation>
           )}
