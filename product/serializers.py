@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Brand, Category, Product, ProductImage, ProductOption, ProductColor, ProductSize, ProductVariant, Review
+from .models import Brand, Category, Product, ProductImage, ProductOption, ProductColor, ProductSize, ProductVariant, Review, Team, SoccerPlayer
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -62,6 +62,15 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = '__all__'
 
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = '__all__'
+
+class SoccerPlayerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SoccerPlayer
+        fields = '__all__'
 
   
 class ProductSerializer(serializers.ModelSerializer):
