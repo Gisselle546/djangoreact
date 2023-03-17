@@ -54,7 +54,7 @@ class SoccerJerseyAdmin(admin.ModelAdmin):
     """
     Display Soccer Jersey
     """
-    list_display = ['get_team', 'jersey_type', 'name', 'image_url']
+    list_display = ['get_team', 'jersey_type', 'image_url']
 
     def get_team(self, obj):
         """

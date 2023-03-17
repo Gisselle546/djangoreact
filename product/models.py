@@ -53,7 +53,6 @@ class SoccerJersey(models.Model):
 
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='jerseys')
     jersey_type = models.CharField(max_length=50, choices=JERSEY_TYPE_CHOICES, default='CLUB')
-    name = models.CharField(max_length=100)
     image_url = models.URLField()
 
     def __str__(self):
