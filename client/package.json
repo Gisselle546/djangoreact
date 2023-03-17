@@ -27,7 +27,8 @@
     "react-redux": "^8.0.5",
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.8",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.0-beta.63",
