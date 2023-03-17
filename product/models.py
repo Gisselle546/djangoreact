@@ -32,7 +32,12 @@ class Brand(models.Model):
         return f"{self.name}"
     
 class Team(models.Model):
+    TEAM_TYPE_CHOICES = (
+        ('CLUB', 'Club'),
+        ('NATIONAL_TEAM', 'National Team'),
+    )
     name = models.CharField(max_length=100)
+    team_type = models.CharField(max_length=50, choices=TEAM_TYPE_CHOICES, default='CLUB')
     location = models.CharField(max_length=100)
     logo_url = models.URLField()
 
