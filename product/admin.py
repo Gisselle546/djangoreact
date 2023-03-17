@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Product, ProductImage, ProductOption, ProductColor, ProductSize, Brand, Category, ProductVariant
+from .models import Product, ProductImage, ProductOption, ProductColor, ProductSize, Brand, Category, ProductVariant, Team, SoccerPlayer
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -49,6 +49,19 @@ class ProductOptionsAdmin(admin.ModelAdmin):
     
     get_colors.short_description = "Colors"
 
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    """
+    Display the list of team admin
+    """
+    list_display = ['name', 'location', 'logo_url']
+
+@admin.register(SoccerPlayer)
+class SoccerPlayerAdmin(admin.ModelAdmin):
+    """
+    Display the list of soccer plays in admin
+    """
+    list_display = ['first_name', 'last_name', 'image_url']
     
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):

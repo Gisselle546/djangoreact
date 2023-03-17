@@ -31,7 +31,53 @@ class Brand(models.Model):
         """
         return f"{self.name}"
     
+class Team(models.Model):
+    name = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    logo_url = models.URLField()
 
+    def __str__(self):
+        return self.name
+
+
+class SoccerJersey(models.Model):
+    JERSEY_TYPE_CHOICES = (
+        ('CLUB', 'Club'),
+        ('NATIONAL_TEAM', 'National Team'),
+    )
+
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='jerseys')
+    jersey_type = models.CharField(max_length=50, choices=JERSEY_TYPE_CHOICES, default='CLUB')
+    name = models.CharField(max_length=100)
+    image_url = models.URLField()
+
+    def __str__(self):
+        return self.name
+
+
+class SoccerPlayer(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    image_url = models.URLField()
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+
+class SoccerPlayerJersey(models.Model):
+    player = models.ForeignKey(SoccerPlayer, on_delete=models.CASCADE, related_name='player_jerseys')
+    jersey = models.ForeignKey(SoccerJersey, on_delete=models.CASCADE, related_name='jersey_players')
+    number = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.player} - {self.jersey}"
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class Product(models.Model):
    
@@ -45,6 +91,8 @@ class Product(models.Model):
     categories  = models.ManyToManyField(Category, blank=True)
     created_date  = models.DateTimeField(default=timezone.now)
     primary_image = models.URLField(blank=True, null=True)
+    tags               = models.ManyToManyField(Tag, blank=True)
+    soccerplayerjersey = models.ForeignKey(SoccerPlayerJersey, related_name='products', on_delete=models.CASCADE, null=True, blank=True)
     
 
     def __str__(self):
