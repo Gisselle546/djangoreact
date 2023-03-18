@@ -10,7 +10,7 @@ function Clubs() {
   const value = useAppSelector(filterValue)
 
   useEffect(()=>{
-    dispatch(filterbyClub({ filter_type: 'teams', team_type: 'team_type', club: 'club' }))
+    dispatch(filterbyClub({ filter_type: 'teams', team_type: 'club', club: 'true' }))
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])

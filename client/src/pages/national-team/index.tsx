@@ -9,7 +9,7 @@ function NationalTeam() {
   const value = useAppSelector(filterValue)
 
   useEffect(()=>{
-    dispatch(filterbyClub({ filter_type: 'teams', team_type: 'team_type', club: 'national' }))
+    dispatch(filterbyClub({ filter_type: 'teams', team_type: 'national', club: 'true' }))
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
@@ -19,7 +19,7 @@ function NationalTeam() {
   return (
    <>
     <PageTemplate>
-       <h1>nationalteam</h1>
+    <CardList data={value} heading={"National Teams"}/>
     </PageTemplate>
    </>
   )

@@ -5,10 +5,10 @@ export const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    height: 330px;
-    width: 320px;
-    border-radius: 5px;
+    height: 350px;
+    width: 350px;
     padding: 0.2rem;
+    border-radius: 5px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
 `;
