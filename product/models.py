@@ -42,8 +42,12 @@ class Team(models.Model):
     logo_url = models.URLField()
 
     def __str__(self):
-        return self.name
+        if len(self.name) > 20:
+            return self.name[:20]
+        else:
+            return self.name
 
+    
 
 class SoccerJersey(models.Model):
     JERSEY_TYPE_CHOICES = (
