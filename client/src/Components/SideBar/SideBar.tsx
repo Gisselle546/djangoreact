@@ -79,7 +79,7 @@ function SideBarItems({show}:Props){
                     <SidebarList>
                         <ListItem>Footwear</ListItem>
                         <ListItem>Players</ListItem>
-                        <ListItem>Clubs</ListItem>
+                        <ListItem  onClick={()=>handleClick('clubs')}>Clubs</ListItem>
                         <ListItem>National Teams</ListItem>
                     </SidebarList>
                     <SidebarList>
