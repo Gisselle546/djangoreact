@@ -29,8 +29,12 @@ class TeamViewSet(viewsets.ModelViewSet):
         queryset = self.queryset
         club_filter = self.request.query_params.get('club', None)
         if club_filter is not None:
-            queryset = queryset.filter(team_type='Club')
+            queryset = queryset.filter(team_type='CLUB')
         national_filter = self.request.query_params.get('national', None)
         if national_filter is not None:
-            queryset = queryset.filter(team_type='International')
+            queryset = queryset.filter(team_type='NATIONAL_TEAM')
         return queryset
+    
+
+
+    
