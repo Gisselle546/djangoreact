@@ -24,7 +24,7 @@ const initialState: FilterState = {
 
 export const filterbyClub = createAsyncThunk(
     'action/filter',
-    async({filter_type, team_type, club}:FilterState, {rejectWithValue})=> {
+    async({filter_type, team_type, club}:{filter_type: string, team_type: string, club: string}, {rejectWithValue})=> {
         try{
             const response = await filter({filter_type,team_type,club})
             return response.data

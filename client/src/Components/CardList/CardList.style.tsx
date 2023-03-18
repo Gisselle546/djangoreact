@@ -6,9 +6,8 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height:30rem;
-
-`
+   
+`;
 
 
 export const PopularClubsHeading = styled.h1(
@@ -16,11 +15,15 @@ export const PopularClubsHeading = styled.h1(
     font-size: ${typography.fontSize.heading2};
     font-weight: ${typography.fontWeight.bold};
     align-self: center;
+    margin-top: 5rem;
     width: 86%;
-`)
+`);
 
 export const CardListWrapper = styled.div`
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
     justify-content: space-around;
+    align-content: space-evenly;
+    height: 70rem;
     
 `

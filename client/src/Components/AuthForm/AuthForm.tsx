@@ -3,7 +3,7 @@ import background from '../../assets/images/signbackground.jpeg';
 import { FormBackground, FormBody, FormButton, FormContainer, HeaderContainer, InputWrapper } from './AuthForm.style';
 import {BsFillPersonFill } from 'react-icons/bs'
 import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from  '../../redux/hooks';
+import { useAppDispatch } from  '../../redux/hooks';
 import { registerUser, loginUser } from '@/redux/reducer/userSlice';
 
 import * as Yup from 'yup';

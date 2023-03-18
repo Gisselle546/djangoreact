@@ -1,11 +1,19 @@
 import React from 'react'
-import { data } from '@/dummy_data'
 import Card from '../Card/Card'
 import { CardListWrapper, PopularClubsHeading, Container } from './CardList.style'
 
-function CardList() {
+type Props = {
+    data: any
+    heading: string
+}
 
-    const dataf = data.map(datafield=>{
+function CardList({data, heading}:Props) {
+
+    if(!data){
+        return <div>....</div>
+    }
+
+    const dataf = data.map((datafield: any)=>{
         return(
             <>
                 <Card data={datafield}/>
@@ -14,7 +22,7 @@ function CardList() {
     })
   return (
     <Container>
-        <PopularClubsHeading>Popular Clubs</PopularClubsHeading>
+        <PopularClubsHeading>{heading}</PopularClubsHeading>
         <CardListWrapper>
             {dataf}
         </CardListWrapper>

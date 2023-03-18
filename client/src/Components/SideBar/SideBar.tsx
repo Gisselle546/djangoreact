@@ -79,8 +79,8 @@ function SideBarItems({show}:Props){
                     <SidebarList>
                         <ListItem>Footwear</ListItem>
                         <ListItem>Players</ListItem>
-                        <ListItem  onClick={()=>handleClick('clubs')}>Clubs</ListItem>
-                        <ListItem>National Teams</ListItem>
+                        <ListItem onClick={()=>handleClick('clubs')}>Clubs</ListItem>
+                        <ListItem onClick={()=>handleClick('national-team')}> National Teams</ListItem>
                     </SidebarList>
                     <SidebarList>
                         <ListItem onClick={()=>handleClick('cart')}>Cart <FiShoppingCart size={18} style={{verticalAlign:'middle', marginRight:'0.2rem'}}/></ListItem>
