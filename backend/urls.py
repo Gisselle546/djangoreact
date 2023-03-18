@@ -2,12 +2,12 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from product.views import ProductDetailView, ProductViewSet
+from product.views import ProductDetailView, ProductViewSet, TeamViewSet
 from account.views import RegisterAccount, MyTokenObtainPairView
 
 router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet)
-
+router.register(r'teams', TeamViewSet)
 
 urlpatterns = [
      path('admin/', admin.site.urls),

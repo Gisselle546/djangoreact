@@ -1,7 +1,7 @@
 from rest_framework import generics, viewsets, filters, status
 from rest_framework.response import Response
-from .models import Brand, Category, Product
-from .serializers import  ProductSerializer
+from .models import Team, Product
+from .serializers import  ProductSerializer, TeamSerializer
 
     
     
@@ -14,3 +14,23 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+
+class TeamViewSet(viewsets.ModelViewSet):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name']
+    ordering_fields = ['name', 'country', 'team_type']
+    
+    def get_queryset(self):
+        queryset = self.queryset
+        club_filter = self.request.query_params.get('club', None)
+        if club_filter is not None:
+            queryset = queryset.filter(team_type='Club')
+        national_filter = self.request.query_params.get('national', None)
+        if national_filter is not None:
+            queryset = queryset.filter(team_type='International')
+        return queryset
