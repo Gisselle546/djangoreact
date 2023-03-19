@@ -13,8 +13,8 @@ type Props = {
 }
 
 function Card({data}:Props) {
-  const {logo_url, name, location} = data
-  
+  const {logo_url, name, location} = data;
+
   return (
     <CardContainer>
         <ImageContainer img={logo_url}/>

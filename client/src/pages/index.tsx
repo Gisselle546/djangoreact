@@ -11,8 +11,9 @@ import second from '../assets/images/NikeMercurialDream.png';
 import third from '../assets/images/M181.jpeg';
 import Slider from '@/Components/Slider/Slider';
 import Searchbar from '@/Components/Searchbar/Searchbar';
-
-const inter = Inter({ subsets: ['latin'] })
+import { filterMethod, filterValue } from '@/redux/reducer/filterSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { useEffect } from 'react';
 
 
 const bannerarr = [
@@ -37,6 +38,17 @@ flex-direction: column;
 `;
 
 export default function Home() {
+  const dispatch = useAppDispatch()
+  const value = useAppSelector(filterValue)
+
+  useEffect(()=>{
+    dispatch(filterMethod({ filter_type: 'products', team_type: 'tag', club: 'Best Seller' }))
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  console.log(value);
+  
+
   return (
     <>
     <PageTemplate type="home">
@@ -47,8 +59,10 @@ export default function Home() {
       <Container>
         <h1 style={{fontFamily:'Cairo, sans-serif', textAlign: 'center', width:'100%', textTransform:'capitalize'}}> best sellers</h1>
         <SmallSpacing/>
-        <Slider/>
+        <Slider data={value}/>
       </Container>
+      <Spacing/>
+     
     </PageTemplate>
 
        

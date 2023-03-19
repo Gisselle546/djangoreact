@@ -22,7 +22,7 @@ const initialState: FilterState = {
     
 }
 
-export const filterbyClub = createAsyncThunk(
+export const filterMethod = createAsyncThunk(
     'action/filter',
     async({filter_type, team_type, club}:{filter_type: string, team_type: string, club: string}, {rejectWithValue})=> {
         try{
@@ -34,16 +34,19 @@ export const filterbyClub = createAsyncThunk(
     }
 )
 
+
+
+
 export const filterSlice = createSlice({
     name: 'filter',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
         builder
-            .addCase(filterbyClub.pending, (state)=>{
+            .addCase(filterMethod.pending, (state)=>{
                 state.status = 'loading';
             })
-            .addCase(filterbyClub.fulfilled, (state, action)=>{
+            .addCase(filterMethod.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.filter_data = action.payload
             })
