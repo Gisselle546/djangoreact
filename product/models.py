@@ -60,7 +60,7 @@ class SoccerJersey(models.Model):
     image_url = models.URLField()
 
     def __str__(self):
-        return self.name
+        return f"{self.team.name}"
 
 
 class SoccerPlayer(models.Model):
@@ -73,9 +73,9 @@ class SoccerPlayer(models.Model):
 
 
 class SoccerPlayerJersey(models.Model):
-    player = models.ForeignKey(SoccerPlayer, on_delete=models.CASCADE, related_name='player_jerseys')
+    player = models.ForeignKey(SoccerPlayer, on_delete=models.CASCADE, related_name='player_jerseys', null=True )
     jersey = models.ForeignKey(SoccerJersey, on_delete=models.CASCADE, related_name='jersey_players')
-    number = models.PositiveIntegerField()
+    number = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.player} - {self.jersey}"

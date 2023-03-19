@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Product, ProductImage, ProductOption, ProductColor, ProductSize, Brand, Category, ProductVariant, Team, SoccerPlayer, Tag, SoccerJersey
+from .models import Product, ProductImage, ProductOption, ProductColor, ProductSize, Brand, Category, ProductVariant, Team, SoccerPlayer, Tag, SoccerJersey, SoccerPlayerJersey
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -60,9 +60,19 @@ class SoccerJerseyAdmin(admin.ModelAdmin):
         """
         Returns the list of team
         """
-        return obj.jerseys.name
+        return obj.team.name
 
+@admin.register(SoccerPlayerJersey)
+class SoccerPlayerJerseyAdmin(admin.ModelAdmin):
+    """
+    Display soccer player jersey
+    """
+    list_display = ['player', 'jersey', 'number']
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'player':
+            kwargs['required'] = False
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):

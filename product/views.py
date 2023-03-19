@@ -14,6 +14,15 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name']
+
+    def get_queryset(self):
+        queryset = self.queryset
+        tag_name = self.request.query_params.get('tag', None)
+        if tag_name is not None:
+            queryset = queryset.filter(tags__name=tag_name)
+        return queryset
 
 
 
