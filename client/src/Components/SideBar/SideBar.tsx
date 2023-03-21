@@ -16,7 +16,7 @@ function SideBarItems({show}:Props){
     const router = useRouter()
    
  const Animation = styled.div<{state: any}>`
-        position: absolute;
+        position: fixed;
         left:7rem;
         z-index:5;
         width: 300px;
