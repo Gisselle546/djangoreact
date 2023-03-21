@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageContainer, SliderContainer } from './SliderCard.style';
+import { ButtonContainer, ImageContainer, SliderContainer } from './SliderCard.style';
 
 type Props = {
     data : {
@@ -17,7 +17,7 @@ function SliderCard({data}: Props) {
     <SliderContainer>
         <ImageContainer img={primary_image}/>
          {name.length> 42? name.substring(0, 40) : name}
-       
+       <ButtonContainer>Add Cart</ButtonContainer>
     </SliderContainer>
   )
 }

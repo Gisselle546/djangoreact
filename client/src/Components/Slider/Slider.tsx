@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SliderCard from '../SliderCard/SliderCard'
 import { SliderWrapper } from './Slider.style'
 import { AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai'
@@ -10,51 +10,59 @@ type Props = {
 
 function Slider({data}: Props ) {
   const [index, setIndex] = useState(0);
+  const [jersey, setJersey] = useState([]);
 
-  const checkNumber=(number :any) =>{
-    if( number > data.length - 1){
-      return 0;
+  useEffect(() => {
+    function getInitialJerseyData() {
+      if (!data) {
+        return [];
+      }
+      return data.slice(0, 4);
     }
-    if(number < 0){
-      return data.length -1
-    }
-    return number
-  }
+    setJersey(getInitialJerseyData());
+  }, [data]);
 
+  console.log(jersey);
+  
   const nextPerson = () => {
-      setIndex((prevIndex)=>{
-          let nowindex = prevIndex + 1
-          return checkNumber(nowindex)
-      })
-     
-  }
+    setIndex((prevIndex) => {
+      let newStartIndex = (prevIndex + 1) % (data.length - 3);
+      setJersey(data.slice(newStartIndex, newStartIndex + 4));
+      return newStartIndex;
+    });
+  };
 
-  const prevPerson = () =>{
 
-      setIndex((prevIndex)=>{
-        let nowindex = prevIndex - 1
-        return checkNumber(nowindex)
-    })
-      
-     
-  }
+
+  const prevPerson = () => {
+    setIndex((prevIndex) => {
+      let newStartIndex = prevIndex - 1;
+      if (newStartIndex < 0) {
+        newStartIndex = data.length - 4;
+      }
+      setJersey(data.slice(newStartIndex, newStartIndex + 4));
+      return newStartIndex;
+    });
+  };
   
 
-  if(!data){
+  if(!jersey){
     return <div>....</div>
   }
 
   console.log(index);
   
  
-  const card = data?.map((cards:any, i: any)=>{
+  const card = jersey?.map((cards:any, i: any)=>{
     
-    const borderwrapper = index===i? '2px solid blue': ''
+    
+    
+   
     return(
         <>
-         <div style={{border: borderwrapper}}>
+         
           <SliderCard data={cards}/>
-        </div>
+     
        </>
       )
   })

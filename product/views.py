@@ -20,8 +20,11 @@ class ProductViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
         tag_name = self.request.query_params.get('tag', None)
+        soccer_player_jer = self.request.query_params.get('playerjersey', None)
         if tag_name is not None:
             queryset = queryset.filter(tags__name=tag_name)
+        if soccer_player_jer is not None:
+            queryset = queryset.filter(soccerplayerjersey__number__isnull=False)
         return queryset
 
 

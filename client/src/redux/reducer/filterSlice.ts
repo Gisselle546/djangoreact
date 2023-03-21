@@ -9,7 +9,8 @@ export interface FilterState{
     club: string;
     error?: null | any;
     status: 'idle' | 'loading' | 'failed'
-    filter_data: [] | any
+    filter_data_general: [] | any
+    filter_data_player: [] | any
 }
 
 const initialState: FilterState = {
@@ -18,7 +19,8 @@ const initialState: FilterState = {
     club: '',
     status: 'idle',
     error: null,
-    filter_data: null
+    filter_data_general: null,
+    filter_data_player: null
     
 }
 
@@ -34,7 +36,18 @@ export const filterMethod = createAsyncThunk(
     }
 )
 
-
+export const filterMethodPlayer = createAsyncThunk(
+    'action/filterplayer',
+    async({filter_type, team_type, club}:{filter_type: string, team_type: string, club: string}, {rejectWithValue})=> {
+        try{
+            const response = await filter({filter_type,team_type,club})
+            console.log(response);
+            return response.data
+        }catch(error){
+            return rejectWithValue(error)
+        }
+    }
+)
 
 
 export const filterSlice = createSlice({
@@ -48,10 +61,19 @@ export const filterSlice = createSlice({
             })
             .addCase(filterMethod.fulfilled, (state, action)=>{
                 state.status = 'idle';
-                state.filter_data = action.payload
+                state.filter_data_general = action.payload
+            })
+        builder
+            .addCase(filterMethodPlayer.pending, (state)=>{
+                state.status = 'loading';
+            })
+            .addCase(filterMethodPlayer.fulfilled, (state, action)=>{
+                state.status = 'idle';
+                state.filter_data_player = action.payload
             })
     }
 })
 
-export const filterValue = (state: AppState) => state.filter.filter_data
+export const filterValue = (state: AppState) => state.filter.filter_data_general
+export const filterPlayer =(state: AppState) => state.filter.filter_data_player
 export default filterSlice.reducer

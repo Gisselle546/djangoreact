@@ -11,7 +11,7 @@ import second from '../assets/images/NikeMercurialDream.png';
 import third from '../assets/images/M181.jpeg';
 import Slider from '@/Components/Slider/Slider';
 import Searchbar from '@/Components/Searchbar/Searchbar';
-import { filterMethod, filterValue } from '@/redux/reducer/filterSlice'
+import { filterMethod, filterValue, filterMethodPlayer, filterPlayer } from '@/redux/reducer/filterSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { useEffect } from 'react';
 
@@ -40,10 +40,12 @@ flex-direction: column;
 export default function Home() {
   const dispatch = useAppDispatch()
   const value = useAppSelector(filterValue)
+  const player = useAppSelector(filterPlayer)
 
   useEffect(()=>{
     dispatch(filterMethod({ filter_type: 'products', team_type: 'tag', club: 'Best Seller' }))
-
+    dispatch(filterMethodPlayer({ filter_type: 'products', team_type: 'playerjersey', club: 'true' }))
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   console.log(value);
@@ -62,6 +64,12 @@ export default function Home() {
         <Slider data={value}/>
       </Container>
       <Spacing/>
+      <Spacing/>
+      <Container>
+        <h1 style={{fontFamily:'Cairo, sans-serif', textAlign: 'center', width:'100%', textTransform:'capitalize'}}> Player Kits</h1>
+        <SmallSpacing/>
+        <Slider data={player}/>
+      </Container>
      
     </PageTemplate>
 
