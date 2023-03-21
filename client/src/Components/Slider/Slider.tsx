@@ -22,7 +22,6 @@ function Slider({data}: Props ) {
     setJersey(getInitialJerseyData());
   }, [data]);
 
-  console.log(jersey);
   
   const nextPerson = () => {
     setIndex((prevIndex) => {
@@ -49,22 +48,18 @@ function Slider({data}: Props ) {
   if(!jersey){
     return <div>....</div>
   }
-
-  console.log(index);
   
- 
+  
   const card = jersey?.map((cards:any, i: any)=>{
     
     
-    
-   
     return(
-        <>
+      <>
          
-          <SliderCard data={cards}/>
+      <SliderCard data={cards}/>
      
-       </>
-      )
+      </>
+    )
   })
 
   
