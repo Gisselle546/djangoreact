@@ -22,7 +22,7 @@ function SliderCard({data}: Props) {
  const handleClick = () =>{
   router.push(`/products/${product_id}`)
  }
-  console.log(product_id);
+
  return (
     <SliderContainer onClick={()=>handleClick()}>
         <ImageContainer img={primary_image}/>

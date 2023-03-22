@@ -13,7 +13,7 @@ export interface FilterState{
     status: 'idle' | 'loading' | 'failed'
     filter_data_general: [] | any
     filter_data_player: [] | any
-    filter_product: {} | any
+    filter_product:  any
 }
 
 const initialState: FilterState = {
@@ -57,7 +57,6 @@ export const filterProductMethod = createAsyncThunk(
     async({filter_type, product_id }:{filter_type: string, product_id: any }, {rejectWithValue})=> {
         try{
             const response = await getProduct({filter_type, product_id})
-            console.log(response);
             return response.data
         }catch(error){
             return rejectWithValue(error)

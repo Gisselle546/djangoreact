@@ -7,7 +7,7 @@ type Props = {
 
 export async function getProduct({product_id, filter_type}:Props){
 
-    let url = `/${filter_type}/?${product_id}`
+    let url = `/${filter_type}/${product_id}`
 
     const response = await customFetch.get(url)
     return response;
