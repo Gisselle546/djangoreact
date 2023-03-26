@@ -6,17 +6,22 @@ import {FiShoppingCart} from 'react-icons/fi';
 
 function Header() {
   const router = useRouter();
+
+  const handleClick = (data: string) =>{
+    router.push(`/${data}`);
+}
+
   return (
    <HeaderContainer>
          <LogoContainer img={logo.src} onClick={()=>router.push('/')}/>
          <ListItems>
             <ListItem>Footwear</ListItem>
             <ListItem>Players</ListItem>
-            <ListItem>Clubs</ListItem>
-            <ListItem>National Teams</ListItem>
+            <ListItem onClick={()=>handleClick('clubs')}>Clubs</ListItem>
+            <ListItem onClick={()=>handleClick('national-team')}>National Teams</ListItem>
          </ListItems>
          <AuthContain>
-          <FiShoppingCart size={22} style={{verticalAlign:'middle', marginRight:'0.2rem'}}/>
+          <FiShoppingCart size={22} style={{verticalAlign:'middle', marginRight:'0.2rem', cursor: 'pointer'}} onClick={()=>handleClick('cart')}/>
          </AuthContain>
    </HeaderContainer>
   )

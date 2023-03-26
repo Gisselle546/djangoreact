@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, {useCallback, useEffect, useState} from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { filterProduct, filterProductMethod } from '@/redux/reducer/filterSlice'
+import { ProductDetailWrapper } from './[id].style'
 
 function ProductDetail() {
     const router = useRouter()
@@ -22,7 +23,9 @@ function ProductDetail() {
   return (
     <>
         <PageTemplate>
-        Product {id}
+          <ProductDetailWrapper>
+            
+          </ProductDetailWrapper>
         </PageTemplate>
     </>
   )
