@@ -5,6 +5,7 @@ import { PageTemplate } from '@/templates/PageTemplate'
 import { filterMethod, filterValue } from '@/redux/reducer/filterSlice'
 
 
+
 function Clubs() {
   const dispatch = useAppDispatch()
   const value = useAppSelector(filterValue)
@@ -15,10 +16,12 @@ function Clubs() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   console.log(value);
+
+ 
   
   return (
     <PageTemplate>
-        <CardList data={value} heading={"Popular Clubs"}/>
+        <CardList data={value}  heading={"Popular Clubs"}/>
     </PageTemplate>
   )
 }

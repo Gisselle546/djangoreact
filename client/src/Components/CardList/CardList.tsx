@@ -5,6 +5,7 @@ import { CardListWrapper, PopularClubsHeading, Container } from './CardList.styl
 type Props = {
     data: any
     heading: string
+    
 }
 
 function CardList({data, heading}:Props) {
@@ -16,7 +17,7 @@ function CardList({data, heading}:Props) {
     const dataf = data.map((datafield: any)=>{
         return(
             <>
-                <Card data={datafield}/>
+                <Card  data={datafield}/>
             </>
         )
     })

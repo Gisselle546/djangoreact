@@ -19,7 +19,7 @@ function NationalTeam() {
   return (
    <>
     <PageTemplate>
-    <CardList data={value} heading={"National Teams"}/>
+     <CardList data={value} heading={"National Teams"}/>
     </PageTemplate>
    </>
   )
