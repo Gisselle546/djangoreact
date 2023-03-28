@@ -57,6 +57,7 @@ export const filterProductMethod = createAsyncThunk(
     async({filter_type, product_id }:{filter_type: string, product_id: any }, {rejectWithValue})=> {
         try{
             const response = await getProduct({filter_type, product_id})
+            console.log(response.data)
             return response.data
         }catch(error){
             return rejectWithValue(error)
