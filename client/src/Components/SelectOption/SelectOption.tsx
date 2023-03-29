@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 
-function SelectOption() {
-    const [quantity, setQuanity] = useState(1)
+type Props ={
+  quantity: any;
+  onIncrement: any;
+}
+
+function SelectOption({quantity, onIncrement}: Props) {
+    
   return (
     <div>
          <select
         style={{width: '100%', padding: '0.5rem'}}
         value={quantity}
-        onChange={(e) => setQuanity(+e.target.value)}
+        onChange={onIncrement}
       >
         
         <option value={1}>Quantity: 1</option>

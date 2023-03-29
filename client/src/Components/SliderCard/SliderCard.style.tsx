@@ -26,10 +26,11 @@ export const ImageContainer =  styled('div')<{img: any}>`
 export const ButtonContainer = styled.button`
     margin: 1rem;
     border: none;
-    color: white;
     padding: 10px 32px;
     text-align: center;
     text-decoration: none;
-    background-color: blue;
     cursor: pointer;
+    background-color: #c7ecee; 
+    border: none;
+    color: #a9a9a9;
 `;

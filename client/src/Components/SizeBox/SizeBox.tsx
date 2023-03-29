@@ -1,23 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ButtonContainer, StyledBoxContainer } from './SizeBox.style'
 
 type Props= {
-
     product: any
-
+    onSizeChange: any
+    
 } 
 
-const size=['small', 'medium', 'large']
+function SizeBox({product, onSizeChange}: Props) {
+ 
+  const handleSizeClick = (size: any) => {
+    onSizeChange(size);
+  };
 
-function SizeBox({product}: Props) {
-   
    const data = product.sizes.map((data:any)=>{
-  
+
     return(
         // eslint-disable-next-line react/jsx-key
         <>
-           
-            <ButtonContainer>{data.size}</ButtonContainer>
+            
+            <ButtonContainer  onClick={() => handleSizeClick(data.size)} key={data.id} >{data.size}</ButtonContainer>
           
         </>
     )
@@ -25,7 +27,6 @@ function SizeBox({product}: Props) {
   return(
     <>
      <StyledBoxContainer>
-       
         {data}
      </StyledBoxContainer>
     </>

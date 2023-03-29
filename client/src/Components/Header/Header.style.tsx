@@ -32,10 +32,12 @@ export const ListItems = styled.ul`
     list-style-type: none;
     align-items: flex-end;
 `;
-export const ListItem = styled.li`
+export const ListItem = styled.li(
+    ({ theme: {typography} }) => css`
    margin-left: 1.1rem;
-   cursor: pointer
-`;
+   font-size: ${typography.fontSize.body};
+   cursor: pointer;
+`);
 
 
 
@@ -43,4 +45,4 @@ export const AuthContain = styled.div`
     display: flex;
     align-items: center;
   
-`
+`;

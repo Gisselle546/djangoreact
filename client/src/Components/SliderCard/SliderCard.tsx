@@ -27,7 +27,7 @@ function SliderCard({data}: Props) {
     <SliderContainer onClick={()=>handleClick()}>
         <ImageContainer img={primary_image}/>
          {name.length> 42? name.substring(0, 40) : name}
-       <ButtonContainer>Add Cart</ButtonContainer>
+       <ButtonContainer>Details</ButtonContainer>
     </SliderContainer>
   )
 }

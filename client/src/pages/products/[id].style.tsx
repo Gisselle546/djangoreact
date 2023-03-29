@@ -10,7 +10,6 @@ export const ProductDetailWrapper = styled.div`
     display: flex;
     justify-content: space-around;
     height: 50vh;
-    border: 2px solid green;
     align-items: center;
 `
 
@@ -44,9 +43,9 @@ export const ProductHeaders =  styled.div(
 
 
 export const ButtonContainer = styled.button`
-background-color: #4CAF50; 
+background-color: #c7ecee; 
 border: none;
-color: white;
+color: #a9a9a9;
 display: flex;
 padding: 1rem;
 text-decoration: none;
@@ -60,5 +59,20 @@ text-align: center;
 
 export const ProductInfo = styled.div`
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+`;  
 
+
+export const ProductBottom= styled.div`
+height: 50vh;
+overflow: scroll;
 `;
+
+export const SizeChart = styled.p`
+    text-align: right;
+    cursor: pointer;
+
+`

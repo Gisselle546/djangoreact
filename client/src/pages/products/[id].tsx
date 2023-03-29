@@ -1,13 +1,16 @@
 import { PageTemplate } from '@/templates/PageTemplate'
 import { useRouter } from 'next/router'
 import React, {useCallback, useEffect, useState} from 'react'
+import {useStore} from '../../context/cart';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { filterProduct, filterProductMethod } from '@/redux/reducer/filterSlice'
-import { ButtonContainer, ProductContainer, ProductDetails, ProductDetailWrapper, ProductHeaders, ProductInfo, ProductSubContainer, SubProductHeaders } from './[id].style'
+import { ButtonContainer, ProductBottom, ProductContainer, ProductDetails, ProductDetailWrapper, ProductHeaders, ProductInfo, ProductSubContainer, SizeChart, SubProductHeaders } from './[id].style'
 import ImageHandler from '@/Components/ImageHandler/ImageHandler'
 import SizeBox from '@/Components/SizeBox/SizeBox'
 import SelectOption from '@/Components/SelectOption/SelectOption'
 import Accordion from '@/Components/Accordion/Accordion'
+import styled from 'styled-components'
+import {getItemBySize} from '../../../utils/arr'
 
 type Props ={
   product : any,
@@ -18,8 +21,15 @@ function ProductDetail() {
     const router = useRouter()
     const { id } = router.query
     const dispatch = useAppDispatch();
-    const product = useAppSelector(filterProduct)
+    const product = useAppSelector(filterProduct);
+    const {addCart} = useStore();
     
+   
+
+    const Spacing = styled.div`
+      margin-bottom: 4.5rem;
+    `
+
 
     const fetchProductDetails = useCallback(() => {
         dispatch(filterProductMethod({ filter_type: 'products', product_id: id }))
@@ -34,6 +44,29 @@ function ProductDetail() {
       }
 
     function Product({product, details}: any){
+      const [quantity, setQuanity] = useState(1);
+      const [selectedSize, setSelectedSize] = useState('');
+
+      const handleItem = () =>{
+        let data = getItemBySize(selectedSize,product);
+        return data;
+      }
+
+     
+     
+
+      const handleSizeChange = (size: any) => {
+        setSelectedSize(size);
+      };
+
+      
+
+      console.log(product);
+     
+       const handleClick = () =>{
+
+        window.location.href="https://soccer.com/content/size-chart"
+      }
 
       return(
         <ProductSubContainer>
@@ -41,9 +74,10 @@ function ProductDetail() {
           <ProductDetails>
             <ProductHeaders> {details.name}</ProductHeaders> 
             <SubProductHeaders>${details.price}</SubProductHeaders>
-            <SizeBox product={details.product_options[0]}/>
-            <SelectOption/>
-            <ButtonContainer>Add to Cart</ButtonContainer>
+            <SizeChart onClick={handleClick}>Size Chart</SizeChart>
+            <SizeBox product={details.product_options[0]}  onSizeChange={handleSizeChange}/>
+            <SelectOption quantity={quantity} onIncrement={(e:any) => setQuanity(+e.target.value)}/>
+            <ButtonContainer onClick={handleItem}>Add to Cart</ButtonContainer>
           </ProductDetails>
         </ProductSubContainer>
       )
@@ -57,9 +91,15 @@ function ProductDetail() {
             <ProductDetailWrapper>
               <Product details={product} product={product?.product_options[0]?.product_variants}/>
             </ProductDetailWrapper>
+            <ProductBottom>
+            <Spacing/>
             <ProductInfo>
-              <Accordion/>
+              <Accordion title={`Reviews (${product.review.length})`} content={product.review}/>
+              <Accordion title={"Details"} content={product.details}/>
+              <Accordion title={"Description"} content={product.description}/>
+              <Accordion title={"Highlights"} content={product.highlights}/>
             </ProductInfo>
+            </ProductBottom>
           </ProductContainer>
         </PageTemplate>
     </>
