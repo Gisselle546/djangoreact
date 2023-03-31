@@ -172,7 +172,7 @@ class ProductImage(models.Model):
         """
         String Method return the product url
         """
-        return f"{self.product.color} - {self.product.product_option.product.name} "
+        return f"{self.product.color} - {self.product.size} - {self.product.product_option.product.name} "
 
 
 class Review(models.Model):

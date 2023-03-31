@@ -1,7 +1,7 @@
 from rest_framework import generics, viewsets, filters, status
 from rest_framework.response import Response
-from .models import Team, Product
-from .serializers import  ProductSerializer, TeamSerializer
+from .models import Team, Product, SoccerPlayer
+from .serializers import  ProductSerializer, TeamSerializer, SoccerPlayerSerializer
 
     
     
@@ -21,10 +21,15 @@ class ProductViewSet(viewsets.ModelViewSet):
         queryset = self.queryset
         tag_name = self.request.query_params.get('tag', None)
         soccer_player_jer = self.request.query_params.get('playerjersey', None)
+        query = self.request.query_params.get('q')
+        
         if tag_name is not None:
             queryset = queryset.filter(tags__name=tag_name)
         if soccer_player_jer is not None:
             queryset = queryset.filter(soccerplayerjersey__number__isnull=False)
+        if query is not None:
+            queryset = queryset.filter(soccerplayerjersey__jersey__team__name__icontains=query)
+        
         return queryset
 
 
@@ -49,4 +54,9 @@ class TeamViewSet(viewsets.ModelViewSet):
     
 
 
+class SoccerPlayerViewSet(viewsets.ModelViewSet):
+    queryset = SoccerPlayer.objects.all()
+    serializer_class = SoccerPlayerSerializer
     
+    search_fields = ['first_name']
+    ordering_fields = ['first_name']

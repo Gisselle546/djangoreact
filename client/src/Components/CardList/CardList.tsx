@@ -17,7 +17,7 @@ function CardList({data, heading}:Props) {
     const dataf = data.map((datafield: any)=>{
         return(
             <>
-                <Card  data={datafield}/>
+                <Card key={datafield.id} data={datafield}/>
             </>
         )
     })

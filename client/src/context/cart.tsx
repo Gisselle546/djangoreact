@@ -4,11 +4,20 @@ enum ActionType {
     ADDCART = "ADDCART",
     INCREMENT='INCREMENT',
     DECREMENT='DECREMENT',
-    REMOVE='REMOVE'
+    REMOVE='REMOVE',
 }
 
+export function getStorageValue(key: any, defaultValue?:any) {
+    // getting stored value
+    if (typeof window !== 'undefined') {
+  const saved = JSON.parse(localStorage.getItem(key)!);
+  return saved || defaultValue;
+    }
+  }
+  
+
 const initialState = {
-    cart: JSON.parse(localStorage.getItem("cart")!) || []
+    cart: getStorageValue("cart") || []
 }
 
 interface Action {
@@ -25,20 +34,18 @@ const reducer: Reducer<State, Action> = (state: State, action: Action) =>{
     
     switch(action.type){
         case ActionType.ADDCART:
-            const existingItem = state.cart.find((item: any) => item.id === action.payload.id);
+            console.log(action.payload);
+            const updatedCart = [...state.cart];
+            const existingItem = updatedCart.find((cartItem: any) => cartItem.data.id === action.payload.data.id);
             if (existingItem) {
-                return {
-                ...state,
-                cart: state.cart.map((item: any) =>
-                    item.id === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item
-                ),
-                };
+              existingItem.quantity += action.payload.quantity;
             } else {
-                return {
-                ...state,
-                cart: [...state.cart, { ...action.payload }],
-                };
+              updatedCart.push(action.payload);
             }
+            return {
+              ...state,
+              cart: updatedCart,
+            };
         
         case ActionType.REMOVE:
             return {
@@ -63,6 +70,7 @@ const reducer: Reducer<State, Action> = (state: State, action: Action) =>{
                     : item
                 ),
             };
+      
             default:
             return state;
         }
@@ -75,15 +83,17 @@ const CartContext = createContext<{
   increment:(items:any)=>void
   decrement:(items:any)=>void
   remove:(items:any)=>void
+  clearAll:()=>void
 }>({
     state:initialState,
     addCart:()=>{},
     increment:()=>{},
     decrement:()=>{},
-    remove:()=>{}
+    remove:()=>{},
+    clearAll:()=>{}
 });
 
-export const CartProvider = (props: {children: React.ReactNode;}) => {
+export const CartProvider = (props: {children: any}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
@@ -92,7 +102,7 @@ export const CartProvider = (props: {children: React.ReactNode;}) => {
           JSON.stringify(state.cart)
         );
         
-      });
+      }, [state]);
 
     const addCart = (items:any)=>{
         dispatch({
@@ -122,8 +132,12 @@ export const CartProvider = (props: {children: React.ReactNode;}) => {
           })
       }
 
+      const clearAll = () =>{
+         localStorage.removeItem("cart");
+      }
+
     return(
-        <CartContext.Provider value={{state,addCart,increment,decrement,remove}}>
+        <CartContext.Provider value={{state,addCart,increment,decrement,remove, clearAll}}>
             {props.children}
         </CartContext.Provider>
     )

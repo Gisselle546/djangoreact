@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import SideBar from '@/Components/SideBar/SideBar';
-import Header from '@/Components/Header/Header';
+
+
+import dynamic from 'next/dynamic';
 
 type PageTemplateProps = { 
     type?: 'default' | 'home',
@@ -23,6 +24,14 @@ const ChildrenWrapper = styled.div`
     flex: 1;
 
 `
+const Header = dynamic(() => import('../Components/Header/Header'), {
+  ssr: false
+});
+
+const SideBar = dynamic(()=> import('../Components/SideBar/SideBar'), {
+ ssr: false
+});
+
 
 export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>{
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import CardList from '@/Components/CardList/CardList'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { PageTemplate } from '@/templates/PageTemplate'
@@ -10,15 +10,16 @@ function Clubs() {
   const dispatch = useAppDispatch()
   const value = useAppSelector(filterValue)
 
+
+const fetchClubs = useCallback(()=>{
+  dispatch(filterMethod({ filter_type: 'teams', team_type: 'club', club: 'true' }))
+},[dispatch])
+
+
   useEffect(()=>{
-    dispatch(filterMethod({ filter_type: 'teams', team_type: 'club', club: 'true' }))
+   fetchClubs()
+  },[fetchClubs])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
-  console.log(value);
-
- 
-  
   return (
     <PageTemplate>
         <CardList data={value}  heading={"Popular Clubs"}/>

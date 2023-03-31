@@ -4,17 +4,13 @@ import { Inter } from 'next/font/google'
 import logo from '../assets/images/logo-grey.png'
 import styled, {css} from 'styled-components';
 import { PageTemplate } from '@/templates/PageTemplate'
-import NotificationBar from '@/Components/NotificationBar/NotificationBar';
-import Banner from '@/Components/Banner/Banner';
 import first from '../assets/images/messi-1-min.jpg'
 import second from '../assets/images/NikeMercurialDream.png';
 import third from '../assets/images/M181.jpeg';
-import Slider from '@/Components/Slider/Slider';
-import Searchbar from '@/Components/Searchbar/Searchbar';
 import { filterMethod, filterValue, filterMethodPlayer, filterPlayer } from '@/redux/reducer/filterSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { useEffect } from 'react';
-
+import dynamic from 'next/dynamic';
 
 const bannerarr = [
   {name: 'X SPEEDPORTAL MESSI FG', heading: 'Gets the new messi kicks', image: first},
@@ -36,6 +32,22 @@ display: flex;
 flex-direction: column;
 
 `;
+
+const Banner = dynamic(() => import('../Components/Banner/Banner'), {
+  ssr: false
+});
+
+const Slider = dynamic(() => import('../Components/Slider/Slider'), {
+  ssr: false
+});
+
+const NotificationBar = dynamic(() => import('../Components/NotificationBar/NotificationBar'), {
+  ssr: false
+});
+
+const Searchbar = dynamic(() => import( '@/Components/Searchbar/Searchbar'), {
+  ssr: false
+});
 
 export default function Home() {
   const dispatch = useAppDispatch()

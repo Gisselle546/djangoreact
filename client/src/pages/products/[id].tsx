@@ -17,6 +17,9 @@ type Props ={
   details: any
 }
 
+
+
+
 function ProductDetail() {
     const router = useRouter()
     const { id } = router.query
@@ -49,6 +52,8 @@ function ProductDetail() {
 
       const handleItem = () =>{
         let data = getItemBySize(selectedSize,product);
+         const cart = {quantity, data: data, details:details}
+        addCart(cart);
         return data;
       }
 

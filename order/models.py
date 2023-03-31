@@ -1,5 +1,5 @@
 from django.db import models
-from product.models import ProductOption
+from product.models import ProductVariant
 from django.utils import timezone
 
 # Create your models here.
@@ -21,7 +21,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product_option = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
+    product_variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
     quantity = models.IntegerField()
  
 

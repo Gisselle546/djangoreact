@@ -1,6 +1,11 @@
 import React from 'react'
-import AuthForm from '@/Components/AuthForm/AuthForm'
 import { PageTemplate } from '@/templates/PageTemplate'
+import dynamic from 'next/dynamic';
+
+
+const AuthForm = dynamic(() => import('@/Components/AuthForm/AuthForm'), {
+  ssr: false
+});
 
 function Signup() {
     return (

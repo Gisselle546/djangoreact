@@ -17,7 +17,7 @@ function QueryList({data, heading}:Props) {
     const object = data.map((product: any)=>{
         return (
             <>
-                <SliderCard data={product}/>
+                <SliderCard  key={product.id} data={product}/>
             </>
         )
     })    
