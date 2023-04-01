@@ -9,8 +9,8 @@ type Props = {
    stars?: any
 }
 //between the header add the stars rating
-function Accordion({ title, content }: Props) {
-    const [rate, setRate] = useState(3);
+function Accordion({ title, content, stars }: Props) {
+    const [rate, setRate] = useState(stars);
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleAccordion = () => {

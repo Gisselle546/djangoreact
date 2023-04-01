@@ -27,7 +27,7 @@ function ProductDetail() {
     const product = useAppSelector(filterProduct);
     const {addCart} = useStore();
     
-   
+   console.log(product);
 
     const Spacing = styled.div`
       margin-bottom: 4.5rem;
