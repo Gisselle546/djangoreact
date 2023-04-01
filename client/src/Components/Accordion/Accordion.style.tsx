@@ -34,6 +34,11 @@ export const Content = styled("div")<{isOpen: Boolean}>`
 `;
 
 
-export const Header = styled.h2`
-    color:  #a9a9a9;
+export const Header = styled.div`
+    display: flex;
+    width: 30%;
+    align-items: center;
+    justify-content: space-between;
+
+    
 `

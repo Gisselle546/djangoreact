@@ -71,6 +71,11 @@ cursor: pointer;
 font-size: 16px;
 text-align: center;
 
+ &:disabled{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+ }
 
 `;
 

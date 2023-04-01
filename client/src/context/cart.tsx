@@ -17,7 +17,7 @@ export function getStorageValue(key: any, defaultValue?:any) {
   
 
 const initialState = {
-    cart: getStorageValue("cart") || []
+    cart: getStorageValue("cart") || [ ]
 }
 
 interface Action {
@@ -30,6 +30,7 @@ interface State{
 }
 
 
+
 const reducer: Reducer<State, Action> = (state: State, action: Action) =>{
     
     switch(action.type){
@@ -37,7 +38,7 @@ const reducer: Reducer<State, Action> = (state: State, action: Action) =>{
             console.log(action.payload);
             const updatedCart = [...state.cart];
             const existingItem = updatedCart.find((cartItem: any) => cartItem.data.id === action.payload.data.id);
-            if (existingItem) {
+            if (existingItem && action.payload.detail!==null) {
               existingItem.quantity += action.payload.quantity;
             } else {
               updatedCart.push(action.payload);
@@ -50,7 +51,7 @@ const reducer: Reducer<State, Action> = (state: State, action: Action) =>{
         case ActionType.REMOVE:
             return {
                 ...state,
-                cart: state.cart.filter((item: any) => item.id !== action.payload.id),
+                cart: state.cart.filter((item: any) => item.data.id !== action.payload.data.id)
             };
         case ActionType.INCREMENT:
             return {

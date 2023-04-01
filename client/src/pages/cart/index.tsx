@@ -1,22 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { PageTemplate } from '@/templates/PageTemplate'
 import { ButtonContainer, CartHeaderItems, CartHeaderLength, CartItem, CartItems, CartProductItem, CartProductTotal, CartProductTotalHeader, CartWrapper, ItemImageContainer, MappedItemsContainer, Money, OrderItem, OrderItems, OrderWrapper, Submenu } from '@/styles/cart/index.style'
 import styled from 'styled-components';
 import { useStore } from '@/context/cart';
 
 
+
 function Cart() {
   
-  const {state, clearAll} = useStore();
+  const {state, clearAll, remove, increment, decrement} = useStore();
  
 
   const Spacing = styled.div`
     margin-bottom: 4.5rem;
   `;
-
-
+  
+  console.log(state)
+  
   const mappedItems = state.cart.map((item:any)=>{
-   
+    const leftButton = () => {
+      item.quantity===1?(remove(item)):(decrement(item))
+    }
+
+    const rightButton = () => {
+      if (item.quantity < item.data.inventory) {
+       increment(item)
+      }
+    }
+
     return(
       <MappedItemsContainer key={item.data.id}>
 
@@ -29,9 +40,9 @@ function Cart() {
         </div>
         <div style={{display: 'flex', alignItems:'center', border: '2px solid red'}}>
           <div style={{display: 'flex' }}>
-            <ButtonContainer>-</ButtonContainer>
+            <ButtonContainer onClick={leftButton}>-</ButtonContainer>
             <div style={{alignSelf:'center'}}>{item.quantity}</div>
-            <ButtonContainer>+</ButtonContainer>
+            <ButtonContainer onClick={rightButton}>+</ButtonContainer>
           </div>
         </div>
         <div style={{display: 'flex',alignItems:'center', flexDirection:'column', border:'2px solid blue', justifyContent:'center' }}>
@@ -39,7 +50,7 @@ function Cart() {
         </div>
       </MappedItemsContainer>
     )
-  });
+  })
     return (
       <PageTemplate>
           <Spacing/>

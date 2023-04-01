@@ -52,9 +52,11 @@ function ProductDetail() {
 
       const handleItem = () =>{
         let data = getItemBySize(selectedSize,product);
+       if(data!==null){
          const cart = {quantity, data: data, details:details}
         addCart(cart);
-        return data;
+       }
+        
       }
 
      
@@ -99,7 +101,7 @@ function ProductDetail() {
             <ProductBottom>
             <Spacing/>
             <ProductInfo>
-              <Accordion title={`Reviews (${product.review.length})`} content={product.review}/>
+              <Accordion title={`Reviews (${product.review.length}) `}  content={product.review}/>
               <Accordion title={"Details"} content={product.details}/>
               <Accordion title={"Description"} content={product.description}/>
               <Accordion title={"Highlights"} content={product.highlights}/>
