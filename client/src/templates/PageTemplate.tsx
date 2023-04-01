@@ -59,8 +59,3 @@ export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>
     )
 
 }
-
-/**
- * Fix all the page template
- * 
- */
