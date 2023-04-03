@@ -2,11 +2,12 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from product.views import ProductDetailView, ProductViewSet, TeamViewSet, SoccerPlayerViewSet
+from product.views import ProductDetailView, ProductViewSet, ReviewViewSet, TeamViewSet, SoccerPlayerViewSet
 from account.views import RegisterAccount, MyTokenObtainPairView
 
 router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet)
+router.register(r'product/(?P<product_id>[^/.]+)/reviews', ReviewViewSet, basename='product_reviews')
 router.register(r'players', SoccerPlayerViewSet)
 router.register(r'teams', TeamViewSet)
 

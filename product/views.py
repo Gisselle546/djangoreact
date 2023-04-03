@@ -1,7 +1,10 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, viewsets, filters, status
+from django.db.models import Avg
 from rest_framework.response import Response
-from .models import Team, Product, SoccerPlayer
-from .serializers import  ProductSerializer, TeamSerializer, SoccerPlayerSerializer
+from rest_framework.decorators import action
+from .models import Team, Product, SoccerPlayer, Review
+from .serializers import  ProductSerializer, TeamSerializer, SoccerPlayerSerializer, ReviewSerializer
 
     
     
@@ -60,3 +63,34 @@ class SoccerPlayerViewSet(viewsets.ModelViewSet):
     
     search_fields = ['first_name']
     ordering_fields = ['first_name']
+
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for creating and retrieving product reviews.
+    """
+    serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        """
+        Only retrieve reviews for the specified product.
+        """
+        product_id = self.kwargs['product_id']
+        return Review.objects.filter(product_id=product_id)
+
+    def perform_create(self, serializer):
+        """
+        Set the product and user fields when creating a new review.
+        """
+        product_id = self.kwargs['product_id']
+        product = get_object_or_404(Product, pk=product_id)
+        serializer.save(product=product, user=self.request.user)
+
+    @action(detail=True, methods=['get'])
+    def average_rating(self, request, product_id=None):
+        """
+        Return the average rating for the specified product.
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        average_rating = queryset.aggregate(Avg('rating'))['rating__avg']
+        return Response({'average_rating': average_rating})
