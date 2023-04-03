@@ -12,6 +12,10 @@ export const SliderContainer =  styled.div`
     &:hover{
         transform: scale(1.1);
     }
+    @media (max-width: 768px) {
+       padding: 0.5rem;
+      
+      }
 `;
 
 
@@ -20,6 +24,10 @@ export const ImageContainer =  styled('div')<{img: any}>`
     height: 30vh;
     width: 30vh;
     cursor: pointer;
+    @media (max-width: 768px) {
+        height: 7rem;
+        width: 7rem;
+      }
 `;
 
 
@@ -34,3 +42,11 @@ export const ButtonContainer = styled.button`
     border: none;
     color: #a9a9a9;
 `;
+
+export const Heading = styled.h4`
+
+@media (max-width: 768px) {
+    font-size: 0.5rem;
+  }
+
+`

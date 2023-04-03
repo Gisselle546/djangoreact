@@ -17,6 +17,9 @@ export const ProductSubContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     width: 100%;
+    @media (max-width: 768px) {
+        height: 24rem;
+     }
    
 
 `;
@@ -25,18 +28,27 @@ export const ProductDetails = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    @media (max-width: 768px) {
+       margin-right: 1rem;
+     }
 `
 
 export const ProductHeaders =  styled.div(
     ({ theme: {color, typography} }) => css`
-    font-size: ${typography.fontSize.heading3}
+    font-size: ${typography.fontSize.heading3};
+    @media (max-width: 768px) {
+        font-size: ${typography.fontSize.body};
+     }
     `
   )
 
   export const SubProductHeaders =  styled.div(
     ({ theme: {color, typography} }) => css`
     font-size: ${typography.fontSize.heading4};
-    font-weight: ${typography.fontWeight.bold}
+    font-weight: ${typography.fontWeight.bold};
+    @media (max-width: 768px) {
+        font-size: ${typography.fontSize.body};
+     }
     `
   )
 
@@ -63,6 +75,8 @@ export const ProductInfo = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
+   
+
 `;  
 
 

@@ -13,7 +13,7 @@ function Searchbar() {
   font-size: 1.5rem;
 
   @media (max-width: 768px) {
-    left:65%;
+    left:90%;
   }
 `;
 

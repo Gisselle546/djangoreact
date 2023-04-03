@@ -8,13 +8,20 @@ export const CartWrapper = styled.div(
     border: 2px solid ${color.sidebarHeader}
     height: 100vh;
     margin: 1rem;
+    @media (max-width: 768px) {
+       height: 100%;
+       flex-direction: column;
+       justify-content: space-between;
+    }
 `);
 
 export const CartProductItem = styled.div`
 border: 2px solid #c7ecee;
 height: 60vh;
 width: 70%;
-
+@media (max-width: 768px) {
+    width: 100%;
+ }
 
 `;
 
@@ -26,6 +33,10 @@ align-items: center;
 background: ${color.black};
 border-radius: 5px;
 width: 25%;
+@media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+ }
 `);
 
 export const CartsItems = styled.div`
@@ -78,13 +89,18 @@ text-align: center;
     color: #666666;
  }
 
+ 
+
 `;
 
 export const MappedItemsContainer = styled.div`
 display: flex;
-border: 2px solid black;
 justify-content: space-around;
 overflow: scroll;
+@media (max-width: 768px) {
+   padding: 0.2rem; 
+    
+ }
 
 `;
 
@@ -121,6 +137,9 @@ export const OrderItems = styled.div`
     margin-left: 2rem;
     justify-content: space-between;
     height: 15rem;
+    @media (max-width: 768px) {
+        margin-left: 1rem;
+     }
 `
 
 
@@ -150,12 +169,35 @@ export const ItemDetails = styled.div`
     flex-direction: column; 
     height: 5rem; 
     justify-content: space-around;
+    @media (max-width: 768px) {
+        margin-left: 0.5rem; 
+        
+     }
 
+`
+
+export const Item = styled.div`
+
+@media (max-width: 768px) {
+    font-size: 0.5rem;
+    
+ }
+
+`
+export const ItemSize = styled.div`
+@media (max-width: 768px) {
+    font-size: 0.3rem;
+    
+ }
 `
 
 export const QuantityWrapper = styled.div`
     display: flex; 
     align-items: center;
+    @media (max-width: 768px) {
+        width: 50%;
+        
+     }
 
 `;
 
@@ -164,5 +206,12 @@ export const PriceContainer = styled.div`
     align-items: center; 
     flex-direction: column; 
     justify-content: center;
+
+    @media (max-width: 768px) {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-right: 1rem;
+        
+     }
 
 `;

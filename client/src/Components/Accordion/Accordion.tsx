@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AiOutlineArrowDown, AiOutlineArrowUp,  } from 'react-icons/ai';
 import StarRating from '../StarRating/StarRating';
-import { AccordionHeader, AccordionWrapper, Content, Header } from './Accordion.style';
+import { AccordionHeader, AccordionWrapper, Content, Header, Innerheader } from './Accordion.style';
 
 type Props = {
    title: any;
@@ -23,7 +23,7 @@ function Accordion({ title, content, stars }: Props) {
     <AccordionWrapper>
         <AccordionHeader onClick={toggleAccordion}>
           
-        <Header> <h2 style={{color:'#a9a9a9'}}>{title}</h2>  {Array.isArray(content) ? (
+        <Header> <Innerheader>{title}</Innerheader>  {Array.isArray(content) ? (
             <StarRating ratingValue={rate} setRating={(ray) => setRate(ray)} />
           ) : typeof content === 'string' ? (
             <span></span>

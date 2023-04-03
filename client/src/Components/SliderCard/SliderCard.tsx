@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router, useRouter } from 'next/router';
-import { ButtonContainer, ImageContainer, SliderContainer } from './SliderCard.style';
+import { ButtonContainer, ImageContainer, SliderContainer, Heading } from './SliderCard.style';
 import { useAppDispatch } from '@/redux/hooks';
 import { filterProductMethod } from '@/redux/reducer/filterSlice';
 
@@ -26,7 +26,7 @@ function SliderCard({data}: Props) {
  return (
     <SliderContainer onClick={()=>handleClick()}>
         <ImageContainer img={primary_image}/>
-         {name.length> 42? name.substring(0, 40) : name}
+       {name.length> 41? name.substring(0, 40) : name}
        <ButtonContainer>Details</ButtonContainer>
     </SliderContainer>
   )

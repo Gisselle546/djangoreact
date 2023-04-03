@@ -19,7 +19,8 @@ const StyledIcon = styled(FiShoppingCart)`
   font-size: 1.5rem;
 
   @media (max-width: 768px) {
-    margin-top: 1.5rem;
+   font-size: 1rem;
+   margin-top: 0.2rem;
   }
 `;
 

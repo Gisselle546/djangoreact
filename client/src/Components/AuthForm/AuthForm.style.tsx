@@ -6,6 +6,7 @@ export const FormBackground = styled('div')<{img: any}>`
     justify-content: flex-end;
     height: 100vh;
     width: 100vw;
+   
 
 `
 
@@ -20,7 +21,12 @@ export const FormContainer = styled.div`
     width: 400px;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    @media (max-width: 768px) {
+        width: 100%;
+        height: 100%;
+    }
     
+   
 
 `
 
@@ -29,6 +35,7 @@ export const HeaderContainer = styled.div(
     display: flex;
     font-size: ${typography.fontSize.heading3};
     padding: 1.3rem;
+    
 `);
 
 
@@ -46,6 +53,12 @@ export const InputWrapper = styled.input(
         width: 300px;
         margin: 1.5rem;
         height: 3.5rem;
+        @media (max-width: 768px) {
+            width: 100%;
+            
+        }
+        
+       
 
 `);
 

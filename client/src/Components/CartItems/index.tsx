@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageTemplate } from '@/templates/PageTemplate'
-import { ButtonContainer, CartHeaderItems, CartHeaderLength, CartsItems, CartsItem, CartProductItem, CartProductTotal, CartProductTotalHeader, CartWrapper, ItemImageContainer, MappedItemsContainer, Money, OrderItem, OrderItems, OrderWrapper, Submenu, MappedWrapper, ItemDetails, QuantityWrapper, PriceContainer } from './index.style';
+import { ButtonContainer, CartHeaderItems, CartHeaderLength, CartsItems, CartsItem, CartProductItem, CartProductTotal, CartProductTotalHeader, CartWrapper, ItemImageContainer, MappedItemsContainer, Money, OrderItem, OrderItems, OrderWrapper, Submenu, MappedWrapper, ItemDetails, QuantityWrapper, PriceContainer, Item, ItemSize } from './index.style';
 import styled from 'styled-components';
 import { useStore } from '@/context/cart';
 
@@ -28,8 +28,8 @@ function CartItems() {
             <MappedWrapper>
                 <ItemImageContainer img={item.data.images[0].url}/>
                 <ItemDetails>
-                    <div>{item.details.name}</div>
-                    <div>Size: {item.data.size.size}</div>
+                    <Item>{item.details.name}</Item>
+                    <ItemSize>Size: {item.data.size.size}</ItemSize>
                 </ItemDetails>
 
             </MappedWrapper>

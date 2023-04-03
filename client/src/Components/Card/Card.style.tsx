@@ -10,6 +10,10 @@ export const CardContainer = styled.div`
     padding: 0.2rem;
     border-radius: 5px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    @media (max-width: 768px) {
+       height: 190px;
+       width: 190px;
+    }
 
 `;
 
@@ -25,3 +29,17 @@ export const BottomContainer = styled.div`
     align-items: center;
     
 `;
+
+export const MainHeading = styled.h1`
+@media (max-width: 768px) {
+   font-size: 0.9rem;
+ }
+`;
+
+
+export const SubHeading = styled.p`
+@media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+
+`

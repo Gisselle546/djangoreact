@@ -1,5 +1,5 @@
 import React from 'react'
-import { BottomContainer, CardContainer, ImageContainer } from './Card.style';
+import { BottomContainer, CardContainer, ImageContainer, MainHeading, SubHeading } from './Card.style';
 import router from 'next/router'
 import { filterMethod, filterValue } from '@/redux/reducer/filterSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -13,13 +13,14 @@ type Props = {
   logo_url: string;
   name: string;
   team_type: string;
+  primary_image?: string;
   
  }
 
 }
 
 function Card({data}:Props) {
-  const {logo_url, name, location, team_type} = data;
+  const {logo_url, name, location, team_type, primary_image} = data;
   const dispatch = useAppDispatch()
   const value = useAppSelector(filterValue)
   console.log(team_type)
@@ -35,10 +36,10 @@ function Card({data}:Props) {
   
   return (
     <CardContainer onClick={handleClick}>
-        <ImageContainer img={logo_url}/>
+        <ImageContainer img={logo_url|| primary_image}/>
         <BottomContainer>
-        <h1>{name}</h1>
-        <p>{location}</p>
+        <MainHeading>{name}</MainHeading>
+        <SubHeading>{location}</SubHeading>
         </BottomContainer>
     </CardContainer>
   )

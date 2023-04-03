@@ -4,6 +4,11 @@ import styled from 'styled-components';
     display: flex;
     padding: 1rem;
     border-radius: 5px;
+    @media (max-width: 768px) {
+      height:60%;
+    
+     
+   }
  `
 
 
@@ -35,6 +40,11 @@ export const Container = styled.div`
  export const BigContainer = styled.div`
    height: 400px;
    width: 400px;
+   @media (max-width: 768px) {
+      height: 150px;
+      width: 150px;
+     
+   }
 
  
  `

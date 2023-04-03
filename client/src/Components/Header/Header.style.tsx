@@ -9,6 +9,10 @@ export const HeaderContainer = styled.div(
     align-content: center;
     justify-content: space-around;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    @media screen and (max-width: 800px) {
+       height:3rem;
+      }
+    
 
 `);
 
@@ -21,9 +25,8 @@ export const LogoContainer = styled('div')<{img: any}>`
     cursor: pointer;
   
     @media screen and (max-width: 800px) {
-      width: 7%;
-      padding: 0;
-      opacity: 1;
+      width: 3rem;
+      height: 3rem;
     }
 `;
 
@@ -37,6 +40,9 @@ export const ListItem = styled.li(
    margin-left: 1.1rem;
    font-size: ${typography.fontSize.body};
    cursor: pointer;
+   @media screen and (max-width: 800px) {
+    font-size: 0.5rem;
+  }
 `);
 
 

@@ -17,6 +17,10 @@ export const PopularClubsHeading = styled.h1(
     align-self: center;
     margin-top: 5rem;
     width: 86%;
+
+    @media (max-width: 768px) {
+        font-size: ${typography.fontSize.heading3};
+      }
 `);
 
 export const CardListWrapper = styled.div`
@@ -25,5 +29,8 @@ export const CardListWrapper = styled.div`
     justify-content: space-around;
     align-content: space-evenly;
     height: 70rem;
+    @media (max-width: 768px) {
+        grid-template-columns: auto auto;
+    }
     
 `

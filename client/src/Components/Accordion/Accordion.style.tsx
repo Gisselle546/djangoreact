@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const AccordionWrapper = styled.div`
 display: flex;
@@ -11,6 +11,9 @@ margin-bottom: 1rem;
 border-radius: 0.5rem;
 overflow: scroll;
 transition: transform 0.3s ease-out;
+@media (max-width: 768px) {
+ width: 100%;
+}
 `;
 
 export const AccordionHeader = styled.div`
@@ -34,11 +37,25 @@ export const Content = styled("div")<{isOpen: Boolean}>`
 `;
 
 
-export const Header = styled.div`
+export const Header = styled.div(
+  ({ theme: {color, typography} }) => css`
     display: flex;
     width: 30%;
     align-items: center;
     justify-content: space-between;
 
+    @media (max-width: 768px) {
+      font-size: ${typography.fontSize.body};
+      width: 70%;
+     }
     
-`
+`)
+
+export const Innerheader = styled.h2(
+  ({ theme: {color, typography} }) => css`
+  color: #a9a9a9;
+  @media (max-width: 768px) {
+    font-size: ${typography.fontSize.body};
+    width: 70%;
+  }
+`)
