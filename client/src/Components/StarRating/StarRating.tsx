@@ -5,15 +5,16 @@ import styled from 'styled-components';
 type Props = {
     setRating(data: any): any
     ratingValue: any
+    changable: any
 }
 
 
-const StarRatingWrapper = styled.div`
+const StarRatingWrapper = styled.div<{changable: any}>`
   display: inline-block;
   .star {
     font-size: 1rem;
-    pointer-events: none;
-    cursor: none;
+    pointer-events: ${({ changable }) => (changable ? 'default' : 'none')};
+    cursor: ${({ changable }) => (changable ? 'pointer' : 'none')};
  
   }
   .star.gray {
@@ -24,7 +25,7 @@ const StarRatingWrapper = styled.div`
   }
 `;
 
-function StarRating({setRating, ratingValue}: Props) {
+function StarRating({setRating, ratingValue, changable}: Props) {
   
 
   const handleRatingClick = (event: any) => {
@@ -33,7 +34,7 @@ function StarRating({setRating, ratingValue}: Props) {
   };
 
   return (
-    <StarRatingWrapper>
+    <StarRatingWrapper changable={changable}>
       {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}

@@ -30,7 +30,7 @@ function ReviewForm() {
         <ReviewContainer>
             <ReviewHeader>Leave a Review</ReviewHeader>
             <InputWrapper type="text" name="title" value={formik.values.title} onChange={formik.handleChange} placeholder="Enter title"/>
-             Rating: <StarRating ratingValue={rating} setRating={(e)=>setRating(e)} />
+             Rating: <StarRating changable={true}ratingValue={rating} setRating={(e)=>setRating(e)} />
             <TextArea
                 name="comment"
                 value={formik.values.comment}

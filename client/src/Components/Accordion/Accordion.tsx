@@ -27,7 +27,7 @@ function Accordion({ title, content, stars, clicked }: Props) {
         <AccordionHeader onClick={toggleAccordion}>
           
         <Header> <Innerheader>{title}</Innerheader>  {Array.isArray(content) ? (
-            <StarRating ratingValue={rate} setRating={(ray) => setRate(ray)} />
+            <StarRating ratingValue={rate} changable={false} setRating={(ray) => setRate(ray)} />
           ) : typeof content === 'string' ? (
             <span></span>
           ) : null}
