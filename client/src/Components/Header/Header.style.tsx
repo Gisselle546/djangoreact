@@ -21,9 +21,9 @@ export const LogoContainer = styled('div')<{img: any}>`
     cursor: pointer;
   
     @media screen and (max-width: 800px) {
-      width: 50%;
+      width: 7%;
       padding: 0;
-      opacity: 0;
+      opacity: 1;
     }
 `;
 

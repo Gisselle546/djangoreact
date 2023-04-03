@@ -10,6 +10,9 @@ export const SideBarContainer = styled.div(
     z-index: 999;
     padding 0.4rem 1.5rem;
     width: 7rem;
+    @media screen and (max-width: 800px) {
+     display: none;
+    }
     `
   )
   

@@ -34,6 +34,10 @@ const SideBar = dynamic(()=> import('../Components/SideBar/SideBar'), {
 
 
 export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>{
+    let shouldRenderHeader;
+    if (typeof window !== "undefined") {
+      shouldRenderHeader = window.matchMedia('(max-width: 768px)').matches;
+    }
 
     switch(type){
         case 'home':
@@ -44,6 +48,7 @@ export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>
                     <SideBar/>
                 </SideBarWrapper>
                 <ChildrenWrapper>
+                {shouldRenderHeader && <Header />}
                     {children}
                 </ChildrenWrapper>
             </Container>

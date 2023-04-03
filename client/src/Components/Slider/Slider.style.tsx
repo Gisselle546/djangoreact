@@ -8,9 +8,9 @@ export const SliderWrapper = styled.div`
     align-content: center;
     overflow: hidden;
     margin: 1rem;
-    100vw;
+    max-width: 100%;
     overflow-x: hidden;
-   
+
 `
 
 
