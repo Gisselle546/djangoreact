@@ -30,7 +30,7 @@ const StyledIcon = styled(FiShoppingCart)`
          <LogoContainer img={logo.src} onClick={()=>router.push('/')}/>
          <ListItems>
             <ListItem onClick={()=>handleClick('footwear')}>Footwear</ListItem>
-            <ListItem>Players</ListItem>
+            <ListItem onClick={()=>handleClick('players')}>Players</ListItem>
             <ListItem onClick={()=>handleClick('clubs')}>Clubs</ListItem>
             <ListItem onClick={()=>handleClick('national-team')}>National Teams</ListItem>
          </ListItems>

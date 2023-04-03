@@ -3,6 +3,7 @@ import React, {useCallback, useEffect} from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { filterMethod, filterValue } from '@/redux/reducer/filterSlice'
 import CardList from '@/Components/CardList/CardList'
+import QueryList from '@/Components/QueryList/QueryList'
 
 function Players() {
     const dispatch = useAppDispatch()
@@ -19,7 +20,7 @@ function Players() {
     console.log(value);
   return (
     <PageTemplate>
-        players
+         players
     </PageTemplate>
   )
 }
