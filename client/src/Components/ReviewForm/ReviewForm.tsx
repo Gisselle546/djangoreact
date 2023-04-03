@@ -39,7 +39,7 @@ function ReviewForm() {
                 cols={50}
                 
                 />
-                <ButtonContainer>Add to Cart</ButtonContainer>
+                <ButtonContainer>Submit</ButtonContainer>
         </ReviewContainer>
 
   )

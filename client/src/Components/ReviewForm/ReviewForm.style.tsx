@@ -42,6 +42,10 @@ export const TextArea = styled.textarea(
   border: 2px solid ${color.sidebarHeader};
   border-radius: 4px;
   resize: none;
+  @media (max-width: 768px) {
+    width: 95%;
+    
+}
 `);
 
 export const ButtonContainer = styled.button`
