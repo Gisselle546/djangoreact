@@ -14,13 +14,16 @@ type Props = {
   name: string;
   team_type: string;
   primary_image?: string;
+  first_name?: string;
+  last_name?: string;
+  image_url?: string
   
  }
 
 }
 
 function Card({data}:Props) {
-  const {logo_url, name, location, team_type, primary_image} = data;
+  const {logo_url, name, location, team_type, primary_image, first_name, last_name, image_url} = data;
   const dispatch = useAppDispatch()
   const value = useAppSelector(filterValue)
   console.log(team_type)
@@ -36,10 +39,10 @@ function Card({data}:Props) {
   
   return (
     <CardContainer onClick={handleClick}>
-        <ImageContainer img={logo_url|| primary_image}/>
+        <ImageContainer img={logo_url|| primary_image|| image_url }/>
         <BottomContainer>
-        <MainHeading>{name}</MainHeading>
-        <SubHeading>{location}</SubHeading>
+        <MainHeading>{name? name : `${first_name} ${last_name}` }</MainHeading>
+        <SubHeading>{location? location: null}</SubHeading>
         </BottomContainer>
     </CardContainer>
   )

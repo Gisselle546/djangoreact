@@ -9,6 +9,9 @@ type Props = {
         name: string;
         primary_image: string
         product_id: any
+        image_url: any
+        first_name: any
+        last_name: any
     }
 }
 
@@ -16,7 +19,7 @@ type Props = {
 
 function SliderCard({data}: Props) {
  const router = useRouter();
- const { name, primary_image, product_id} = data;
+ const { name, primary_image, product_id, image_url, first_name, last_name} = data;
 
 
  const handleClick = () =>{
@@ -25,8 +28,8 @@ function SliderCard({data}: Props) {
 
  return (
     <SliderContainer onClick={()=>handleClick()}>
-        <ImageContainer img={primary_image}/>
-       {name.length> 41? name.substring(0, 40) : name}
+        <ImageContainer img={primary_image || image_url}/>
+      { name? name.length> 41? name.substring(0, 40) : name: `${first_name} ${last_name}` }
        <ButtonContainer>Details</ButtonContainer>
     </SliderContainer>
   )
