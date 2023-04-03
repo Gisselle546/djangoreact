@@ -135,6 +135,7 @@ function ProductDetail() {
             <BigSpacing/>
             <div id='product-review-form'>
               {user && <ReviewForm />}
+              
             </div>
             </ProductBottom>
           </ProductContainer>

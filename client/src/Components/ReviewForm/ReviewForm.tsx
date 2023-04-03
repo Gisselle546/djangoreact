@@ -1,13 +1,14 @@
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
-import React from 'react'
-import { InputWrapper, ReviewContainer, ReviewHeader, TextArea } from './ReviewForm.style';
+import React, { useState } from 'react'
+import { ButtonContainer, InputWrapper, ReviewContainer, ReviewHeader, TextArea } from './ReviewForm.style';
+import StarRating from '../StarRating/StarRating';
 
 
 function ReviewForm() {
     const router = useRouter();
-
+    const [rating, setRating] = useState()
 
     const formik = useFormik({
         initialValues: {
@@ -24,17 +25,21 @@ function ReviewForm() {
           console.log(values);
         },
       });
+      console.log(rating);
   return (
         <ReviewContainer>
             <ReviewHeader>Leave a Review</ReviewHeader>
-            <InputWrapper type="email" name="email" value={formik.values.title} onChange={formik.handleChange} placeholder="Enter Email Address"/>
+            <InputWrapper type="text" name="title" value={formik.values.title} onChange={formik.handleChange} placeholder="Enter title"/>
+             Rating: <StarRating ratingValue={rating} setRating={(e)=>setRating(e)} />
             <TextArea
+                name="comment"
                 value={formik.values.comment}
                 onChange={formik.handleChange}
                 rows={5} 
                 cols={50}
                 
                 />
+                <ButtonContainer>Add to Cart</ButtonContainer>
         </ReviewContainer>
 
   )

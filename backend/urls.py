@@ -7,7 +7,7 @@ from account.views import RegisterAccount, MyTokenObtainPairView
 
 router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet)
-router.register(r'product/(?P<product_id>[^/.]+)/reviews', ReviewViewSet, basename='product_reviews')
+router.register(r'products/(?P<product_id>[^/.]+)/reviews', ReviewViewSet, basename='product_reviews')
 router.register(r'players', SoccerPlayerViewSet)
 router.register(r'teams', TeamViewSet)
 

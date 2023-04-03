@@ -5,9 +5,9 @@ export const ReviewContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     padding: 1rem;
-    
+    height: 30rem;
 
 `;
 
@@ -43,3 +43,18 @@ export const TextArea = styled.textarea(
   border-radius: 4px;
   resize: none;
 `);
+
+export const ButtonContainer = styled.button`
+background-color: #c7ecee; 
+border: none;
+color: #a9a9a9;
+display: flex;
+padding: 1rem;
+text-decoration: none;
+text-transform: capitalize;
+cursor: pointer;
+font-size: 16px;
+text-align: center;
+
+
+`

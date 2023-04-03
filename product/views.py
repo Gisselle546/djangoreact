@@ -83,7 +83,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         Set the product and user fields when creating a new review.
         """
         product_id = self.kwargs['product_id']
-        product = get_object_or_404(Product, pk=product_id)
+        product = get_object_or_404(Product, product_id=product_id)
         serializer.save(product=product, user=self.request.user)
 
     @action(detail=True, methods=['get'])
