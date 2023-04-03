@@ -59,3 +59,12 @@ export const Innerheader = styled.h2(
     width: 70%;
   }
 `)
+
+export const Here = styled.span(
+  ({ theme: {color, typography} }) => css`
+    font-size: ${typography.fontSize.body};
+    cursor: pointer;
+    color: #c7ecee;
+    font-weight: ${typography.fontWeight.bold};
+
+`);

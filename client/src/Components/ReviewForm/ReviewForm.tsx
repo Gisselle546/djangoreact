@@ -2,7 +2,8 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import React from 'react'
-import { InputWrapper, ReviewContainer } from './ReviewForm.style';
+import { InputWrapper, ReviewContainer, ReviewHeader, TextArea } from './ReviewForm.style';
+
 
 function ReviewForm() {
     const router = useRouter();
@@ -25,8 +26,15 @@ function ReviewForm() {
       });
   return (
         <ReviewContainer>
+            <ReviewHeader>Leave a Review</ReviewHeader>
             <InputWrapper type="email" name="email" value={formik.values.title} onChange={formik.handleChange} placeholder="Enter Email Address"/>
-            <InputWrapper type="password" name="password" value={formik.values.comment} onChange={formik.handleChange}placeholder="Enter Password"/>
+            <TextArea
+                value={formik.values.comment}
+                onChange={formik.handleChange}
+                rows={5} 
+                cols={50}
+                
+                />
         </ReviewContainer>
 
   )

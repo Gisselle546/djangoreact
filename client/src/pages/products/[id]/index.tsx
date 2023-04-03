@@ -1,9 +1,10 @@
 import { PageTemplate } from '@/templates/PageTemplate'
 import { useRouter } from 'next/router'
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
 import {useStore} from '../../../context/cart';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { filterProduct, filterProductMethod } from '@/redux/reducer/filterSlice'
+import { tokenValue } from '@/redux/reducer/userSlice';
 import { ButtonContainer, ProductBottom, ProductContainer, ProductDetails, ProductDetailWrapper, ProductHeaders, ProductInfo, ProductSubContainer, SizeChart, SubProductHeaders } from './index.style'
 import ImageHandler from '@/Components/ImageHandler/ImageHandler'
 import SizeBox from '@/Components/SizeBox/SizeBox'
@@ -11,6 +12,8 @@ import SelectOption from '@/Components/SelectOption/SelectOption'
 import Accordion from '@/Components/Accordion/Accordion'
 import styled from 'styled-components'
 import {getItemBySize} from '../../../../utils/arr'
+import ReviewForm from '@/Components/ReviewForm/ReviewForm';
+
 
 type Props ={
   product : any,
@@ -25,14 +28,27 @@ function ProductDetail() {
     const { id } = router.query
     const dispatch = useAppDispatch();
     const product = useAppSelector(filterProduct);
+    const user = useAppSelector(tokenValue);
     const {addCart} = useStore();
+
+    useEffect(() => {
+      const hash = router.asPath.split('#')[1];
+      if (hash) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }, [router.asPath]);
     
-   console.log(product);
 
     const Spacing = styled.div`
       margin-bottom: 4.5rem;
     `
 
+    const BigSpacing = styled.div`
+    margin-bottom: 7.5rem;
+  `
 
     const fetchProductDetails = useCallback(() => {
         dispatch(filterProductMethod({ filter_type: 'products', product_id: id }))
@@ -41,6 +57,17 @@ function ProductDetail() {
       useEffect(() => {
         fetchProductDetails()
       }, [fetchProductDetails])
+
+      const clickHandler = () => {
+        if (user) {
+          // Navigate to the element with the ID of `product-review-form`
+          console.log('hi')
+          router.push(`/products/${id}#product-review-form`, undefined, { scroll: true });
+        } else {
+          // Redirect to the sign-in page if the user is not logged in
+          router.push('/signin');
+        }
+      };
     
       if(!product){
         return <div>....</div>
@@ -49,6 +76,7 @@ function ProductDetail() {
     function Product({product, details}: any){
       const [quantity, setQuanity] = useState(1);
       const [selectedSize, setSelectedSize] = useState('');
+      
 
       const handleItem = () =>{
         let data = getItemBySize(selectedSize,product);
@@ -59,6 +87,7 @@ function ProductDetail() {
         
       }
 
+
      
      
 
@@ -66,14 +95,11 @@ function ProductDetail() {
         setSelectedSize(size);
       };
 
-      
-
-      console.log(product);
-     
-       const handleClick = () =>{
+      const handleClick = () =>{
 
         window.location.href="https://soccer.com/content/size-chart"
       }
+
 
       return(
         <ProductSubContainer>
@@ -101,11 +127,15 @@ function ProductDetail() {
             <ProductBottom>
             <Spacing/>
             <ProductInfo>
-              <Accordion title={`Reviews (${product.review.length}) `}  content={product.review}/>
+              <Accordion title={`Reviews (${product.review.length}) `}  content={product.review} clicked={clickHandler}/>
               <Accordion title={"Details"} content={product.details}/>
               <Accordion title={"Description"} content={product.description}/>
               <Accordion title={"Highlights"} content={product.highlights}/>
             </ProductInfo>
+            <BigSpacing/>
+            <div id='product-review-form'>
+              {user && <ReviewForm />}
+            </div>
             </ProductBottom>
           </ProductContainer>
         </PageTemplate>
