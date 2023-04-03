@@ -1,16 +1,16 @@
 import { PageTemplate } from '@/templates/PageTemplate'
 import { useRouter } from 'next/router'
 import React, {useCallback, useEffect, useState} from 'react'
-import {useStore} from '../../context/cart';
+import {useStore} from '../../../context/cart';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { filterProduct, filterProductMethod } from '@/redux/reducer/filterSlice'
-import { ButtonContainer, ProductBottom, ProductContainer, ProductDetails, ProductDetailWrapper, ProductHeaders, ProductInfo, ProductSubContainer, SizeChart, SubProductHeaders } from './[id].style'
+import { ButtonContainer, ProductBottom, ProductContainer, ProductDetails, ProductDetailWrapper, ProductHeaders, ProductInfo, ProductSubContainer, SizeChart, SubProductHeaders } from './index.style'
 import ImageHandler from '@/Components/ImageHandler/ImageHandler'
 import SizeBox from '@/Components/SizeBox/SizeBox'
 import SelectOption from '@/Components/SelectOption/SelectOption'
 import Accordion from '@/Components/Accordion/Accordion'
 import styled from 'styled-components'
-import {getItemBySize} from '../../../utils/arr'
+import {getItemBySize} from '../../../../utils/arr'
 
 type Props ={
   product : any,

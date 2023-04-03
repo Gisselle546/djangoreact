@@ -40,7 +40,7 @@ function Accordion({ title, content, stars }: Props) {
                         <div key={item.id}>{item.name}</div>
                       ))
                     ) : (
-                      <div>No Review yet</div>)
+                      <div>Be the first to review this product <>Here!</></div>)
                     ) :typeof content === 'string' ? (
                       <span>{content}</span>
                     ) : null
