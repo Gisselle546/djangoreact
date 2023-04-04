@@ -190,4 +190,4 @@ class Review(models.Model):
         """
         String Method return the rating for the product 
         """
-        return self.rating
+        return f'Review {self.id} for {self.product.name} by {self.name}: {self.rating}'

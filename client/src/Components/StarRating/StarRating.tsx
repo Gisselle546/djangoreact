@@ -6,6 +6,8 @@ type Props = {
     setRating(data: any): any
     ratingValue: any
     changable: any
+    onChange?: any
+    name?: any
 }
 
 

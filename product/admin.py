@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Product, ProductImage, ProductOption, ProductColor, ProductSize, Brand, Category, ProductVariant, Team, SoccerPlayer, Tag, SoccerJersey, SoccerPlayerJersey
+from .models import Product, ProductImage, ProductOption, ProductColor, ProductSize, Brand, Category, ProductVariant, Team, SoccerPlayer, Tag, SoccerJersey, SoccerPlayerJersey, Review
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -155,3 +155,19 @@ class CategoryAdmin(admin.ModelAdmin):
     Display list of categories
     """
     list_display = ['name', 'slug']
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    """
+    Display list of reviews
+    """
+    list_display = ['name', 'rating', 'comment', 'get_product_name']
+
+
+    def get_product_name(self, obj):
+        """
+        Return the name of the product associated with the review
+        """
+        return obj.product.name
+    
+    get_product_name.short_description = 'Product Name'

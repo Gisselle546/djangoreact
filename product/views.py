@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, viewsets, filters, status
+from rest_framework import generics, viewsets, filters, status, serializers
 from django.db.models import Avg
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -36,6 +36,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(soccerplayerjersey__jersey__team__name__icontains=query)
         if player_first_name is not None and player_last_name is not None:
             queryset = queryset.filter(soccerplayerjersey__player__first_name__icontains=player_first_name, soccerplayerjersey__player__last_name__icontains=player_last_name)
+        
         return queryset
 
 
@@ -78,8 +79,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
         """
         Only retrieve reviews for the specified product.
         """
-        product_id = self.kwargs['product_id']
-        return Review.objects.filter(product_id=product_id)
+        product_id = self.kwargs.get('product_id')
+        return Review.objects.filter(product__product_id=product_id)
 
     def perform_create(self, serializer):
         """
@@ -87,7 +88,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
         """
         product_id = self.kwargs['product_id']
         product = get_object_or_404(Product, product_id=product_id)
-        serializer.save(product=product, user=self.request.user)
+        user = self.request.user
+        if Review.objects.filter(product=product, user=user).exists():
+            raise serializers.ValidationError("You have already reviewed this product.")
+        serializer.save(product=product, user=user)
 
     @action(detail=True, methods=['get'])
     def average_rating(self, request, product_id=None):

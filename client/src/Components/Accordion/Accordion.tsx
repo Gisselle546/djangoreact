@@ -40,7 +40,10 @@ function Accordion({ title, content, stars, clicked }: Props) {
                    (
                     content.length > 0 ? (
                       content.map((item: any) => (
-                        <div key={item.id}>{item.name}</div>
+                        <div key={item.id}>
+                          {item.name} - <StarRating ratingValue={item.rating} changable={false} setRating={(ray) => setRate(ray)} />
+                          <div> {item.comment} </div>
+                        </div>
                       ))
                     ) : (
                       <div>Be the first to review this product <Here onClick={clickHandle}>Here!</Here></div>)

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 import {useStore} from '../../../context/cart';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { filterProduct, filterProductMethod } from '@/redux/reducer/filterSlice'
+import { filterProduct, filterProductMethod, getAvgReview, avgReview } from '@/redux/reducer/filterSlice'
 import { tokenValue } from '@/redux/reducer/userSlice';
 import { ButtonContainer, ProductBottom, ProductContainer, ProductDetails, ProductDetailWrapper, ProductHeaders, ProductInfo, ProductSubContainer, SizeChart, SubProductHeaders } from './index.style'
 import ImageHandler from '@/Components/ImageHandler/ImageHandler'
@@ -28,8 +28,11 @@ function ProductDetail() {
     const { id } = router.query
     const dispatch = useAppDispatch();
     const product = useAppSelector(filterProduct);
+    const stars = useAppSelector(avgReview);
     const user = useAppSelector(tokenValue);
     const {addCart} = useStore();
+
+    console.log(stars, 'stars')
 
     useEffect(() => {
       const hash = router.asPath.split('#')[1];
@@ -52,6 +55,7 @@ function ProductDetail() {
 
     const fetchProductDetails = useCallback(() => {
         dispatch(filterProductMethod({ filter_type: 'products', product_id: id }))
+        dispatch(getAvgReview({ filter_type: 'products', product_id: id }))
       }, [dispatch, id])
     
       useEffect(() => {
@@ -61,7 +65,6 @@ function ProductDetail() {
       const clickHandler = () => {
         if (user) {
           // Navigate to the element with the ID of `product-review-form`
-          console.log('hi')
           router.push(`/products/${id}#product-review-form`, undefined, { scroll: true });
         } else {
           // Redirect to the sign-in page if the user is not logged in
@@ -88,7 +91,7 @@ function ProductDetail() {
       }
 
 
-     
+   
      
 
       const handleSizeChange = (size: any) => {
@@ -127,14 +130,14 @@ function ProductDetail() {
             <ProductBottom>
             <Spacing/>
             <ProductInfo>
-              <Accordion title={`Reviews (${product.review.length}) `}  content={product.review} clicked={clickHandler}/>
+              <Accordion title={`Reviews (${product.review.length}) `} stars={stars.average_rating}content={product.review} clicked={clickHandler}/>
               <Accordion title={"Details"} content={product.details}/>
               <Accordion title={"Description"} content={product.description}/>
               <Accordion title={"Highlights"} content={product.highlights}/>
             </ProductInfo>
             <BigSpacing/>
             <div id='product-review-form'>
-              {user && <ReviewForm />}
+              {user && <ReviewForm product_id={id}/>}
               
             </div>
             </ProductBottom>

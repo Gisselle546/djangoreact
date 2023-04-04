@@ -15,6 +15,7 @@ urlpatterns = [
      path('admin/', admin.site.urls),
      path('login/',  MyTokenObtainPairView.as_view(), name='user_login'),
      path('products/<str:product_id>/', ProductDetailView.as_view(), name='product-detail'),
+     path('products/<str:product_id>/reviews/average_rating/', ReviewViewSet.as_view({'get': 'average_rating'}), name='review_average_rating'),
      path('register/', RegisterAccount.as_view(), name='user_create'),
      path('', include(router.urls)),
 ]
