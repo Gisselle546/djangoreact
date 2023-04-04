@@ -18,5 +18,8 @@ export const SearchInput = styled.input`
     position: relative;
     border-radius: 5px;
     border:2px solid ${({theme: {color} }) => (color.sidebarBackground)};
+    @media (max-width: 768px) {
+        min-width: 20rem;
+     }
 
 `;

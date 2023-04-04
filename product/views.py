@@ -25,6 +25,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         tag_name = self.request.query_params.get('tag', None)
         soccer_player_jer = self.request.query_params.get('playerjersey', None)
         query = self.request.query_params.get('q')
+        player_first_name = self.request.query_params.get('player_first_name', None)
+        player_last_name = self.request.query_params.get('player_last_name', None)
         
         if tag_name is not None:
             queryset = queryset.filter(tags__name=tag_name)
@@ -32,7 +34,8 @@ class ProductViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(soccerplayerjersey__number__isnull=False)
         if query is not None:
             queryset = queryset.filter(soccerplayerjersey__jersey__team__name__icontains=query)
-        
+        if player_first_name is not None and player_last_name is not None:
+            queryset = queryset.filter(soccerplayerjersey__player__first_name__icontains=player_first_name, soccerplayerjersey__player__last_name__icontains=player_last_name)
         return queryset
 
 

@@ -29,7 +29,7 @@ function SliderCard({data}: Props) {
  return (
     <SliderContainer onClick={()=>handleClick()}>
         <ImageContainer img={primary_image || image_url}/>
-      { name? name.length> 41? name.substring(0, 40) : name: `${first_name} ${last_name}` }
+        <Heading>{ name? name.length> 41? name.substring(0, 40) : name: `${first_name} ${last_name}` }</Heading>
        <ButtonContainer>Details</ButtonContainer>
     </SliderContainer>
   )

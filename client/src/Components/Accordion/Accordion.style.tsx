@@ -9,7 +9,7 @@ min-height: 3rem;
 margin: 0 auto;
 margin-bottom: 1rem;
 border-radius: 0.5rem;
-overflow: scroll;
+box-sizing: border-box;
 transition: transform 0.3s ease-out;
 @media (max-width: 768px) {
  width: 100%;
@@ -20,19 +20,22 @@ export const AccordionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 9px;
   cursor: pointer; 
-  height: 4rem;
+  height: 5rem;
+  overflow-x: scroll;
   width: 100%;
+  
 `;
 
 
 export const Content = styled("div")<{isOpen: Boolean}>`
   display: ${(props: any) => props.isOpen ? 'block' : 'none'};
   max-height: ${(props: any) => props.isOpen ? '100%' : '0'};
-  overflow: scroll;
   transition: max-height 0.3s ease-out;
   background-color:  #FFFFFF;
+  overflow-x: scroll;
+  overscroll-behavior-y: auto;
   padding: 1.5rem;
 `;
 
@@ -43,7 +46,7 @@ export const Header = styled.div(
     width: 30%;
     align-items: center;
     justify-content: space-between;
-
+    
     @media (max-width: 768px) {
       font-size: ${typography.fontSize.body};
       width: 70%;

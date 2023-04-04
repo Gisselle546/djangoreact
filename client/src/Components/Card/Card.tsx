@@ -30,10 +30,15 @@ function Card({data}:Props) {
 
   const handleClick = () =>{
 
+    if(first_name!==undefined){
+      router.push(`/players/?first_name=${first_name}`)
+      
+    }else{
     const team = team_type==='CLUB'? 'clubs' : 'national'
 
     router.push(`/clubs/${team}?query=${name}`)
     dispatch(filterMethod({filter_type:'products', team_type:'q', club: name}))
+    }
    }
 
   
