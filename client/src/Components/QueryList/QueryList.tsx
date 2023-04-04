@@ -13,8 +13,9 @@ function QueryList({data, heading}:Props) {
     if(!data){
         return <div>....</div>
     }
+    console.log(data);
 
-    const object = data.map((product: any)=>{
+    const object = data?.map((product: any)=>{
         return (
             <>
                 <SliderCard  key={product.id} data={product}/>

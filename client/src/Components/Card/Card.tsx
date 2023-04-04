@@ -31,7 +31,7 @@ function Card({data}:Props) {
   const handleClick = () =>{
 
     if(first_name!==undefined){
-      router.push(`/players/?first_name=${first_name}`)
+      router.push(`/players/${first_name}?last_name=${last_name}`);
       
     }else{
     const team = team_type==='CLUB'? 'clubs' : 'national'

@@ -10,6 +10,7 @@ function NationalQuery() {
     const value = useAppSelector(filterValue)
     const router = useRouter();
     const { query }= router.query;
+
   return (
     <PageTemplate>
       <QueryList  data={value} heading={`${query}`}/>

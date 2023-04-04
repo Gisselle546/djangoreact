@@ -4,10 +4,13 @@ import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 import { filter } from '../action/filter';
 import { getProduct } from '../action/getProduct';
+import { playerquery } from '../action/playerquery';
 
 export interface FilterState{
     filter_type: string;
     team_type: string;
+    player_first_name: string;
+    player_last_name: string;
     club: string;
     error?: null | any;
     status: 'idle' | 'loading' | 'failed'
@@ -22,6 +25,8 @@ const initialState: FilterState = {
     team_type: '',
     club: '',
     status: 'idle',
+    player_first_name: '',
+    player_last_name:  '',
     error: null,
     filter_data_general: null,
     filter_data_player: null,
@@ -65,6 +70,19 @@ export const filterProductMethod = createAsyncThunk(
     }
 )
 
+export const filterPlayerQuery = createAsyncThunk(
+    'action/playerquery',
+    async({filter_type, player_first_name, player_last_name }:{filter_type: string, player_first_name: string, player_last_name: string }, {rejectWithValue})=> {
+        try{
+            const response = await playerquery({filter_type, player_first_name, player_last_name})
+            console.log(response.data);
+            return response.data
+        }catch(error){
+            return rejectWithValue(error)
+        }
+    }
+)
+
 
 export const filterSlice = createSlice({
     name: 'filter',
@@ -94,6 +112,14 @@ export const filterSlice = createSlice({
             .addCase(filterProductMethod.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.filter_product = action.payload
+            })
+            builder
+            .addCase(filterPlayerQuery.pending, (state)=>{
+                state.status = 'loading';
+            })
+            .addCase(filterPlayerQuery.fulfilled, (state, action)=>{
+                state.status = 'idle';
+                state.filter_data_player = action.payload
             })
     }
 })
