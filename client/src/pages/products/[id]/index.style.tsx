@@ -82,7 +82,7 @@ export const ProductInfo = styled.div`
 
 export const ProductBottom= styled.div`
 height: 50vh;
-overflow: scroll;
+overflow: auto;
 `;
 
 export const SizeChart = styled.p`

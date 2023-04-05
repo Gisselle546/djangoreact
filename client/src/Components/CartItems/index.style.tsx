@@ -96,7 +96,7 @@ text-align: center;
 export const MappedItemsContainer = styled.div`
 display: flex;
 justify-content: space-around;
-overflow: scroll;
+overflow: auto;
 @media (max-width: 768px) {
    padding: 0.2rem; 
     

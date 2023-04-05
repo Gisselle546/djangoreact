@@ -3,8 +3,8 @@ import background from '../../assets/images/signbackground.jpeg';
 import { FormBackground, FormBody, FormButton, FormContainer, HeaderContainer, InputWrapper } from './AuthForm.style';
 import {BsFillPersonFill } from 'react-icons/bs'
 import { useRouter } from 'next/router';
-import { useAppDispatch } from  '../../redux/hooks';
-import { registerUser, loginUser } from '@/redux/reducer/userSlice';
+import { useAppDispatch, useAppSelector } from  '../../redux/hooks';
+import { registerUser, loginUser, error } from '@/redux/reducer/userSlice';
 
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
@@ -19,6 +19,8 @@ function AuthForm({type}: Props) {
   const link = type==='Sign In'? '/signup' : '/signin';
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const errorValue = useAppSelector(error)
+
  
 
 
@@ -55,8 +57,11 @@ function AuthForm({type}: Props) {
           </HeaderContainer>
          
           <FormBody> 
+            
             <InputWrapper type="email" name="email" value={formik.values.email} onChange={formik.handleChange} placeholder="Enter Email Address"/>
+            {formik.errors.email || errorValue? <div>{formik.errors.email}</div> : null}
             <InputWrapper type="password" name="password" value={formik.values.password} onChange={formik.handleChange}placeholder="Enter Password"/>
+            {formik.errors.password || errorValue? <div>{formik.errors.password}</div> : null}
           </FormBody>
           <FormButton type='submit'>{type} </FormButton>
           <div style={{cursor:'pointer'}} onClick={()=>handleClick(link)}>{register}&rarr;</div>

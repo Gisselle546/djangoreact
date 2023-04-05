@@ -49,4 +49,4 @@ export function setStorageLocal(key: string, defaultValue: any) {
     localStorage.setItem(key, JSON.stringify(defaultValue));
  
     }
-  }
+}

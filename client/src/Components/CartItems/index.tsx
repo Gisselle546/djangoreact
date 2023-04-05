@@ -3,17 +3,20 @@ import { PageTemplate } from '@/templates/PageTemplate'
 import { ButtonContainer, CartHeaderItems, CartHeaderLength, CartsItems, CartsItem, CartProductItem, CartProductTotal, CartProductTotalHeader, CartWrapper, ItemImageContainer, MappedItemsContainer, Money, OrderItem, OrderItems, OrderWrapper, Submenu, MappedWrapper, ItemDetails, QuantityWrapper, PriceContainer, Item, ItemSize } from './index.style';
 import styled from 'styled-components';
 import { useStore } from '@/context/cart';
+import { useRouter } from 'next/router';
 
 
 function CartItems() {
 
  const {state, clearAll, remove, increment, decrement} = useStore();
+ const router = useRouter()
 
  const Spacing = styled.div`
     margin-bottom: 4.5rem;
   `;
 
   const mappedItems = state.cart.map((item:any)=>{
+   
     const leftButton = () => {
       item.quantity===1?(remove(item)):(decrement(item))
     }
@@ -26,7 +29,7 @@ function CartItems() {
     return(
         <MappedItemsContainer key={item.data.id}>
             <MappedWrapper>
-                <ItemImageContainer img={item.data.images[0].url}/>
+                <ItemImageContainer onClick={()=>router.push(`/products/${item.details.product_id}`)} img={item.data.images[0].url}/>
                 <ItemDetails>
                     <Item>{item.details.name}</Item>
                     <ItemSize>Size: {item.data.size.size}</ItemSize>
@@ -87,7 +90,7 @@ function CartItems() {
                 </CartProductTotalHeader>
                  <Submenu>{state.cart.length} items</Submenu>
                  <OrderItems>
-                  <OrderWrapper><OrderItem>Order Subtotal</OrderItem><Money>0.00</Money></OrderWrapper>
+                  <OrderWrapper><OrderItem>Order Subtotal</OrderItem><Money>${state.cart.reduce((acc:any, item: any) => acc + item.quantity * item.details.price, 0).toFixed(2)}</Money></OrderWrapper>
                   <OrderWrapper><OrderItem>Shipping</OrderItem><Money>0.00</Money></OrderWrapper>
                   <OrderWrapper><OrderItem>TAX</OrderItem><Money>0.00</Money></OrderWrapper>
                   <OrderWrapper><OrderItem>Total</OrderItem><Money>0.00</Money></OrderWrapper>

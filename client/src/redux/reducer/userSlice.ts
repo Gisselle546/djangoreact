@@ -58,6 +58,9 @@ const initialState: AuthState = {
             state.status = 'idle';
             state.token  = action.payload;
           })
+          .addCase(registerUser.rejected, (state, action) => {
+            state.error = action.payload
+          })
           .addCase(loginUser.pending, (state)=>{
             state.status = 'loading';
           })
@@ -65,9 +68,13 @@ const initialState: AuthState = {
             state.status = 'idle';
             state.token  = action.payload;
           })
+          .addCase(loginUser.rejected, (state, action) => {
+            state.error = action.payload
+          })
           
     }
   })
 
   export const tokenValue = (state: AppState) => state.auth.token
+  export const error = (state: AppState) => state.auth.error
   export default userSlice.reducer

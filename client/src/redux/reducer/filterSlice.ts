@@ -14,7 +14,7 @@ export interface FilterState{
     player_first_name: string;
     player_last_name: string;
     club: string;
-    error?: null | any;
+    error?: {} | any;
     status: 'idle' | 'loading' | 'failed'
     filter_data_general: [] | any
     filter_data_player: [] | any
@@ -35,7 +35,8 @@ const initialState: FilterState = {
     filter_data_general: null,
     filter_data_player: null,
     filter_product: null,
-    avg_review_rating: null
+    avg_review_rating: null,
+   
     
 }
 
@@ -126,7 +127,9 @@ export const filterSlice = createSlice({
                 state.status = 'idle';
                 state.filter_data_general = action.payload
             })
-        builder
+            .addCase(filterMethod.rejected, (state, action) => {
+                state.error = action.payload
+            })
             .addCase(filterMethodPlayer.pending, (state)=>{
                 state.status = 'loading';
             })
@@ -134,7 +137,9 @@ export const filterSlice = createSlice({
                 state.status = 'idle';
                 state.filter_data_player = action.payload
             })
-        builder
+            .addCase(filterMethodPlayer.rejected, (state, action) => {
+                state.error = action.payload
+            })
             .addCase(filterProductMethod.pending, (state)=>{
                 state.status = 'loading';
             })
@@ -142,7 +147,9 @@ export const filterSlice = createSlice({
                 state.status = 'idle';
                 state.filter_product = action.payload
             })
-            builder
+            .addCase(filterProductMethod.rejected, (state, action) => {
+                state.error = action.payload
+            })
             .addCase(filterPlayerQuery.pending, (state)=>{
                 state.status = 'loading';
             })
@@ -150,13 +157,18 @@ export const filterSlice = createSlice({
                 state.status = 'idle';
                 state.filter_data_player = action.payload
             })
-            builder
+            .addCase(filterPlayerQuery.rejected, (state, action) => {
+                state.error = action.payload
+            })
             .addCase(getAvgReview.pending, (state)=>{
                 state.status = 'loading';
             })
             .addCase(getAvgReview.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.avg_review_rating = action.payload
+            })
+            .addCase(getAvgReview.rejected, (state, action) => {
+                state.error = action.payload
             })
    
     }
@@ -166,4 +178,5 @@ export const filterValue = (state: AppState) => state.filter.filter_data_general
 export const filterPlayer =(state: AppState) => state.filter.filter_data_player
 export const filterProduct = (state: AppState) => state.filter.filter_product
 export const avgReview = (state: AppState) => state.filter.avg_review_rating
+export const error = (state: AppState) => state.filter.error
 export default filterSlice.reducer

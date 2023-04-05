@@ -23,7 +23,7 @@ export const AccordionHeader = styled.div`
   padding: 9px;
   cursor: pointer; 
   height: 5rem;
-  overflow-x: scroll;
+  overflow-x: auto;
   width: 100%;
   
 `;
@@ -34,7 +34,7 @@ export const Content = styled("div")<{isOpen: Boolean}>`
   max-height: ${(props: any) => props.isOpen ? '100%' : '0'};
   transition: max-height 0.3s ease-out;
   background-color:  #FFFFFF;
-  overflow-x: scroll;
+  overflow-x: auto;
   overscroll-behavior-y: auto;
   padding: 1.5rem;
 `;

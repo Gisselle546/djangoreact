@@ -83,7 +83,7 @@ export const MappedItemsContainer = styled.div`
 display: flex;
 border: 2px solid black;
 justify-content: space-around;
-overflow: scroll;
+overflow: auto;
 
 `
 
