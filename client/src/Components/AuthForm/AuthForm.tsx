@@ -43,7 +43,7 @@ function AuthForm({type}: Props) {
     onSubmit: async values => {
       const auth: any  = type==='Sign In'?  loginUser(values) : registerUser(values) 
       dispatch(auth)
-      router.push('/');
+      router.back();
     },
   });
 

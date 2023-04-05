@@ -20,10 +20,11 @@ export const AccordionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px;
+  padding: 5px;
   cursor: pointer; 
   height: 5rem;
   overflow-x: auto;
+  overflow: auto;
   width: 100%;
   
 `;
@@ -35,7 +36,7 @@ export const Content = styled("div")<{isOpen: Boolean}>`
   transition: max-height 0.3s ease-out;
   background-color:  #FFFFFF;
   overflow-x: auto;
-  overscroll-behavior-y: auto;
+  overflow: auto;
   padding: 1.5rem;
 `;
 

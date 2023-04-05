@@ -97,6 +97,9 @@ function CartItems() {
                  </OrderItems>
               </CartProductTotal>                        
             </CartWrapper>
+            <div style={{display: 'flex', justifyContent: 'flex-end', marginRight: '2rem'}}>
+            <ButtonContainer onClick={()=>router.push('/checkout')}>Checkout</ButtonContainer>
+            </div>
     </PageTemplate>
   )
 }
