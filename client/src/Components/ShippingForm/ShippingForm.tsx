@@ -1,20 +1,24 @@
 import React, {useState} from 'react'
 import {useFormik} from 'formik';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import * as Yup from 'yup';
 import { FormBody, FormButton, FormContainer, HeaderContainer, InputWrapper, StyledSelect } from './ShippingForm.style';
+import { shippingdetails } from '@/redux/reducer/orderSlice';
+
 
 type Props = {
     onShipping: any
 }
 
 function ShippingForm({onShipping}: Props) {
-
+    const dispatch = useAppDispatch();
+  
+  
     const formik = useFormik({
         initialValues: {
           address: '',
           city: '',
           postalCode:'',
-          country:'USA'
         },
         validationSchema: Yup.object({
             address: Yup.string()
@@ -26,13 +30,15 @@ function ShippingForm({onShipping}: Props) {
             
         }),
         onSubmit: async values => {
-          console.log(values);
+          dispatch(shippingdetails(values))
+          onShipping();
         },
       });
 
 
   return (
     <FormContainer>
+           <form  style={{border:'0', margin:'0', padding:'0'}} onSubmit={formik.handleSubmit}>
             <FormBody>
                 <HeaderContainer> Shipping</HeaderContainer>
                 <InputWrapper type="text" name="address" value={formik.values.address} onChange={formik.handleChange} placeholder="Enter address"/>
@@ -46,7 +52,7 @@ function ShippingForm({onShipping}: Props) {
                 </StyledSelect>
                 <FormButton type="submit">Next&rarr; </FormButton>
             </FormBody>
-           
+           </form>
     </FormContainer>
   )
 }

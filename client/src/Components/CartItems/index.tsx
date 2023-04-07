@@ -6,6 +6,7 @@ import { useStore } from '@/context/cart';
 import { useRouter } from 'next/router';
 
 
+
 function CartItems() {
 
  const {state, clearAll, remove, increment, decrement} = useStore();

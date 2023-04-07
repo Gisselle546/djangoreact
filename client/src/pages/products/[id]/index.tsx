@@ -13,15 +13,13 @@ import Accordion from '@/Components/Accordion/Accordion'
 import styled from 'styled-components'
 import {getItemBySize} from '../../../../utils/arr'
 import ReviewForm from '@/Components/ReviewForm/ReviewForm';
+import { toast } from "react-toastify";
 
 
 type Props ={
   product : any,
   details: any
 }
-
-
-
 
 function ProductDetail() {
     const router = useRouter()
@@ -31,8 +29,6 @@ function ProductDetail() {
     const stars = useAppSelector(avgReview);
     const user = useAppSelector(tokenValue);
     const {addCart} = useStore();
-
-    console.log(stars, 'stars')
 
     useEffect(() => {
       const hash = router.asPath.split('#')[1];
@@ -52,7 +48,6 @@ function ProductDetail() {
     const BigSpacing = styled.div`
     margin-bottom: 7.5rem;
   `
-
     const fetchProductDetails = useCallback(() => {
         dispatch(filterProductMethod({ filter_type: 'products', product_id: id }))
         dispatch(getAvgReview({ filter_type: 'products', product_id: id }))
@@ -83,11 +78,12 @@ function ProductDetail() {
 
       const handleItem = () =>{
         let data = getItemBySize(selectedSize,product);
+        toast(`Successfully added  ${quantity}  ${details.name} to your cart`, { hideProgressBar: true, autoClose: 2000, type: 'success' })
        if(data!==null){
          const cart = {quantity, data: data, details:details}
         addCart(cart);
        }
-        
+     
       }
 
 

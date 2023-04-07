@@ -35,7 +35,6 @@ const reducer: Reducer<State, Action> = (state: State, action: Action) =>{
     
     switch(action.type){
         case ActionType.ADDCART:
-            console.log(action.payload);
             const updatedCart = [...state.cart];
             const existingItem = updatedCart.find((cartItem: any) => cartItem.data.id === action.payload.data.id);
             if (existingItem && action.payload.detail!==null) {
@@ -57,16 +56,19 @@ const reducer: Reducer<State, Action> = (state: State, action: Action) =>{
             return {
                 ...state,
                 cart: state.cart.map((item: any) =>
-                item.id === action.payload.id
+                item.data.id === action.payload.data.id &&
+                item.data.size.id === action.payload.data.size.id
                     ? { ...item, quantity: item.quantity + 1 }
                     : item
                 ),
             };
         case ActionType.DECREMENT:
+            
             return {
                 ...state,
                 cart: state.cart.map((item: any) =>
-                item.id === action.payload.id
+                item.data.id === action.payload.data.id &&
+                item.data.size.id === action.payload.data.size.id
                     ? { ...item, quantity: item.quantity - 1 }
                     : item
                 ),

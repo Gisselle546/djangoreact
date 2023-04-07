@@ -24,7 +24,7 @@ export const InputWrapper = styled.input(
         margin: 1.5rem;
         height: 3.5rem;
         @media (max-width: 768px) {
-            width: 100%;
+            
             
         }
         
@@ -38,6 +38,10 @@ export const FormBody = styled.div`
         border: 2px solid  #c7ecee;
         border-radius: 5px;
         padding: 1rem;
+        @media (max-width: 768px) {
+            width: 100%;
+            
+        }
 `
 
 export const StyledSelect = styled.select(
@@ -52,8 +56,8 @@ export const StyledSelect = styled.select(
     border-radius: 5px;
     height: 3.5rem;
     @media (max-width: 768px) {
-                width: 100%;
-                margin-left: 1.5rem;
+               
+                
                 
     }
 
@@ -77,3 +81,4 @@ export const FormButton = styled.button(
 
 `
 )
+

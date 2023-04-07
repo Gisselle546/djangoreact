@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import  userSlice  from './reducer/userSlice';
-import filterSlice  from './reducer/filterSlice';
+import  filterSlice  from './reducer/filterSlice';
+import  orderSlice  from './reducer/orderSlice';
 
 
 
@@ -9,7 +10,8 @@ export function makeStore(){
     return configureStore({
         reducer: {
             auth: userSlice,
-            filter: filterSlice
+            filter: filterSlice,
+            order: orderSlice
         }
         
     })
