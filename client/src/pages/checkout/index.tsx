@@ -13,6 +13,7 @@ import PlaceOrderForm from '@/Components/PlaceOrderForm/PlaceOrderForm';
 import OrderConfirmation from '@/Components/OrderConfirmation/OrderConfirmation';
 import { shippingValue } from '@/redux/reducer/orderSlice';
 import dynamic from 'next/dynamic';
+import { getStorageValue } from '../../../utils/storage';
 
 const CheckoutProgress = dynamic(() => import('@/Components/CheckoutProgress'), {
   ssr: false
@@ -28,7 +29,7 @@ const Spacing = styled.div`
 
 function Checkout() {
     const [step, setStep] = useState(1);
-    const token = useAppSelector(tokenValue);
+    const token = getStorageValue('token')
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
     const address = useAppSelector(shippingValue)
     

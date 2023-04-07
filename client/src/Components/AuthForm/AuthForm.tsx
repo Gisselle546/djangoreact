@@ -42,8 +42,13 @@ function AuthForm({type}: Props) {
     }),
     onSubmit: async values => {
       const auth: any  = type==='Sign In'?  loginUser(values) : registerUser(values) 
-      dispatch(auth)
-      router.back();
+      dispatch(auth);
+      
+        router.back();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      
     },
   });
 

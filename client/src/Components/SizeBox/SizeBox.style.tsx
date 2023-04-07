@@ -20,8 +20,14 @@ export const ButtonContainer = styled.button`
   padding: 1rem;
   text-decoration: none;
   text-transform: capitalize;
+  transition: padding 0.2s ease;
   cursor: pointer;
   font-size: 16px;
+  &:focus {
+    color: #fff;
+    padding: 30px;
+    border-color: #6c757d;
+  }
   @media (max-width: 768px) {
     width: 5rem;
   
