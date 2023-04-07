@@ -99,7 +99,7 @@ function CartItems() {
               </CartProductTotal>                        
             </CartWrapper>
             <div style={{display: 'flex', justifyContent: 'flex-end', marginRight: '2rem'}}>
-            <ButtonContainer onClick={()=>router.push('/checkout')}>Checkout</ButtonContainer>
+            <ButtonContainer disabled={state.cart.length<1} onClick={()=>router.push('/checkout')}>Checkout</ButtonContainer>
             </div>
     </PageTemplate>
   )

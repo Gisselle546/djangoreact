@@ -3,7 +3,6 @@ import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { PaymentMethod } from "@stripe/stripe-js";
 import { PageTemplate } from '@/templates/PageTemplate';
-import { tokenValue } from '@/redux/reducer/userSlice';
 import { useAppSelector } from '@/redux/hooks';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
@@ -26,6 +25,13 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY as strin
 const Spacing = styled.div`
     margin-bottom: 4.5rem;
   `;
+
+const RedirectContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 
 function Checkout() {
     const [step, setStep] = useState(1);
@@ -81,7 +87,8 @@ function Checkout() {
         <PageTemplate>
             <Spacing/>
             <CheckoutProgress step={step} loggedIn={loggedIn}/>
-            {step === 1 && <div>Redirecting you to Login</div>}
+            <Spacing/>
+            {step === 1 && <RedirectContainer>Redirecting you to Login</RedirectContainer>}
             {step === 2 && <ShippingForm onShipping={handleShipping} />}
             {step === 3 && 
                 <>

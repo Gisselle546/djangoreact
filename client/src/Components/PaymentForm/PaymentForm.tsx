@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { PaymentFormWrapper, PaymentTotal, PaymentTotalHeader, Submenu, OrderItems, OrderWrapper, OrderItem, Money, FormButton, FormInfo, PaymentFormContainer, CardElementWrapper, CardLabel  } from './PaymentForm.style'
+import { PaymentFormWrapper, PaymentTotal, PaymentTotalHeader, Submenu, OrderItems, OrderWrapper, OrderItem, Money, FormButton, FormInfo, PaymentFormContainer, CardElementWrapper, CardLabel, CardContainer  } from './PaymentForm.style'
 import { useStore } from '@/context/cart';
+import router from 'next/router';
+import { toast } from 'react-toastify';
 
 type Props = {
     onPaymentMethodUpdate: (paymentMethod: any) => void;
@@ -46,12 +48,20 @@ function PaymentForm({onPaymentMethodUpdate}: Props) {
     onPaymentMethodUpdate(paymentMethod);
   };
 
+  useEffect(()=>{
+    if(state.cart.length <1){
+      toast('Please add items into your cart to checkout')
+      router.push("/")
+    };
+   
+  },[state.cart])
+
 
   return (
     <PaymentFormWrapper>
         <PaymentFormContainer>
       <form style={{margin: 0, border: 0, height:'100%' }}onSubmit={handleSubmit}>
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', height:'100%',}}>
+        <CardContainer>
           <CardLabel htmlFor="card-element">Card Details</CardLabel>
             <div>
               <CardElementWrapper>
@@ -63,7 +73,7 @@ function PaymentForm({onPaymentMethodUpdate}: Props) {
                   {processing ? "Processing..." : "Next"}
               </FormButton>
             </div>
-        </div>
+        </CardContainer>
       </form>
     </PaymentFormContainer>
       

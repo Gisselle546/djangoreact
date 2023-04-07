@@ -9,6 +9,8 @@ export const PaymentFormWrapper = styled.div(
     margin: 1rem;
     @media (max-width: 768px) {
        height: 100%;
+       width: 100%;
+       margin:0rem;
        flex-direction: column;
        justify-content: space-between;
     }
@@ -85,6 +87,9 @@ export const FormButton = styled.button(
     text-decoration: none;
     align-self: center;
     width: 150px;
+    @media (max-width: 768px) {
+        width: 100%;
+     }
 
 `
 );
@@ -105,12 +110,18 @@ export const PaymentFormContainer = styled.div(
   border-radius: 5px;
   font-size: 16px;
   line-height: 1.5;
+  @media (max-width: 768px) {
+    width: 100%;
+ }
 `);
 
 export const CardLabel = styled.label`
   display: block;
   font-weight: bold;
   margin-bottom: 10px;
+  @media (max-width: 768px) {
+   text-align: center;
+ }
 `;
 
 export const CardElementWrapper = styled.div`
@@ -118,4 +129,20 @@ export const CardElementWrapper = styled.div`
   width: 400px;
   border-radius: 5px;
   padding: 10px;
+  @media (max-width: 768px) {
+    width: 100%;
+ }
+`;
+
+export const CardContainer = styled.div`
+
+display: flex; 
+flex-direction: column; 
+justify-content: space-around; 
+height:100%;
+@media (max-width: 768px) {
+    width: 100%;
+    height: 30rem;
+ }
+
 `;
