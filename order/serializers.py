@@ -1,17 +1,28 @@
 from rest_framework import serializers
-from .models import Order, OrderItem
-from product.serializers import ProductOptionsSerializer
+from .models import Order, OrderItem, ShippingAddress
+from account.serializers import UserSerializer
+from product.serializers import ProductVariantSerializer
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product_options = ProductOptionsSerializer()
+    product_variant = ProductVariantSerializer(many=True)
 
     class Meta:
         model = OrderItem
-        fields = ['product_options', 'quantity']
+        fields = '__all__'
+
+class ShippingAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShippingAddress
+        fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True)
+    user        = UserSerializer()
+    shipping_address = ShippingAddressSerializer()
 
     class Meta:
         model = Order
-        fields = ['id', 'order_id', 'customer_name', 'customer_email', 'shipping_address', 'order_items']
+        fields = '__all__'
+
+
+

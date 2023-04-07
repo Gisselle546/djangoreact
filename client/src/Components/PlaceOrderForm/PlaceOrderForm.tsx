@@ -1,5 +1,6 @@
 import React from 'react'
 import { PaymentMethod, Stripe } from "@stripe/stripe-js";
+import { OrderSummaryContainer, OrderSummaryWrapper } from './PlaceOrder.style';
 
 interface PaymentInfo {
   cardBrand: string;
@@ -41,20 +42,20 @@ function PlaceOrderForm({ paymentMethod, stripe }: Props) {
   
   return (
 
-    <>
-    <h2>Order Summary</h2>
-      <div>
-        <div>
-          <span>Total:</span>
-          
-        </div>
-        <div>
-          <span>Payment method:</span>
-          
-        </div>
-      </div>
-      <button onClick={handleConfirmPayment}>Complete Purchase</button>
-      </>
+    <OrderSummaryContainer>
+      <h2>Order Summary</h2>
+        <OrderSummaryWrapper>
+          <div>
+            <span>Total:</span>
+            
+          </div>
+          <div>
+            <span>Payment method:</span>
+            
+          </div>
+        </OrderSummaryWrapper>
+        <button onClick={handleConfirmPayment}>Complete Purchase</button>
+    </OrderSummaryContainer>
   )
 }
 
