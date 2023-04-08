@@ -20,7 +20,7 @@ export interface Order{
         tax_price: any;
         shipping_price: any;
         total_price: any;
-        order_id: string;
+        order_id?: string;
         shipping_address:{
             street_address: string;
             city: string;

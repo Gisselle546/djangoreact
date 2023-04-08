@@ -26,6 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
+
 AUTH_USER_MODEL = 'account.User'
 
 INSTALLED_APPS = [
@@ -39,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'account',
     'product',
-    'order'
+    'order',
+    'stripe',
 ]
 
 MIDDLEWARE = [

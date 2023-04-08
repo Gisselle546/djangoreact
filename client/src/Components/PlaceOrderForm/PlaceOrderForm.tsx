@@ -3,8 +3,11 @@ import { PaymentMethod, Stripe } from "@stripe/stripe-js";
 import { FormButton, Item, ItemDetails, ItemImageContainer, ItemSize, Itemlist, MappedItemsContainer, MappedWrapper, OrderLetters, OrderSummaryContainer, OrderSummaryHeader, OrderSummaryWrapper, PlaceOrder, PriceContainer, Span } from './PlaceOrder.style';
 import { useStore } from '@/context/cart';
 import { QuantityWrapper } from '../CartItems/index.style';
+import { createOrder } from '@/redux/reducer/orderSlice';
+import { useAppDispatch } from '@/redux/hooks';
 import styled from 'styled-components';
 import PromoInput from '../PromoInput/PromoInput';
+import { getStorageLocal } from '../../../utils/storage';
 
 interface PaymentInfo {
   cardBrand: string;
@@ -14,7 +17,7 @@ interface PaymentInfo {
 type Props ={
   
     paymentMethod: PaymentMethod;
-    stripe: any;
+    stripePromise: any;
 
   
 }
@@ -24,34 +27,51 @@ const Spacing = styled.div`
   `;
 
 
-function PlaceOrderForm({ paymentMethod, stripe }: Props) {
+function PlaceOrderForm({ paymentMethod, stripePromise }: Props) {
   const { state } = useStore()
+  const dispatch = useAppDispatch()
+  console.log(stripePromise)
+  console.log(paymentMethod, 'paymentmethod')
   const [correct, setCorrect] = useState()
+
+  let itemsPrice = state.cart.reduce((acc: any, item: any) => acc + item.quantity * item.details.price, 0).toFixed(2)
+  let shippingPrice = (itemsPrice < 250 ? 0 : 10).toFixed(2)
+  let taxPrice = Number((0.082) * itemsPrice).toFixed(2)
+  let discount = Number((0.30) * itemsPrice).toFixed(2)
+  let totalPriceNodiscount = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2) 
+  let totalPricediscount = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice) - Number(discount)).toFixed(2) 
   
   const handleConfirmPayment = async () => {
-    if (!stripe) {
+    if (!stripePromise) {
       return;
     }
+    const stripe = await stripePromise;
    
-    const { error } = await stripe.confirmCardPayment((paymentMethod as any).client_secret, {
+    const { paymentIntent, error } = await stripe.confirmCardPayment((paymentMethod as any).client_secret, {
       payment_method: paymentMethod.id,
     });
-
-    if (error) {
-      alert("An error occurred while confirming the payment. Please try again.");
-    } else {
-      alert("Payment confirmed!");
+  
+    if (paymentIntent) {
+      let data = {
+        payment_method: paymentMethod,
+        total_price: totalPriceNodiscount,
+        tax_price: taxPrice,
+        shipping_price: shippingPrice,
+        order_id: null,
+        shippingaddress: getStorageLocal('shipping_address'),
+        order_items: state.cart
+      }
+    
+      try {
+        await dispatch(createOrder(data))
+      } catch (error) {
+        console.log(error)
+      }
     }
-  };
+    
+  }
 
-    let itemsPrice = state.cart.reduce((acc: any, item: any) => acc + item.quantity * item.details.price, 0).toFixed(2)
-    let shippingPrice = (itemsPrice < 250 ? 0 : 10).toFixed(2)
-    let taxPrice = Number((0.082) * itemsPrice).toFixed(2)
-    let discount = Number((0.30) * itemsPrice).toFixed(2)
-    let totalPriceNodiscount = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2) 
-    let totalPricediscount = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice) - Number(discount)).toFixed(2) 
- 
-    { correct ?  totalPricediscount: totalPriceNodiscount}
+   
 
 
     const mappedItems = state.cart.map((item:any)=>{

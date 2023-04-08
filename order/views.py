@@ -1,7 +1,7 @@
 from django.db import transaction
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
-
+import stripe
 from .models import Order, ShippingAddress, OrderItem, ProductVariant
 from .serializers import OrderSerializer, ShippingAddressSerializer, OrderItemSerializer
 
@@ -73,8 +73,46 @@ class OrderViewSet(viewsets.ModelViewSet):
                 product_option.inventory_total -= quantity
                 product_option.save()
 
-        serializer = OrderSerializer(order)
-        return Response(serializer.data)
+
+        # (4) Process payment with Stripe
+        try:
+            intent = stripe.PaymentIntent.create(
+                amount=int(data['total_price'] * 100),
+                currency='usd',
+                payment_method=data['payment_method'],
+                description=f'Order #{order.id}',
+                metadata={'order_id': order.id},
+            )
+
+            if intent.status == 'requires_action':
+                return Response({
+                    'client_secret': intent.client_secret,
+                    'requires_action': True,
+                })
+
+            if intent.status == 'succeeded':
+                order.payment_status = Order.PAID
+                order.save()
+
+                serializer = OrderSerializer(order)
+                return Response(serializer.data)
+
+            else:
+                order.delete()
+                return Response({'error': 'Payment failed'})
+
+        except stripe.error.CardError as e:
+            order.delete()
+            body = e.json_body
+            err = body.get('error', {})
+            return Response({'error': err.get('message')}, status.HTTP_400_BAD_REQUEST)
+
+        except stripe.error.StripeError as e:
+            order.delete()
+            return Response({'error': 'Payment failed'}, status.HTTP_400_BAD_REQUEST)
+        
+        
+
 
     def retrieve(self, request, pk=None):
         try:

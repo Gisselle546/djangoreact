@@ -19,7 +19,7 @@ const CheckoutProgress = dynamic(() => import('@/Components/CheckoutProgress'), 
 });
 
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY as string);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY!);
 
 
 const Spacing = styled.div`
@@ -98,7 +98,7 @@ function Checkout() {
                 </>
                 
             }
-            {step === 4 && <PlaceOrderForm paymentMethod={paymentMethod!} stripe={stripePromise}  />}
+            {step === 4 && <PlaceOrderForm paymentMethod={paymentMethod!} stripePromise={stripePromise}  />}
             {step === 5 && <OrderConfirmation />}
             
         </PageTemplate>
