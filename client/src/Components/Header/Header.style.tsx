@@ -52,3 +52,17 @@ export const AuthContain = styled.div`
     align-items: center;
   
 `;
+
+export const CartLength = styled.span`
+  background-color: #ffff;
+  border-radius: 60%;
+  position: absolute;
+  left: 4px;
+  bottom:18px;
+  padding:0.2rem;
+  @media screen and (max-width: 800px) {
+    padding:0.2rem;
+    left: 4px;
+    bottom:7px;
+  }
+`;

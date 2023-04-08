@@ -62,6 +62,7 @@ function PaymentForm({onPaymentMethodUpdate}: Props) {
         <PaymentFormContainer>
       <form style={{margin: 0, border: 0, height:'100%' }}onSubmit={handleSubmit}>
         <CardContainer>
+          
           <CardLabel htmlFor="card-element">Card Details</CardLabel>
             <div>
               <CardElementWrapper>

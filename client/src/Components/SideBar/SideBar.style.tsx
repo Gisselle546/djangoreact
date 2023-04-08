@@ -88,3 +88,18 @@ export const SideBarContainer = styled.div(
     
   `
   
+  export const CartLength = styled.span(
+    ({ theme: {color} }) => css`
+  background-color: ${color.sidebarHeader};
+  border-radius: 50%;
+  position: absolute;
+  left: 40px;
+  bottom:4.4rem;
+  padding:0.4rem;
+  @media screen and (max-width: 800px) {
+    padding:0.2rem;
+    left: 4px;
+    bottom:7px;
+  }
+  
+  `);

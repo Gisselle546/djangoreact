@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import { SideBarContainer, LogoContainer, HeadingContainer, SideBarItemContainers, SidebarHeader, SidebarList, SidebarListBottom, ListItem, ListButton, SidebarBody } from './SideBar.style';
+import { SideBarContainer, LogoContainer, HeadingContainer, SideBarItemContainers, SidebarHeader, SidebarList, SidebarListBottom, ListItem, ListButton, SidebarBody, CartLength } from './SideBar.style';
 import styled, {css} from 'styled-components';
 import { CSSTransition } from "react-transition-group";
 import {BiExit} from 'react-icons/bi';
 import {FiShoppingCart} from 'react-icons/fi';
 import logo from '../../assets/images/logo-grey.png';
 import { useRouter } from 'next/router';
+import { useStore } from '@/context/cart';
+import { useAppSelector } from '@/redux/hooks';
+import { tokenValue } from '@/redux/reducer/userSlice';
+import { deleteStorageValue } from '../../../utils/storage';
 
 
 type Props ={
     show: boolean
 }
 
-function SideBarItems({show}:Props){
-    const router = useRouter()
-   
- const Animation = styled.div<{state: any}>`
+const Animation = styled.div<{state: any}>`
         position: fixed;
         left:7rem;
         z-index:5;
@@ -59,8 +60,20 @@ function SideBarItems({show}:Props){
         box-shadow: ${({theme: {boxShadow}}) => (boxShadow.outerBorder)}
     `;
 
+function SideBarItems({show}:Props){
+    const router = useRouter()
+    const { state } = useStore()
+    const token = useAppSelector(tokenValue);
+    console.log(token, 'token');
+    let cart = state.cart;
+
     const handleClick = (data: string) =>{
         router.push(`/${data}`);
+    }
+
+    const clickto = () =>{
+        deleteStorageValue("token");
+        router.push("/");
     }
 
     return(
@@ -83,12 +96,14 @@ function SideBarItems({show}:Props){
                         <ListItem onClick={()=>handleClick('national-team')}> National Teams</ListItem>
                     </SidebarList>
                     <SidebarList>
-                        <ListItem onClick={()=>handleClick('cart')}>Cart <FiShoppingCart size={18} style={{verticalAlign:'middle', marginRight:'0.2rem'}}/></ListItem>
-                        
+                        <div>
+                        <ListItem onClick={()=>handleClick('cart')}>Cart <FiShoppingCart size={18} style={{verticalAlign:'middle', marginRight:'0.2rem', position: 'relative'}}/></ListItem>
+                        <CartLength>{cart.length}</CartLength>
+                        </div>
                     </SidebarList>
-                    <SidebarListBottom onClick={()=>handleClick('signin')}>
+                    <SidebarListBottom>
                         
-                        <ListButton>Sign In</ListButton>
+                     { token?  <ListButton onClick={()=>clickto()}>Sign out</ListButton> :  <ListButton onClick={()=>handleClick('signin')}>Sign In</ListButton>}
                     </SidebarListBottom>
                 </SidebarBody>
             </SideBarItemContainers>
@@ -102,6 +117,7 @@ function SideBarItems({show}:Props){
 
 function SideBar() {
     const [show, setShow] = useState(false);
+    
   return (
     <div style={{display: 'flex'}}>
         <SideBarContainer>

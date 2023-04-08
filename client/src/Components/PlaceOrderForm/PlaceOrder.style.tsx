@@ -53,6 +53,7 @@ overflow: auto;
 
 export const MappedWrapper = styled.div`
  display: flex;
+ margin-top: 0.5rem;
 `
 
 export const ItemDetails = styled.div`
@@ -148,4 +149,5 @@ export const QuantityWrapper = styled.div`
         
      }
 
-`
+`;
+
