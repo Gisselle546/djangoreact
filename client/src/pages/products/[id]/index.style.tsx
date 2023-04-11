@@ -9,7 +9,6 @@ export const ProductContainer = styled.div`
 export const ProductDetailWrapper = styled.div`
     display: flex;
     justify-content: space-around;
-    height: 50vh;
     align-items: center;
 `
 
@@ -18,7 +17,7 @@ export const ProductSubContainer = styled.div`
     justify-content: space-evenly;
     width: 100%;
     @media (max-width: 768px) {
-        height: 24rem;
+        flex-direction: column;
      }
    
 
@@ -29,7 +28,10 @@ export const ProductDetails = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     @media (max-width: 768px) {
-       margin-right: 1rem;
+      text-align: center;
+      margin-top: 5px;
+      justify-content: space-between;
+      height:
      }
 `
 
@@ -37,7 +39,7 @@ export const ProductHeaders =  styled.div(
     ({ theme: {color, typography} }) => css`
     font-size: ${typography.fontSize.heading3};
     @media (max-width: 768px) {
-        font-size: ${typography.fontSize.body};
+        font-size: ${typography.fontSize.bodyXS};
      }
     `
   )
@@ -48,6 +50,7 @@ export const ProductHeaders =  styled.div(
     font-weight: ${typography.fontWeight.bold};
     @media (max-width: 768px) {
         font-size: ${typography.fontSize.body};
+        margin-top: 1rem;
      }
     `
   )
@@ -65,8 +68,15 @@ text-transform: capitalize;
 cursor: pointer;
 font-size: 16px;
 text-align: center;
+@media (max-width: 768px) {
+    margin-top: 1rem;
+ }
+`;
 
-
+export const SelectOptionWrapper = styled.div`
+@media (max-width: 768px) {
+    margin-top: 1rem;
+ }
 `
 
 export const ProductInfo = styled.div`
@@ -85,8 +95,12 @@ height: 50vh;
 overflow: auto;
 `;
 
-export const SizeChart = styled.p`
+export const SizeChart = styled.p(
+({ theme: {color, typography} }) => css`
     text-align: right;
     cursor: pointer;
+    @media (max-width: 768px) {
+        font-size: ${typography.fontSize.bodyXS};
+     }
 
-`
+`)

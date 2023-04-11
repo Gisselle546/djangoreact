@@ -7,10 +7,7 @@ height: 10rem;
 align-items: center;
 justify-content: space-evenly;
 @media (max-width: 768px) {
-  flex-direction: column;
-  align-items: space-between;
-  width: 11rem;
-  height: 11rem;
+height: 7rem;
 }
 
 `
@@ -43,8 +40,8 @@ export const ButtonContainer = styled.button`
   align-items: center;
   justify-content: space-evenly;
   @media (max-width: 768px) {
-    flex-direction: row;
-    height:10rem;
+    height:0rem;
+    margin-bottom: 3rem;
   }
   
   `

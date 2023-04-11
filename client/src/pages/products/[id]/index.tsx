@@ -5,7 +5,7 @@ import {useStore} from '../../../context/cart';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { filterProduct, filterProductMethod, getAvgReview, avgReview } from '@/redux/reducer/filterSlice'
 import { tokenValue } from '@/redux/reducer/userSlice';
-import { ButtonContainer, ProductBottom, ProductContainer, ProductDetails, ProductDetailWrapper, ProductHeaders, ProductInfo, ProductSubContainer, SizeChart, SubProductHeaders } from './index.style'
+import { ButtonContainer, ProductBottom, ProductContainer, ProductDetails, ProductDetailWrapper, ProductHeaders, ProductInfo, ProductSubContainer, SelectOptionWrapper, SizeChart, SubProductHeaders } from './index.style'
 import ImageHandler from '@/Components/ImageHandler/ImageHandler'
 import SizeBox from '@/Components/SizeBox/SizeBox'
 import SelectOption from '@/Components/SelectOption/SelectOption'
@@ -118,7 +118,9 @@ function ProductDetail() {
             <SubProductHeaders>${details.price}</SubProductHeaders>
             <SizeChart onClick={handleClick}>Size Chart</SizeChart>
             <SizeBox product={details.product_options[0]}  onSizeChange={handleSizeChange}/>
+            <SelectOptionWrapper>
             <SelectOption quantity={quantity} onIncrement={(e:any) => setQuanity(+e.target.value)}/>
+            </SelectOptionWrapper>
             <ButtonContainer onClick={handleItem}>Add to Cart</ButtonContainer>
           </ProductDetails>
         </ProductSubContainer>
