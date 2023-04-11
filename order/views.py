@@ -1,10 +1,17 @@
+import json
 from django.db import transaction
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, serializers
 from rest_framework.response import Response
+from django.views import View
+from django.http import JsonResponse
 import stripe
+import os
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from .models import Order, ShippingAddress, OrderItem, ProductVariant
 from .serializers import OrderSerializer, ShippingAddressSerializer, OrderItemSerializer
 
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
@@ -16,19 +23,22 @@ class OrderViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(user=user)
         return queryset
 
+    @transaction.atomic()
     def create(self, request):
         user = request.user
         data = request.data
-
+  
         # (1) Create order
-        order = Order.objects.create(
-            user=user,
-            payment_method=data['payment_method'],
-            tax_price=data['tax_price'],
-            shipping_price=data['shipping_price'],
-            total_price=data['total_price'],
-            order_id=data['order_id']
-        )
+        try:
+            order = Order.objects.create(
+                user=user,
+                payment_method=data['payment_method'],
+                tax_price=data['tax_price'],
+                shipping_price=data['shipping_price'],
+                total_price=data['total_price']
+            )
+        except KeyError as e:
+            raise serializers.ValidationError(f'Missing required field: {str(e)}')
 
         # (2) Create shipping address
         shipping_data = data['shipping_address']
@@ -53,63 +63,33 @@ class OrderViewSet(viewsets.ModelViewSet):
                 order.delete()
                 return Response({'error': f'Product variant with id {variant_id} does not exist.'})
 
-            if variant.stock < quantity:
+            if variant.inventory < quantity:
                 order.delete()
                 return Response({'error': f'Product variant with id {variant_id} does not have enough stock.'})
 
 
             # create order item and update variant stock
-            OrderItem.objects.create(
+            order_item = OrderItem.objects.create(
                 order=order,
                 product_variant=variant,
                 quantity=quantity,
             )
-            
+            variant.inventory -= quantity
+            variant.save()
+            product_option = variant.product_option
+            product_option.inventory_total -= quantity
+            product_option.save()
 
-            with transaction.atomic():
-                variant.stock -= quantity
-                variant.save()
-                product_option = variant.product_option
-                product_option.inventory_total -= quantity
-                product_option.save()
+        # (4) Update payment status
+        order.payment_status = Order.ORDER_PAID
+        order.save()
+
+        serializer = OrderSerializer(order)
+        return Response(serializer.data)
 
 
-        # (4) Process payment with Stripe
-        try:
-            intent = stripe.PaymentIntent.create(
-                amount=int(data['total_price'] * 100),
-                currency='usd',
-                payment_method=data['payment_method'],
-                description=f'Order #{order.id}',
-                metadata={'order_id': order.id},
-            )
 
-            if intent.status == 'requires_action':
-                return Response({
-                    'client_secret': intent.client_secret,
-                    'requires_action': True,
-                })
 
-            if intent.status == 'succeeded':
-                order.payment_status = Order.PAID
-                order.save()
-
-                serializer = OrderSerializer(order)
-                return Response(serializer.data)
-
-            else:
-                order.delete()
-                return Response({'error': 'Payment failed'})
-
-        except stripe.error.CardError as e:
-            order.delete()
-            body = e.json_body
-            err = body.get('error', {})
-            return Response({'error': err.get('message')}, status.HTTP_400_BAD_REQUEST)
-
-        except stripe.error.StripeError as e:
-            order.delete()
-            return Response({'error': 'Payment failed'}, status.HTTP_400_BAD_REQUEST)
         
         
 
@@ -122,3 +102,26 @@ class OrderViewSet(viewsets.ModelViewSet):
 
         serializer = OrderSerializer(order)
         return Response(serializer.data)
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CreatePaymentIntentView(View):
+    def post(self, request):
+       
+        try:
+            data = json.loads(request.body.decode())
+            amount = data['amount']
+            if isinstance(amount, str):
+                amount = int(float(amount) * 100)
+            else:
+                amount = int(amount * 100)
+            currency = data['currency']
+            payment_intent = stripe.PaymentIntent.create(
+                amount=amount,
+                currency=currency,
+               
+            )
+            return JsonResponse({
+                'client_secret': payment_intent.client_secret
+            })
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)

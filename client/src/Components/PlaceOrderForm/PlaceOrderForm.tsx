@@ -7,7 +7,9 @@ import { createOrder } from '@/redux/reducer/orderSlice';
 import { useAppDispatch } from '@/redux/hooks';
 import styled from 'styled-components';
 import PromoInput from '../PromoInput/PromoInput';
+import customFetch from '../../../utils/axios';
 import { getStorageLocal } from '../../../utils/storage';
+
 
 interface PaymentInfo {
   cardBrand: string;
@@ -30,8 +32,6 @@ const Spacing = styled.div`
 function PlaceOrderForm({ paymentMethod, stripePromise }: Props) {
   const { state } = useStore()
   const dispatch = useAppDispatch()
-  console.log(stripePromise)
-  console.log(paymentMethod, 'paymentmethod')
   const [correct, setCorrect] = useState()
 
   let itemsPrice = state.cart.reduce((acc: any, item: any) => acc + item.quantity * item.details.price, 0).toFixed(2)
@@ -40,34 +40,55 @@ function PlaceOrderForm({ paymentMethod, stripePromise }: Props) {
   let discount = Number((0.30) * itemsPrice).toFixed(2)
   let totalPriceNodiscount = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2) 
   let totalPricediscount = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice) - Number(discount)).toFixed(2) 
+
+  const newArray = state.cart.reduce((acc:any, cur:any) => {
+    acc.push({
+      product_variant: cur.data,
+      quantity: cur.quantity,
+    });
+    return acc;
+  }, []);
   
   const handleConfirmPayment = async () => {
     if (!stripePromise) {
       return;
     }
     const stripe = await stripePromise;
-   
-    const { paymentIntent, error } = await stripe.confirmCardPayment((paymentMethod as any).client_secret, {
+
+    let paymentIntent = {
+      amount: totalPriceNodiscount,
+      currency: 'usd'
+    }
+
+    const response = await customFetch.post('/create_payment_intent/',  paymentIntent)
+    const {client_secret} = response.data;
+  
+
+    const {  error } = await stripe.confirmCardPayment(client_secret, {
       payment_method: paymentMethod.id,
     });
-  
-    if (paymentIntent) {
+
+
+   
       let data = {
-        payment_method: paymentMethod,
-        total_price: totalPriceNodiscount,
+        payment_method: paymentMethod.card?.brand,
+        total_price: correct ? totalPricediscount : totalPriceNodiscount,
         tax_price: taxPrice,
         shipping_price: shippingPrice,
-        order_id: null,
         shippingaddress: getStorageLocal('shipping_address'),
-        order_items: state.cart
+        order_items: newArray
       }
+
+     
     
       try {
-        await dispatch(createOrder(data))
+        await dispatch(createOrder({data:{payment_method: data.payment_method as string, total_price: data.total_price, tax_price: data.tax_price,
+          shipping_price: data.shipping_price, shipping_address: data.shippingaddress, order_items:data.order_items}})
+          )
       } catch (error) {
         console.log(error)
-      }
-    }
+      } 
+  
     
   }
 

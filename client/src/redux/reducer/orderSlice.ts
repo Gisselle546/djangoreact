@@ -4,15 +4,6 @@ import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import { create_order } from "../action/create_order";
 import { getStorageLocal, setStorageLocal } from "../../../utils/storage";
 
-interface Product {
-    quantity: any;
-    product_variant: {
-         id: any
-         name: string;
-         price: any
-         stock: any
-    }
-}
 
 export interface Order{
     data: {
@@ -20,14 +11,13 @@ export interface Order{
         tax_price: any;
         shipping_price: any;
         total_price: any;
-        order_id?: string;
         shipping_address:{
             street_address: string;
             city: string;
             state: string;
             zip_code: string;
         }
-        order_items:[Product]  
+        order_items:any
     },
     status: 'idle' | 'loading' | 'failed';
     error?: {} | any;
@@ -36,25 +26,16 @@ export interface Order{
 const initialState: Order = {
     data: {
         payment_method: '',
-        tax_price: '',
-        shipping_price: '',
+        tax_price: 0.00,
+        shipping_price: 0.00,
         total_price: 0.00,
-        order_id: '',
         shipping_address: getStorageLocal('shipping_address') ||{
             street_address: '',
             city: '',
             state: '',
             zip_code: ''
         },
-        order_items:[{
-            quantity: 0,
-            product_variant:{
-                id:0,
-                name: '',
-                price: 0.00,
-                stock:0
-            }
-        }]  
+        order_items:[]
     },
     status: 'idle',
     error: null
@@ -62,9 +43,17 @@ const initialState: Order = {
 
 export const createOrder = createAsyncThunk(
     'action/create_order',
-    async( data:any, {rejectWithValue})=> {
+    async( { data }:{ 
+        data: 
+        { payment_method: string, tax_price: any, shipping_price: any, total_price: any,
+        shipping_address:{street_address: string, city: string, state: string, zip_code: string},
+        order_items:any
+    } 
+    }, {rejectWithValue})=> {
+        console.log(data)
         try{
-            const response = await create_order(data)
+            const response = await create_order({data})
+            console.log(response);
             return response.data
         }catch(error){
             return rejectWithValue(error)

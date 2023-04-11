@@ -77,12 +77,20 @@ function ProductDetail() {
       
 
       const handleItem = () =>{
-        let data = getItemBySize(selectedSize,product);
-        toast(`Successfully added  ${quantity}  ${details.name} to your cart`, { hideProgressBar: true, autoClose: 2000, type: 'success' })
-       if(data!==null){
-         const cart = {quantity, data: data, details:details}
-        addCart(cart);
-       }
+        if (selectedSize === '') {
+          toast.warning('Please select a size before adding to cart');
+          return;
+        }
+        let data = getItemBySize(selectedSize, product);
+        toast(`Successfully added ${quantity} ${details.name} to your cart`, {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'success',
+        });
+        if (data !== null) {
+          const cart = { quantity, data: data, details: details };
+          addCart(cart);
+        }
      
       }
 

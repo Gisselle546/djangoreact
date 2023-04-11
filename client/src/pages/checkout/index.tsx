@@ -42,10 +42,28 @@ function Checkout() {
     const [loggedIn, setLoggedIn] = useState(token);
     const router = useRouter()
 
+    console.log(step);
+
+
     const handlePaymentMethodUpdate = (newPaymentMethod: PaymentMethod) => {
       setPaymentMethod(newPaymentMethod);
       setStep(4)
     };
+
+
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const updateStep = () => {
+    if (loggedIn && address.city !== '') {
+      if (paymentMethod !== null) {
+        setStep(4);
+      } else {
+        setStep(3);
+      }
+    } else {
+      setStep(2);
+    }
+  };
 
     useEffect(() => {
         if (!loggedIn) {
@@ -55,21 +73,10 @@ function Checkout() {
           }, 2000);
     
           return () => clearTimeout(timeoutId);
-        }{
-          if (address.city!=='') {
-            setStep(3);
-          } else {
-            setStep(2);
-          }
-
-          if(paymentMethod!==null){
-            setStep(4)
-          }else{
-            setStep(3)
-          }
         }
+          updateStep()
         
-      }, [loggedIn, router, address, paymentMethod]);
+      }, [loggedIn, router, address, paymentMethod, updateStep]);
 
       const handleShipping = () => {
         // handle shipping logic here

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { deleteStorageValue, getStorageValue } from './storage';
 import { toast } from "react-toastify";
+import { useRouter } from 'next/router';
 
 const customFetch = axios.create({
     baseURL: 'http://127.0.0.1:8000',
@@ -23,6 +24,8 @@ const customFetch = axios.create({
       if (error.response && error.response.status === 401) {
         deleteStorageValue('token'); // or whatever function you use to remove the token from storage
         toast.warning('Session timed out, please sign back in')
+        const router = useRouter();
+        router.push('/login');
       }
       return Promise.reject(error);
     }

@@ -4,7 +4,7 @@ from account.serializers import UserSerializer
 from product.serializers import ProductVariantSerializer
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product_variant = ProductVariantSerializer(many=True)
+    product_variant = ProductVariantSerializer()
 
     class Meta:
         model = OrderItem
@@ -16,7 +16,7 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(many=True)
+    items = OrderItemSerializer(many=True, read_only=True)
     user        = UserSerializer()
     shipping_address = ShippingAddressSerializer()
 

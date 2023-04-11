@@ -6,11 +6,21 @@ from django.utils import timezone
 # Create your models here.
 
 class Order(models.Model):
+    ORDER_PENDING = 'pending'
+    ORDER_PAID = 'paid'
+    ORDER_CANCELLED = 'cancelled'
+
+    ORDER_PAYMENT_STATUSES = [
+        (ORDER_PENDING, 'Pending'),
+        (ORDER_PAID, 'Paid'),
+        (ORDER_CANCELLED, 'Cancelled')
+    ]
     order_id = models.CharField(max_length=8, blank=True, null=True, unique=True)
     user      = models.ForeignKey(User, on_delete=models.SET_NULL, null = True)
     payment_method = models.CharField(max_length=200, null=True, blank=True)
     tax_price = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     shipping_price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
+    payment_status = models.CharField(max_length=20, choices=ORDER_PAYMENT_STATUSES, default=ORDER_PENDING)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
 
@@ -22,7 +32,7 @@ class Order(models.Model):
     
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='items', null=True, blank=True, on_delete=models.CASCADE)
     product_variant = models.ForeignKey(ProductVariant, null=True, on_delete=models.CASCADE)
     quantity = models.IntegerField()
  
@@ -34,9 +44,10 @@ class OrderItem(models.Model):
         return f"{self.order.order_id} - {self.quantity}"
 
 class ShippingAddress(models.Model):
-    order         = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True)
+    order         = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True, related_name='shipping_address')
     address       = models.CharField(max_length=200, null=True, blank=True)
     city          =  models.CharField(max_length=200, null=True, blank=True)
+    state          = models.CharField(max_length=200, null=True, blank=True)
     postal_code    = models.CharField(max_length=200, null=True, blank=True)
     country       = models.CharField(max_length=200, null=True, blank=True)
     shipping_price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
