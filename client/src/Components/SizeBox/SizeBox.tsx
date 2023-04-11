@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ButtonContainer, StyledBoxContainer } from './SizeBox.style'
+import { ButtonContainer, InnerStyling, Inventory, StyledBoxContainer } from './SizeBox.style'
 
 type Props= {
     product: any
@@ -28,16 +28,16 @@ function SizeBox({product, onSizeChange}: Props) {
 
     return(
         <>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ marginBottom: '12px', color: 'red' }}>
-          {data.inventory <= 3 ? `Only ${data.inventory} left` : null}
+      <InnerStyling>
+        <div style={{ marginBottom: '12px' }}>
+          <Inventory>{data.inventory <= 3 ? `Only ${data.inventory} left` : null}</Inventory>
         </div>
         <div style={{ display: 'inline-block'}}>
-          <ButtonContainer style={{ marginBottom: data.inventory <= 3 ? '18px' : '0' }} onClick={() => handleSizeClick(data.size)} key={data.size.id}>
+          <ButtonContainer style={{ marginBottom: data.inventory <= 3 ? '18px' : '0' }} onClick={() => handleSizeClick(data.size.size)} key={data.size.id}>
             {data.size.size}
           </ButtonContainer>
         </div>
-      </div>
+      </InnerStyling>
       </>
     )
    })

@@ -107,6 +107,7 @@ export const CartProvider = (props: {children: any}) => {
         
       }, [state]);
 
+
     const addCart = (items:any)=>{
         dispatch({
             type:ActionType.ADDCART,

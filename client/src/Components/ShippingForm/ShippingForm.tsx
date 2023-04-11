@@ -20,6 +20,7 @@ function ShippingForm({onShipping}: Props) {
           city: '',
           state: '',
           zip_code:'',
+          country: 'USA'
         },
         validationSchema: Yup.object({
           street_address: Yup.string()

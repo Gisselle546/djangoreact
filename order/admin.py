@@ -25,4 +25,4 @@ class ShippingAddressAdmin(admin.ModelAdmin):
     """
     Display Shipping Address 
     """
-    list_display = ['address', 'city', 'postal_code', 'country', 'shipping_price']
+    list_display = ['street_address', 'city', 'zip_code', 'country', 'shipping_price']

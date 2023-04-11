@@ -81,10 +81,12 @@ function ProductDetail() {
           toast.warning('Please select a size before adding to cart');
           return;
         }
+        console.log(product, selectedSize);
+
         let data = getItemBySize(selectedSize, product);
         toast(`Successfully added ${quantity} ${details.name} to your cart`, {
           hideProgressBar: true,
-          autoClose: 2000,
+          autoClose: 1000,
           type: 'success',
         });
         if (data !== null) {

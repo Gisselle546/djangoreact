@@ -7,6 +7,7 @@ import { createOrder } from '@/redux/reducer/orderSlice';
 import { useAppDispatch } from '@/redux/hooks';
 import styled from 'styled-components';
 import PromoInput from '../PromoInput/PromoInput';
+import { toast } from "react-toastify";
 import customFetch from '../../../utils/axios';
 import { getStorageLocal } from '../../../utils/storage';
 
@@ -30,7 +31,7 @@ const Spacing = styled.div`
 
 
 function PlaceOrderForm({ paymentMethod, stripePromise }: Props) {
-  const { state } = useStore()
+  const { state, clearAll } = useStore()
   const dispatch = useAppDispatch()
   const [correct, setCorrect] = useState()
 
@@ -85,8 +86,10 @@ function PlaceOrderForm({ paymentMethod, stripePromise }: Props) {
         await dispatch(createOrder({data:{payment_method: data.payment_method as string, total_price: data.total_price, tax_price: data.tax_price,
           shipping_price: data.shipping_price, shipping_address: data.shippingaddress, order_items:data.order_items}})
           )
+          clearAll();
+          toast.success('Order submitted successfully!')
       } catch (error) {
-        console.log(error)
+        toast.error('An error occurred while submitting the order. Please try again later.')
       } 
   
     

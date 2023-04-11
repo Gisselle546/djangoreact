@@ -16,6 +16,7 @@ export interface Order{
             city: string;
             state: string;
             zip_code: string;
+            country: string;
         }
         order_items:any
     },
@@ -33,7 +34,8 @@ const initialState: Order = {
             street_address: '',
             city: '',
             state: '',
-            zip_code: ''
+            zip_code: '',
+            country: 'USA'
         },
         order_items:[]
     },
@@ -46,14 +48,13 @@ export const createOrder = createAsyncThunk(
     async( { data }:{ 
         data: 
         { payment_method: string, tax_price: any, shipping_price: any, total_price: any,
-        shipping_address:{street_address: string, city: string, state: string, zip_code: string},
+        shipping_address:{street_address: string, city: string, state: string, zip_code: string, country: string},
         order_items:any
     } 
     }, {rejectWithValue})=> {
         console.log(data)
         try{
             const response = await create_order({data})
-            console.log(response);
             return response.data
         }catch(error){
             return rejectWithValue(error)

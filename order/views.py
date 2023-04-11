@@ -1,9 +1,10 @@
 import json
 from django.db import transaction
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status, serializers
 from rest_framework.response import Response
 from django.views import View
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 import stripe
 import os
 from django.utils.decorators import method_decorator
@@ -26,8 +27,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     @transaction.atomic()
     def create(self, request):
         user = request.user
-        data = request.data
-  
+        data = request.data 
         # (1) Create order
         try:
             order = Order.objects.create(
@@ -40,22 +40,27 @@ class OrderViewSet(viewsets.ModelViewSet):
         except KeyError as e:
             raise serializers.ValidationError(f'Missing required field: {str(e)}')
 
-        # (2) Create shipping address
-        shipping_data = data['shipping_address']
-        shipping_data['order'] = order.id
-        shipping_serializer = ShippingAddressSerializer(data=shipping_data)
-        if shipping_serializer.is_valid():
-            shipping_serializer.save()
-        else:
-            order.delete()
-            return Response(shipping_serializer.errors)
-
+        try:
+         shipping_address = get_object_or_404(ShippingAddress, user=user)
+        except Http404:
+            shipping_address = ShippingAddress(user=user)
+            shipping_address.save()
+        
+        # Update shipping address data
+        shipping_address.street_address = data['shipping_address']['street_address']
+        shipping_address.city = data['shipping_address']['city']
+        shipping_address.state = data['shipping_address']['state']
+        shipping_address.zip_code = data['shipping_address']['zip_code']
+        shipping_address.country = data['shipping_address']['country']
+        shipping_address.shipping_price = data['shipping_price']
+        shipping_address.order = order
+        shipping_address.save()
+       
         # (3) Create order items and update stock
         for item_data in data['order_items']:
             variant_data = item_data['product_variant']
             variant_id = variant_data['id']
             quantity = item_data['quantity']
-
             # check if product variant exists and has enough stock
             try:
                 variant = ProductVariant.objects.select_for_update().get(id=variant_id)
@@ -66,7 +71,6 @@ class OrderViewSet(viewsets.ModelViewSet):
             if variant.inventory < quantity:
                 order.delete()
                 return Response({'error': f'Product variant with id {variant_id} does not have enough stock.'})
-
 
             # create order item and update variant stock
             order_item = OrderItem.objects.create(

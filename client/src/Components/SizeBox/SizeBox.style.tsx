@@ -8,7 +8,10 @@ align-items: center;
 justify-content: space-evenly;
 @media (max-width: 768px) {
   flex-direction: column;
-  align-items: space-between; 
+  align-items: space-between;
+  width: 11rem;
+  height: 11rem;
+}
 
 `
 
@@ -30,6 +33,24 @@ export const ButtonContainer = styled.button`
   }
   @media (max-width: 768px) {
     width: 5rem;
-  
+  }
   `
   
+
+  export const InnerStyling= styled.div`
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+  justify-content: space-evenly;
+  @media (max-width: 768px) {
+    flex-direction: row;
+    height:10rem;
+  }
+  
+  `
+  export const Inventory = styled.div `
+    color: red;
+    @media (max-width: 768px) {
+      font-size: 0.5rem;
+    }
+  `

@@ -11,6 +11,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
+    user        = UserSerializer()
     class Meta:
         model = ShippingAddress
         fields = '__all__'
