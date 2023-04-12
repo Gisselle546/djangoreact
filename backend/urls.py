@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from order.views import OrderViewSet,CreatePaymentIntentView
 from rest_framework import routers
-from product.views import ProductDetailView, ProductViewSet, ReviewViewSet, TeamViewSet, SoccerPlayerViewSet
+from product.views import ProductDetailView, ProductSearchView, ProductViewSet, ReviewViewSet, TeamViewSet, SoccerPlayerViewSet
 from account.views import RegisterAccount, MyTokenObtainPairView
 
 router = routers.DefaultRouter()
@@ -19,6 +19,7 @@ urlpatterns = [
      path('orders/create/', OrderViewSet.as_view({'post': 'create'}), name='order-create'),
      path('orders/<str:order_id>/', OrderViewSet.as_view({'get': 'retrieve'}), name='order-detail'),
      path('create_payment_intent/', CreatePaymentIntentView.as_view(), name='create_payment_intent'),
+     path('products/search-results/', ProductSearchView.as_view(), name='product_search'),
      path('products/<str:product_id>/', ProductDetailView.as_view(), name='product-detail'),
      path('products/<str:product_id>/reviews/average_rating/', ReviewViewSet.as_view({'get': 'average_rating'}), name='review_average_rating'),
      path('register/', RegisterAccount.as_view(), name='user_create'),

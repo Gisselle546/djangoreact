@@ -131,6 +131,7 @@ function ProductDetail() {
   return (
     <>
         <PageTemplate>
+          <BigSpacing/>
           <ProductContainer>
             <ProductDetailWrapper>
               <Product details={product} product={product?.product_options[0]?.product_variants}/>

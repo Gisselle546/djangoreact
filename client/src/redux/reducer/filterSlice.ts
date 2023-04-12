@@ -7,6 +7,7 @@ import { getProduct } from '../action/getProduct';
 import { playerquery } from '../action/playerquery';
 import { create_review } from '../action/create_review';
 import { get_avg_review } from '../action/get_avg_rating';
+import { ProductSearch } from '../action/filter_search';
 
 export interface FilterState{
     filter_type: string;
@@ -20,7 +21,7 @@ export interface FilterState{
     filter_data_player: [] | any
     filter_product:  any
     avg_review_rating: any
-    
+    search: any
     
 }
 
@@ -36,15 +37,29 @@ const initialState: FilterState = {
     filter_data_player: null,
     filter_product: null,
     avg_review_rating: null,
+    search: ''
    
     
 }
+
+export const Search = createAsyncThunk(
+    'action/filter_search',
+    async({searchterm}:{searchterm: string }, {rejectWithValue})=> {
+        try{
+            const response = await ProductSearch({searchterm})
+            return response.data
+        }catch(error){
+            return rejectWithValue(error)
+        }
+    }
+)
 
 export const filterMethod = createAsyncThunk(
     'action/filter',
     async({filter_type, team_type, club}:{filter_type: string, team_type: string, club: string}, {rejectWithValue})=> {
         try{
             const response = await filter({filter_type,team_type,club})
+            console.log(response);
             return response.data
         }catch(error){
             return rejectWithValue(error)
@@ -170,12 +185,23 @@ export const filterSlice = createSlice({
             .addCase(getAvgReview.rejected, (state, action) => {
                 state.error = action.payload
             })
+            .addCase(Search.pending, (state)=>{
+                state.status = 'loading';
+            })
+            .addCase(Search.fulfilled, (state, action)=>{
+                state.status = 'idle';
+                state.search = action.payload
+            })
+            .addCase(Search.rejected, (state, action) => {
+                state.error = action.payload
+            })
    
     }
 })
 
 export const filterValue = (state: AppState) => state.filter.filter_data_general
 export const filterPlayer =(state: AppState) => state.filter.filter_data_player
+export const filterSearch =(state: AppState) => state.filter.search
 export const filterProduct = (state: AppState) => state.filter.filter_product
 export const avgReview = (state: AppState) => state.filter.avg_review_rating
 export const error = (state: AppState) => state.filter.error

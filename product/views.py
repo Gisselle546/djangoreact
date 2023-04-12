@@ -41,6 +41,21 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 
+
+class ProductSearchView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    queryset = Product.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
+
+    def get_queryset(self):
+        queryset = self.queryset
+        search_term = self.request.query_params.get('query')
+        if search_term:
+            queryset = queryset.filter(name__icontains=search_term)
+        return queryset
+
+
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer

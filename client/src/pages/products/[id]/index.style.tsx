@@ -24,14 +24,16 @@ export const ProductSubContainer = styled.div`
 `;
 
 export const ProductDetails = styled.div`
+
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    max-width: 25rem;
     @media (max-width: 768px) {
       text-align: center;
       margin-top: 5px;
       justify-content: space-between;
-      height:
+      max-width:100%;
      }
 `
 

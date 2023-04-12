@@ -36,7 +36,7 @@ function Card({data}:Props) {
     }else{
     const team = team_type==='CLUB'? 'clubs' : 'national'
 
-    router.push(`/clubs/${team}?query=${name}`)
+    router.push(`/${team}/${team}?query=${name}`)
     dispatch(filterMethod({filter_type:'products', team_type:'q', club: name}))
     }
    }
