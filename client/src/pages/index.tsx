@@ -12,10 +12,11 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
+
 const bannerarr = [
-  {name: 'X SPEEDPORTAL MESSI FG', heading: 'Gets the new messi kicks', image: first},
-  {name: 'NIKE MERCURIAL DREAM SPEED 6 ', heading : 'get the new ronaldo', image: second},
-  {name: 'FUTURE ULTIMATE CREATIVITY FG/AG', heading: 'Go crazy with Neymars creativity', image: third }
+  {name: 'X SPEEDPORTAL MESSI FG', heading: 'Gets the new messi kicks', image: first, url:'/products/LIKCOJV8' },
+  {name: 'NIKE MERCURIAL DREAM SPEED 6 ', heading : 'get the new ronaldo', image: second, url:'/products/EULFTKOU'},
+  {name: 'FUTURE ULTIMATE CREATIVITY FG/AG', heading: 'Go crazy with Neymars creativity', image: third, url:'/products/SHPZ0Y7G' }
 ]
 
 const Spacing = styled.div`

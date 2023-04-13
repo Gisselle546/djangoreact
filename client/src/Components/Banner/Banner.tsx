@@ -1,12 +1,14 @@
 import { StaticImageData } from 'next/image'
 import React, { useState } from 'react'
 import { BannerContainer, BannerItems, BannerItem, BannerHeading } from './Banner.style'
+import { useRouter } from 'next/router'
 
 type ArrData  = {
 
     name: string
     image: StaticImageData
     heading: string
+    url: any
 }
 
 type BannerProps = {
@@ -18,6 +20,7 @@ type BannerProps = {
 
 function Banner({data}:BannerProps) {
     const [hoveredItem, setHoveredItem] = useState('');
+    const router = useRouter()
     const handleMouseEnter = (name: string) => {
         setHoveredItem(name);
     };
@@ -27,8 +30,9 @@ function Banner({data}:BannerProps) {
     };
 
     const arr = data.map((item: ArrData)=>{
+        console.log(item);
         return( 
-            <BannerItem key={item.name}  onMouseEnter={() => handleMouseEnter(item.name)} onMouseLeave={handleMouseLeave} img={item.image.src}>
+            <BannerItem key={item.name}  onMouseEnter={() => handleMouseEnter(item.name)} onMouseLeave={handleMouseLeave} img={item.image.src} onClick={()=>router.push(item.url)} >
              { hoveredItem === item.name &&<BannerHeading>{item.name}</BannerHeading>}
             </BannerItem>
 

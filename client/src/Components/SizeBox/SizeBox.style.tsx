@@ -28,6 +28,11 @@ export const ButtonContainer = styled.button`
     padding: 30px;
     border-color: #6c757d;
   }
+  &:disabled{
+    background-color: #b0b0b0;
+    color: #f1f1f1;
+    cursor: not-allowed;
+  }
   @media (max-width: 768px) {
     width: 5rem;
   }
