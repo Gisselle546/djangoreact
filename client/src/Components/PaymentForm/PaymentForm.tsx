@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { PaymentFormWrapper, PaymentTotal, PaymentTotalHeader, Submenu, OrderItems, OrderWrapper, OrderItem, Money, FormButton, FormInfo, PaymentFormContainer, CardElementWrapper, CardLabel, CardContainer  } from './PaymentForm.style'
+import { PaymentFormWrapper, PaymentTotal, PaymentTotalHeader, Submenu, OrderItems, OrderWrapper, OrderItem, Money, FormButton, FormInfo, PaymentFormContainer, CardElementWrapper, CardLabel, CardContainer, InputWrapper  } from './PaymentForm.style'
 import { useStore } from '@/context/cart';
 import router from 'next/router';
 import { toast } from 'react-toastify';
@@ -15,6 +15,7 @@ function PaymentForm({onPaymentMethodUpdate}: Props) {
   const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+  const [fullName, setFullName ] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -65,6 +66,7 @@ function PaymentForm({onPaymentMethodUpdate}: Props) {
           
           <CardLabel htmlFor="card-element">Card Details</CardLabel>
             <div>
+            <InputWrapper type="text" id="name" name="name" placeholder=' Full Name (as it appears on card)' onChange={(e:any)=>setFullName(e.target.value)}/>
               <CardElementWrapper>
                 <CardElement id="card-element" />
               </CardElementWrapper>

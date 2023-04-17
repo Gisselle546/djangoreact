@@ -146,3 +146,19 @@ height:100%;
  }
 
 `;
+
+export const InputWrapper = styled.input(
+    ({ theme: {color} }) => css`
+        border: 1px solid #ccc;
+        width: 350px;
+        border-radius: 5px;
+        margin-bottom: 1.5rem;
+        height: 2.5rem;
+        @media (max-width: 768px) {
+            width: 100%;
+            
+        }
+        
+       
+
+`);
