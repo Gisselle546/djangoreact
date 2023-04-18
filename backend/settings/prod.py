@@ -12,8 +12,8 @@ DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", False)
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 
-CORS_ALLOWED_ORIGINS = ['djangoreact-mbovb3a1y-gissellerodriguez431-gmailcom.vercel.app', 'https://djangoreact.vercel.app']
-CSRF_TRUSTED_ORIGINS = ['djangoreact-mbovb3a1y-gissellerodriguez431-gmailcom.vercel.app', 'https://djangoreact.vercel.app']
+CORS_ALLOWED_ORIGINS = ['https://djangoreact.vercel.app']
+CSRF_TRUSTED_ORIGINS = ['https://djangoreact.vercel.app']
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 db_info = urlparse(DATABASE_URL)
