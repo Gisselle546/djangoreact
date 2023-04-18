@@ -52,7 +52,7 @@ export const createOrder = createAsyncThunk(
         order_items:any
     } 
     }, {rejectWithValue})=> {
-        console.log(data)
+
         try{
             const response = await create_order({data})
             return response.data

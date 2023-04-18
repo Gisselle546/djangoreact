@@ -122,7 +122,6 @@ function PlaceOrderForm({ paymentMethod, stripePromise }: Props) {
       )
     })
   
-  console.log(paymentMethod.card?.brand);
   return (
 
     <>

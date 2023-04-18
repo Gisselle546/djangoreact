@@ -26,7 +26,7 @@ function Card({data}:Props) {
   const {logo_url, name, location, team_type, primary_image, first_name, last_name, image_url} = data;
   const dispatch = useAppDispatch()
   const value = useAppSelector(filterValue)
-  console.log(team_type)
+
 
   const handleClick = () =>{
 

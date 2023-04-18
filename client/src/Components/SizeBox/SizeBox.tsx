@@ -18,8 +18,6 @@ function SizeBox({product, onSizeChange, quantity}: Props) {
     return acc;
   }, []);
 
-  console.log(newArray,'newArray');
-
   const handleSizeClick = (size: any) => {
     onSizeChange(size);
   };

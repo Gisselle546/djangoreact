@@ -17,7 +17,6 @@ function Players() {
         players()
     },[players])
 
-    console.log(value);
   return (
     <PageTemplate>
          <CardList data={value} heading={"Players"}/>

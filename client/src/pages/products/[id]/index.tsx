@@ -30,7 +30,6 @@ function ProductDetail() {
     const user = useAppSelector(tokenValue);
     const {addCart} = useStore();
 
-    console.log(product);
 
     useEffect(() => {
       const hash = router.asPath.split('#')[1];
@@ -83,7 +82,7 @@ function ProductDetail() {
           toast.warning('Please select a size before adding to cart');
           return;
         }
-        console.log(product, selectedSize);
+  
 
         let data = getItemBySize(selectedSize, product);
         toast(`Successfully added ${quantity} ${details.name} to your cart`, {
@@ -93,7 +92,7 @@ function ProductDetail() {
         });
         if (data !== null) {
           const cart = { quantity, data: data, details: details };
-          console.log(cart, 'cart')
+
            addCart(cart);
         }
      
@@ -108,7 +107,6 @@ function ProductDetail() {
         window.location.href="https://soccer.com/content/size-chart"
       }
 
-      console.log(product[0], 'product 000')
 
       return(
         <ProductSubContainer>

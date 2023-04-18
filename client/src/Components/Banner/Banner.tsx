@@ -30,7 +30,6 @@ function Banner({data}:BannerProps) {
     };
 
     const arr = data.map((item: ArrData)=>{
-        console.log(item);
         return( 
             <BannerItem key={item.name}  onMouseEnter={() => handleMouseEnter(item.name)} onMouseLeave={handleMouseLeave} img={item.image.src} onClick={()=>router.push(item.url)} >
              { hoveredItem === item.name &&<BannerHeading>{item.name}</BannerHeading>}

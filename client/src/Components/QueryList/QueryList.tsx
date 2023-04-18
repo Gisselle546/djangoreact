@@ -13,7 +13,7 @@ function QueryList({data, heading}:Props) {
     if(!data){
         return <div>....</div>
     }
-    console.log(data);
+
 
     const object = data?.map((product: any)=>{
         return (

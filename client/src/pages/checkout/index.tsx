@@ -42,8 +42,6 @@ function Checkout() {
     const [loggedIn, setLoggedIn] = useState(token);
     const router = useRouter()
 
-    console.log(step);
-
 
     const handlePaymentMethodUpdate = (newPaymentMethod: PaymentMethod) => {
       setPaymentMethod(newPaymentMethod);

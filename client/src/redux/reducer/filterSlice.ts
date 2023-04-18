@@ -59,7 +59,7 @@ export const filterMethod = createAsyncThunk(
     async({filter_type, team_type, club}:{filter_type: string, team_type: string, club: string}, {rejectWithValue})=> {
         try{
             const response = await filter({filter_type,team_type,club})
-            console.log(response);
+
             return response.data
         }catch(error){
             return rejectWithValue(error)
@@ -120,7 +120,7 @@ export const getAvgReview = createAsyncThunk(
     async({filter_type, product_id }:{filter_type: string, product_id: any}, {rejectWithValue})=> {
         try{
             const response = await get_avg_review({filter_type, product_id })
-            console.log(response);
+
             return response.data
         }catch(error){
             return rejectWithValue(error)

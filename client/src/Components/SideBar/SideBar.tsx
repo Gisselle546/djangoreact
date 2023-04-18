@@ -64,7 +64,7 @@ function SideBarItems({show}:Props){
     const router = useRouter()
     const { state } = useStore()
     const token = useAppSelector(tokenValue);
-    console.log(token, 'token');
+    
     let cart = state.cart;
 
     const handleClick = (data: string) =>{

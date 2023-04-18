@@ -18,8 +18,6 @@ function Footwear() {
       footwear()
     },[footwear])
 
-    console.log(value);
-
   return (
     <PageTemplate>
       <QueryList data={value} heading={'Footwear'}/>

@@ -11,13 +11,10 @@ function SearchQuery() {
     const router = useRouter();
     const query = router.query.q;
 
-    console.log(query);
-
     const search_query = useCallback(()=>{
         dispatch(Search({searchterm: `${query}`}))
     },[dispatch,query])
 
-    console.log(value);
 
   useEffect(()=>{
     search_query()
