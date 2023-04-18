@@ -11,4 +11,5 @@ psycopg2-binary==2.9.3
 python-decouple==3.5
 python-dotenv==1.0.0
 requests==2.27.1
+stripe==2.63.0
 xmltodict==0.12.0
