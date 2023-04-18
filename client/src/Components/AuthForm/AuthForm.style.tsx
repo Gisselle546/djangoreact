@@ -6,6 +6,10 @@ export const FormBackground = styled('div')<{img: any}>`
     justify-content: flex-end;
     height: 100vh;
     width: 100vw;
+    @media (max-width: 900px) {
+        width: 100%;
+        height: 100%;
+    }
    
 
 `
