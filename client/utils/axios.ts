@@ -2,9 +2,12 @@ import axios from 'axios';
 import { deleteStorageValue, getStorageValue } from './storage';
 import { toast } from "react-toastify";
 
+export const isProduction = () => {
+  return  process.env.NODE_ENV === 'production';
+};
 
 const customFetch = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: isProduction() ? 'https://djangoreact-production.up.railway.app/':'http://127.0.0.1:8000',
   });
 
   customFetch.interceptors.request.use((config:any) => {
