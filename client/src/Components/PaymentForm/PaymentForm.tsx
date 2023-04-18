@@ -72,7 +72,7 @@ function PaymentForm({onPaymentMethodUpdate}: Props) {
               </CardElementWrapper>
             </div>
             <div>
-              <FormButton type="submit" disabled={processing}>
+              <FormButton type="submit" disabled={processing || fullName===''}>
                   {processing ? "Processing..." : "Next"}
               </FormButton>
             </div>

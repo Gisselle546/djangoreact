@@ -1,4 +1,6 @@
+from urllib.parse import urlparse
 from .base import *
+import dj_database_url
 import os
 
 DEBUG = False
@@ -9,6 +11,15 @@ DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", False)
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
+
+
+DATABASE_URL = os.getenv('DATABASE_URL')
+db_info = urlparse(DATABASE_URL)
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600),
+}
+
+DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
 
 LOGGING = {
     'version': 1,
