@@ -1,1 +1,1 @@
-web: python manage.py runserver --settings=backend.settings.prod
+web: gunicorn backend.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3 --log-level=info
