@@ -48,6 +48,11 @@ function ProductDetail() {
 
     const BigSpacing = styled.div`
     margin-bottom: 7.5rem;
+    @media (max-width: 908px) {
+      margin-bottom: 1.5rem;
+   }
+
+
   `
     const fetchProductDetails = useCallback(() => {
         dispatch(filterProductMethod({ filter_type: 'products', product_id: id }))

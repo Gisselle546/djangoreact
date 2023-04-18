@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SliderCard from '../SliderCard/SliderCard'
-import { SliderWrapper } from './Slider.style'
-import { AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai'
+import { ArrowRight, ArrowLeft, SliderWrapper } from './Slider.style'
+
 
 type Props = {
   data: any
@@ -34,6 +34,7 @@ function Slider({data}: Props ) {
 
 
   const prevPerson = () => {
+    console.log('clicked')
     setIndex((prevIndex) => {
       let newStartIndex = prevIndex - 1;
       if (newStartIndex < 0) {
@@ -67,11 +68,11 @@ function Slider({data}: Props ) {
   return (
     <>
     <SliderWrapper>
-    <AiOutlineArrowLeft size={30} style={{position: 'absolute', left:'0', top:'40%',verticalAlign:'middle', cursor: 'pointer'}} onClick={()=>prevPerson()}/>
+    <ArrowLeft onClick={()=>prevPerson()}/>
        
           {card}
      
-    <AiOutlineArrowRight size={30} style={{position: 'absolute', right: '0%',  top:'40%', verticalAlign:'middle', cursor: 'pointer'}} onClick={()=>nextPerson()}/>
+    <ArrowRight onClick={()=>nextPerson()}/>
     </SliderWrapper>
     </>
   )

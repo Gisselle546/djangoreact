@@ -20,6 +20,7 @@ export const PopularClubsHeading = styled.h1(
 
     @media (max-width: 768px) {
         font-size: ${typography.fontSize.heading3};
+        margin-top: 3rem;
       }
 `);
 
@@ -31,6 +32,7 @@ export const CardListWrapper = styled.div`
     height: 70rem;
     @media (max-width: 768px) {
         grid-template-columns: auto auto;
+        height: 60rem;
     }
     
 `

@@ -8,7 +8,7 @@ export const CartWrapper = styled.div(
     border: 2px solid ${color.sidebarHeader}
     height: 100vh;
     margin: 1rem;
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
        height: 100%;
        flex-direction: column;
        justify-content: space-between;
@@ -19,7 +19,7 @@ export const CartProductItem = styled.div`
 border: 2px solid #c7ecee;
 height: 60vh;
 width: 70%;
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     width: 100%;
  }
 
@@ -33,7 +33,7 @@ align-items: center;
 background: ${color.black};
 border-radius: 5px;
 width: 25%;
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     width: 100%;
     justify-content: center;
  }
@@ -97,7 +97,7 @@ export const MappedItemsContainer = styled.div`
 display: flex;
 justify-content: space-around;
 overflow: auto;
-@media (max-width: 768px) {
+@media (max-width: 900px) {
    padding: 0.2rem; 
     
  }

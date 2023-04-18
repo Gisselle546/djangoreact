@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai'
 
 export const SliderWrapper = styled.div`
     display: grid;
@@ -13,7 +14,7 @@ export const SliderWrapper = styled.div`
     @media (max-width: 900px) {
         grid-template-columns: auto auto;
         width:100%;
-        margin: 0.5rem;
+        margin-left: 0.5rem;
         grid-column-gap: 0px; 
         grid-row-gap: 20px;
       }
@@ -21,3 +22,56 @@ export const SliderWrapper = styled.div`
 `
 
 
+export const ArrowLeft = styled(AiOutlineArrowLeft)`
+position: absolute; 
+left: 0; 
+top: 40%;
+vertical-align: middle; 
+cursor: pointer;
+font-size: 1.5rem;
+
+&:hover {
+  color: #555;
+  transform: scale(1.1);
+}
+
+
+@media (max-width: 900px) {
+    color: #333;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    z-index:50;
+
+    &:hover {
+        color: #555;
+        transform: scale(1.1);
+    }
+  }
+`;
+
+export const ArrowRight = styled(AiOutlineArrowRight)`
+position: absolute; 
+right: 0; 
+top: 40%;
+vertical-align: middle; 
+cursor: pointer;
+font-size: 1.5rem;
+
+&:hover {
+  color: #555;
+  transform: scale(1.1);
+}
+
+@media (max-width: 900px) {
+    color: #333;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        color: #555;
+        transform: scale(1.1);
+    }
+  }
+`;
