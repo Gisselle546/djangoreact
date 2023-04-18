@@ -72,6 +72,7 @@ font-size: 16px;
 text-align: center;
 @media (max-width: 768px) {
     margin-top: 1rem;
+    justify-content: center;
  }
 `;
 

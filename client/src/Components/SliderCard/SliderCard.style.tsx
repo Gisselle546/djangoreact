@@ -24,9 +24,9 @@ export const ImageContainer =  styled('div')<{img: any}>`
     height: 30vh;
     width: 30vh;
     cursor: pointer;
-    @media (max-width: 768px) {
-        height: 7rem;
-        width: 7rem;
+    @media (max-width: 900px) {
+        max-height: 6rem;
+        max-width: 6rem;
       }
 `;
 
@@ -45,7 +45,7 @@ export const ButtonContainer = styled.button`
 
 export const Heading = styled.h4`
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     font-size: 0.5rem;
     max-width: 75%;
   }
