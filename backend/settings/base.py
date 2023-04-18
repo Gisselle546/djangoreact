@@ -170,5 +170,4 @@ MEDIA_URL ='/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = []
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']
+
