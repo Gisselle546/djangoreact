@@ -8,7 +8,6 @@ imap-tools==0.56.0
 Jinja2==3.0.3
 pillow
 psycopg2-binary==2.9.3
-psycopg2==2.7.7
 python-decouple==3.5
 python-dotenv==1.0.0
 requests==2.27.1
