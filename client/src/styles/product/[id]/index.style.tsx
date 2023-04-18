@@ -103,6 +103,7 @@ export const SizeChart = styled.p(
     cursor: pointer;
     @media (max-width: 768px) {
         font-size: ${typography.fontSize.bodyXS};
+        width: 95%;
      }
 
 `)

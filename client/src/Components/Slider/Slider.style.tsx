@@ -10,10 +10,12 @@ export const SliderWrapper = styled.div`
     margin: 1rem;
     max-width: 100%;
     overflow-x: hidden;
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
         grid-template-columns: auto auto;
-        grid-column-gap: 10px; 
-        grid-row-gap: 10px;
+        width:100%;
+        margin: 0.5rem;
+        grid-column-gap: 0px; 
+        grid-row-gap: 20px;
       }
 
 `

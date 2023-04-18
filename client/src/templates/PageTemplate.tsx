@@ -18,6 +18,10 @@ const Container = styled.div`
 
 const SideBarWrapper = styled.div`
     width: 7rem;
+    @media (max-width: 900px) {
+        width:0rem;
+     }
+
 `
 
 const ChildrenWrapper = styled.div`
