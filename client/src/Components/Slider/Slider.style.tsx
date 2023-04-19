@@ -38,10 +38,10 @@ font-size: 1.5rem;
 
 @media (max-width: 900px) {
     color: #333;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    z-index:50;
+    z-index:190;
 
     &:hover {
         color: #555;
@@ -65,7 +65,7 @@ font-size: 1.5rem;
 
 @media (max-width: 900px) {
     color: #333;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 
