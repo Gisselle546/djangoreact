@@ -12,7 +12,7 @@ export const HeaderContainer = styled.div(
         display: flex;
         justify-content: center;
         font-size: ${typography.fontSize.heading3};
-        color: #a9a9a9;
+        color: #9b2828;
         padding: 1.3rem;
         
     `);
@@ -69,7 +69,7 @@ export const StyledSelect = styled.select(
 
 export const FormButton = styled.button(
     ({ theme: {color} }) => css`
-    background-color: #a9a9a9; 
+    background-color: #9b2828; 
     cursor: pointer;
     border: none;
     color: white;

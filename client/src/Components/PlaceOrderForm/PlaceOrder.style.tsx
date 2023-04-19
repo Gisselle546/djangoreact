@@ -27,7 +27,7 @@ export const OrderSummaryWrapper = styled.div(
 
 export const FormButton = styled.button(
     ({ theme: {color} }) => css`
-    background-color: #a9a9a9; 
+    background-color: #9b2828; 
     cursor: pointer;
     border: none;
     color: white;
@@ -100,7 +100,7 @@ export const PriceContainer = styled.div`
 `;
 
 export const ItemImageContainer =  styled('div')<{img: any}>`
-    border: 1px solid #a9a9a9;
+    border: 1px solid #9b2828;
     background:url(${(props: any) => props.img}) center/cover;
     height: 10vh;
     width: 10vh;

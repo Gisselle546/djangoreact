@@ -40,7 +40,7 @@ export const ButtonContainer = styled.button`
     cursor: pointer;
     background-color: #c7ecee; 
     border: none;
-    color: #a9a9a9;
+    color: #9b2828;
 `;
 
 export const Heading = styled.h4`

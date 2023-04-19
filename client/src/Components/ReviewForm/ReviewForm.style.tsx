@@ -29,7 +29,7 @@ export const InputWrapper = styled.input(
 export const ReviewHeader = styled.div(
     ({ theme: {color, typography} }) => css`
     font-size: ${typography.fontSize.heading4};
-    color: #a9a9a9;
+    color: #9b2828;
 
     `
 );
@@ -51,7 +51,7 @@ export const TextArea = styled.textarea(
 export const ButtonContainer = styled.button`
 background-color: #c7ecee; 
 border: none;
-color: #a9a9a9;
+color: #9b2828;
 display: flex;
 padding: 1rem;
 text-decoration: none;

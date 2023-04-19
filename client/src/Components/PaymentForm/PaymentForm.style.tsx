@@ -78,7 +78,7 @@ export const Money = styled.div(
 
 export const FormButton = styled.button(
     ({ theme: {color} }) => css`
-    background-color: #a9a9a9; 
+    background-color: #9b2828; 
     cursor: pointer;
     border: none;
     color: white;

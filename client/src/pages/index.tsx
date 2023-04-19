@@ -21,10 +21,13 @@ const bannerarr = [
 
 const Spacing = styled.div`
   margin-bottom: 4.5rem;
+  @media (max-width: 900px){
+    margin-bottom: 1.5rem;
+  }
 `
 
 const SmallSpacing = styled.div`
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 `
 
 const Container = styled.div`

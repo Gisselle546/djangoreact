@@ -15,7 +15,7 @@ height: 7rem;
 export const ButtonContainer = styled.button`
   background-color: #c7ecee; 
   border: none;
-  color: #a9a9a9;
+  color: #9b2828;
   display: flex;
   padding: 1rem;
   text-decoration: none;

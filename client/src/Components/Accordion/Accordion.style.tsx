@@ -57,7 +57,7 @@ export const Header = styled.div(
 
 export const Innerheader = styled.h2(
   ({ theme: {color, typography} }) => css`
-  color: #a9a9a9;
+  color: #9b2828;
   @media (max-width: 768px) {
     font-size: ${typography.fontSize.body};
     width: 70%;

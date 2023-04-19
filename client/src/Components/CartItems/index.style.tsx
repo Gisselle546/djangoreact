@@ -62,7 +62,7 @@ export const CartHeaderLength = styled.h2(
     ({ theme: {typography} }) => css`
       font-size: ${typography.fontSize.heading4};
       font-weight: ${typography.fontWeight.bold};
-      color: #a9a9a9;
+      color: #9b2828;
       margin-left: 1rem;
      
     `
@@ -72,7 +72,7 @@ export const CartHeaderLength = styled.h2(
 export const ButtonContainer = styled.button`
 background-color: #c7ecee; 
 border: none;
-color: #a9a9a9;
+color: #9b2828;
 display: flex;
 padding: 1rem;
 margin: 1rem;
@@ -109,7 +109,7 @@ export const MappedWrapper = styled.div`
 `
 
 export const ItemImageContainer =  styled('div')<{img: any}>`
-    border: 2px solid #a9a9a9;
+    border: 2px solid #9b2828;
     background:url(${(props: any) => props.img}) center/cover;
     height: 10vh;
     width: 10vh;

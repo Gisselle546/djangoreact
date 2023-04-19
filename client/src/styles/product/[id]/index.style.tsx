@@ -62,7 +62,7 @@ export const ProductHeaders =  styled.div(
 export const ButtonContainer = styled.button`
 background-color: #c7ecee; 
 border: none;
-color: #a9a9a9;
+color: #9b2828;
 display: flex;
 padding: 1rem;
 text-decoration: none;
@@ -73,6 +73,7 @@ text-align: center;
 @media (max-width: 768px) {
     margin-top: 1rem;
     justify-content: center;
+    
  }
 `;
 

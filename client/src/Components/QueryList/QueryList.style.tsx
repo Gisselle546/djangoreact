@@ -5,6 +5,8 @@ import styled,{css} from 'styled-components'
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
+
+
    
    
 `;
@@ -28,10 +30,11 @@ export const CardListWrapper = styled.div`
     justify-content: space-around;
     align-content: space-evenly;
     height: 50rem;
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
         display: flex;
         flex-direction: column;
-        
+        justify-content: space-between;
+        align-items:center;
      }
     
 `
