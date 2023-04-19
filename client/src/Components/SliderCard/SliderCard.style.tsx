@@ -13,7 +13,8 @@ export const SliderContainer =  styled.div`
         transform: scale(1.1);
     }
     @media (max-width: 900px) {
-       width: 100%;
+        max-width:11rem;
+        max-height:12rem;
       
       }
 `;
@@ -47,7 +48,6 @@ export const Heading = styled.h4`
 
 @media (max-width: 900px) {
     font-size: 0.5rem;
-    max-width: 75%;
   }
 
 `

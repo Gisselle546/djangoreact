@@ -4,18 +4,18 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai'
 export const SliderWrapper = styled.div`
     display: grid;
     height: 30rem;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: repeat(4, 1fr);
     justify-content: space-around;
     align-content: center;
     overflow: hidden;
-    margin: 1rem;
-    max-width: 100%;
+    grid-column-gap: 40px;
     overflow-x: hidden;
     @media (max-width: 900px) {
-        grid-template-columns: auto auto;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 20px;
         width:100%;
         margin-left: 0.5rem;
-        grid-column-gap: 0px; 
+        grid-column-gap: 20px; 
         grid-row-gap: 20px;
       }
 

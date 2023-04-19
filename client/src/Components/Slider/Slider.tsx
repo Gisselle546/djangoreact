@@ -66,15 +66,15 @@ function Slider({data}: Props ) {
   
 
   return (
-    <>
-    <SliderWrapper>
+    <div style={{display: 'flex', justifyContent:'space-evenly'}}>
     <ArrowLeft onClick={()=>prevPerson()}/>
+    <SliderWrapper>
        
           {card}
      
-    <ArrowRight onClick={()=>nextPerson()}/>
     </SliderWrapper>
-    </>
+    <ArrowRight onClick={()=>nextPerson()}/>
+    </div>
   )
 }
 
