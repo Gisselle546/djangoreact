@@ -70,9 +70,11 @@ text-transform: capitalize;
 cursor: pointer;
 font-size: 16px;
 text-align: center;
+justify-content: center;
 @media (max-width: 768px) {
     margin-top: 1rem;
     justify-content: center;
+    font-weight: bold;
     
  }
 `;

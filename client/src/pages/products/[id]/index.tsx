@@ -16,6 +16,7 @@ import ReviewForm from '@/Components/ReviewForm/ReviewForm';
 import { toast } from "react-toastify";
 
 
+
 type Props ={
   product : any,
   details: any
@@ -124,7 +125,9 @@ function ProductDetail() {
             <SelectOptionWrapper>
             <SelectOption quantity={quantity} onIncrement={(e:any) => setQuanity(+e.target.value)}/>
             </SelectOptionWrapper>
+            
             <ButtonContainer onClick={handleItem}>Add to Cart</ButtonContainer>
+            
           </ProductDetails>
         </ProductSubContainer>
       )
