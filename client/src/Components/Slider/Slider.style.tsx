@@ -41,7 +41,7 @@ font-size: 1.5rem;
     font-size: 1.3rem;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    z-index:190;
+    z-index:999;
 
     &:hover {
         color: #555;
