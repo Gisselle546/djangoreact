@@ -8,7 +8,8 @@ export const FormBackground = styled('div')<{img: any}>`
     width: 100vw;
     @media (max-width: 900px) {
         width: 100%;
-        height: 100%;
+        justify-content: center;
+        height: 100vh;
     }
    
 
@@ -27,7 +28,7 @@ export const FormContainer = styled.div`
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     @media (max-width: 900px) {
         width: 100%;
-        height: 100%;
+        height: 90%;
     }
     
    
