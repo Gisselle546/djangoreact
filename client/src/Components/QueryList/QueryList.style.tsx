@@ -24,16 +24,18 @@ export const PopularClubsHeading = styled.h1(
      }
 `);
 
-export const CardListWrapper = styled.div`
+export const CardListWrapper = styled.div<{data: any}>`
     display: grid;
     grid-template-columns: auto auto auto auto;
-    justify-content: space-around;
+    justify-content: ${({ data }) => data.length === 1 ? "center" : "space-around"};
     align-content: space-evenly;
     height: 50rem;
     @media (max-width: 900px) {
+        margin-top: 0rem;
+        height: 40rem;
+        justify-content: ${({ data }) => data.length === 1 ? "flex-start" : "space-around"};
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         align-items:center;
      }
     

@@ -24,7 +24,7 @@ export const SliderWrapper = styled.div`
 
 export const ArrowLeft = styled(AiOutlineArrowLeft)`
 position: absolute; 
-left: 0; 
+left: 4%; 
 top: 40%;
 vertical-align: middle; 
 cursor: pointer;
@@ -52,7 +52,7 @@ font-size: 1.5rem;
 
 export const ArrowRight = styled(AiOutlineArrowRight)`
 position: absolute; 
-right: 0; 
+right: 4%; 
 top: 40%;
 vertical-align: middle; 
 cursor: pointer;

@@ -26,9 +26,11 @@ function QueryList({data, heading}:Props) {
   return (
     <Container>
         <PopularClubsHeading>{heading}</PopularClubsHeading>
-        <CardListWrapper>
+    
+        <CardListWrapper data={data}>
             {object}
         </CardListWrapper>
+    
     </Container>
   )
 }
