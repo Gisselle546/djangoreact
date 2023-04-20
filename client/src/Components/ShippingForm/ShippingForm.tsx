@@ -49,7 +49,7 @@ function ShippingForm({onShipping}: Props) {
                 {formik.errors.street_address && <div>{formik.errors.street_address}</div> }
                 <InputWrapper type="text" name="city" value={formik.values.city} onChange={formik.handleChange}placeholder="Enter city"/>
                 {formik.errors.city && <div>{formik.errors.city}</div> }
-                <InputWrapper type="text" name="state" value={formik.values.state} onChange={formik.handleChange}placeholder="Enter city"/>
+                <InputWrapper type="text" name="state" value={formik.values.state} onChange={formik.handleChange}placeholder="Enter state"/>
                 {formik.errors.state && <div>{formik.errors.state}</div> }
                 <InputWrapper type="text" name="zip_code" value={formik.values.zip_code} onChange={formik.handleChange}placeholder="Enter zip code"/>
                 {formik.errors.zip_code && <div>{formik.errors.zip_code}</div> }

@@ -10,6 +10,7 @@ import PromoInput from '../PromoInput/PromoInput';
 import { toast } from "react-toastify";
 import customFetch from '../../../utils/axios';
 import { getStorageLocal } from '../../../utils/storage';
+import {  useRouter } from 'next/router';
 
 
 interface PaymentInfo {
@@ -34,7 +35,7 @@ function PlaceOrderForm({ paymentMethod, stripePromise }: Props) {
   const { state, clearAll } = useStore()
   const dispatch = useAppDispatch()
   const [correct, setCorrect] = useState()
-
+  const router = useRouter();
   let itemsPrice = state.cart.reduce((acc: any, item: any) => acc + item.quantity * item.details.price, 0).toFixed(2)
   let shippingPrice = (itemsPrice < 250 ? 0 : 10).toFixed(2)
   let taxPrice = Number((0.082) * itemsPrice).toFixed(2)
@@ -88,6 +89,7 @@ function PlaceOrderForm({ paymentMethod, stripePromise }: Props) {
           )
           clearAll();
           toast.success('Order submitted successfully!')
+          router.push('/');
       } catch (error) {
         toast.error('An error occurred while submitting the order. Please try again later.')
       } 
