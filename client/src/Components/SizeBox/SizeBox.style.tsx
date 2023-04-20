@@ -33,8 +33,9 @@ export const ButtonContainer = styled.button`
     color: #f1f1f1;
     cursor: not-allowed;
   }
-  @media (max-width: 768px) {
-    width: 5rem;
+  @media (max-width: 900px) {
+    justify-content: center;
+    font-weight: bold;
   }
   `
   
