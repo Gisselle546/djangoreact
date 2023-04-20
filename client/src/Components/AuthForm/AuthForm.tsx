@@ -64,9 +64,9 @@ function AuthForm({type}: Props) {
           <FormBody> 
             
             <InputWrapper type="email" name="email" value={formik.values.email} onChange={formik.handleChange} placeholder="Enter Email Address"/>
-            {formik.errors.email || errorValue? <div>{formik.errors.email}</div> : null}
+            {formik.errors.email || errorValue? <div style={{color: '#AB1822'}}>{formik.errors.email}</div> : null}
             <InputWrapper type="password" name="password" value={formik.values.password} onChange={formik.handleChange}placeholder="Enter Password"/>
-            {formik.errors.password || errorValue? <div>{formik.errors.password}</div> : null}
+            {formik.errors.password || errorValue? <div style={{color: '#AB1822'}}>{formik.errors.password}</div> : null}
           </FormBody>
           <FormButton type='submit'>{type} </FormButton>
           <div style={{cursor:'pointer'}} onClick={()=>handleClick(link)}>{register}&rarr;</div>
