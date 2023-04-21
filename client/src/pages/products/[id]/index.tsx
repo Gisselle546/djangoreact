@@ -30,6 +30,7 @@ function ProductDetail() {
     const stars = useAppSelector(avgReview);
     const user = useAppSelector(tokenValue);
     const {addCart} = useStore();
+    const[starry, setStarry] = useState<any>()
 
 
     useEffect(() => {
@@ -55,6 +56,12 @@ function ProductDetail() {
 
 
   `
+
+  useEffect(()=>{
+    (!stars)?null:
+    setStarry(stars);
+  },[stars])
+
     const fetchProductDetails = useCallback(() => {
         dispatch(filterProductMethod({ filter_type: 'products', product_id: id }))
         dispatch(getAvgReview({ filter_type: 'products', product_id: id }))
@@ -145,7 +152,7 @@ function ProductDetail() {
             <ProductBottom>
             <Spacing/>
             <ProductInfo>
-              <Accordion title={`Reviews (${product.review.length}) `} stars={stars.average_rating}content={product.review} clicked={clickHandler}/>
+              <Accordion title={`Reviews (${product.review.length}) `} stars={starry?.average_rating}content={product.review} clicked={clickHandler}/>
               <Accordion title={"Details"} content={product.details}/>
               <Accordion title={"Description"} content={product.description}/>
               <Accordion title={"Highlights"} content={product.highlights}/>

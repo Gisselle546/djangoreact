@@ -129,6 +129,7 @@ export const getAvgReview = createAsyncThunk(
 )
 
 
+
 export const filterSlice = createSlice({
     name: 'filter',
     initialState,
@@ -137,20 +138,24 @@ export const filterSlice = createSlice({
         builder
             .addCase(filterMethod.pending, (state)=>{
                 state.status = 'loading';
+                
             })
             .addCase(filterMethod.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.filter_data_general = action.payload
+                state.error= null
             })
             .addCase(filterMethod.rejected, (state, action) => {
                 state.error = action.payload
             })
             .addCase(filterMethodPlayer.pending, (state)=>{
                 state.status = 'loading';
+                
             })
             .addCase(filterMethodPlayer.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.filter_data_player = action.payload
+                state.error= null
             })
             .addCase(filterMethodPlayer.rejected, (state, action) => {
                 state.error = action.payload
@@ -161,6 +166,7 @@ export const filterSlice = createSlice({
             .addCase(filterProductMethod.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.filter_product = action.payload
+                state.error= null
             })
             .addCase(filterProductMethod.rejected, (state, action) => {
                 state.error = action.payload
@@ -171,6 +177,7 @@ export const filterSlice = createSlice({
             .addCase(filterPlayerQuery.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.filter_data_player = action.payload
+                state.error= null
             })
             .addCase(filterPlayerQuery.rejected, (state, action) => {
                 state.error = action.payload
@@ -181,6 +188,7 @@ export const filterSlice = createSlice({
             .addCase(getAvgReview.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.avg_review_rating = action.payload
+                state.error= null
             })
             .addCase(getAvgReview.rejected, (state, action) => {
                 state.error = action.payload
@@ -191,6 +199,7 @@ export const filterSlice = createSlice({
             .addCase(Search.fulfilled, (state, action)=>{
                 state.status = 'idle';
                 state.search = action.payload
+                state.error= null
             })
             .addCase(Search.rejected, (state, action) => {
                 state.error = action.payload
