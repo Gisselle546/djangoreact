@@ -34,7 +34,6 @@ function Slider({data}: Props ) {
 
 
   const prevPerson = () => {
-    console.log('clicked')
     setIndex((prevIndex) => {
       let newStartIndex = prevIndex - 1;
       if (newStartIndex < 0) {
