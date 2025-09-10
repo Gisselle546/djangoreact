@@ -1,52 +1,38 @@
-import { useState, useEffect } from "react";
-
-export function getStorageValue(key: string, defaultValue?: any) {
-  // getting stored value
-  if (typeof window !== 'undefined') {
-const saved = JSON.parse(sessionStorage.getItem(key)!)
-return saved || defaultValue;
+function safeParse<T>(raw: string | null, fallback?: T): T | undefined {
+  if (raw == null) return fallback;
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return fallback;
   }
 }
 
-export function setStorageValue(key: string, defaultValue: any) {
-    // getting stored value
-    if (typeof window !== 'undefined') {
-    sessionStorage.setItem(key, JSON.stringify(defaultValue));
- 
-    }
-  }
-
-export const useLocalStorage = (key: string, defaultValue: any) => {
-  const [value, setValue] = useState(() => {
-return getStorageValue(key, defaultValue);
-  });
-
-  useEffect(() => {
-// storing input name
-    sessionStorage.setItem(key, value);
-  }, [key, value]);
-
-  return [value, setValue];
-};
-
-export function deleteStorageValue(key?: string, defaultValue?: any){
-  if (typeof window !== 'undefined') {
-    sessionStorage.clear();
-  }
+export function getSessionValue<T>(key: string, fallback?: T): T | undefined {
+  if (typeof window === "undefined") return fallback;
+  return safeParse<T>(sessionStorage.getItem(key), fallback);
 }
 
-export function getStorageLocal(key: string, defaultValue?: any) {
-  // getting stored value
-  if (typeof window !== 'undefined') {
-const saved = JSON.parse(localStorage.getItem(key)!)
-return saved || defaultValue;
-  }
+export function setSessionValue<T>(key: string, value: T): void {
+  if (typeof window === "undefined") return;
+  sessionStorage.setItem(key, JSON.stringify(value));
 }
 
-export function setStorageLocal(key: string, defaultValue: any) {
-    // getting stored value
-    if (typeof window !== 'undefined') {
-    localStorage.setItem(key, JSON.stringify(defaultValue));
- 
-    }
+export function removeSessionValue(key: string): void {
+  if (typeof window === "undefined") return;
+  sessionStorage.removeItem(key);
+}
+
+export function getLocalValue<T>(key: string, fallback?: T): T | undefined {
+  if (typeof window === "undefined") return fallback;
+  return safeParse<T>(localStorage.getItem(key), fallback);
+}
+
+export function setLocalValue<T>(key: string, value: T): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+export function removeLocalValue(key: string): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(key);
 }
