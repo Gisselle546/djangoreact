@@ -8,7 +8,6 @@ import {
   filterPlayer,
   filterValue,
 } from "@/redux/reducer/filterSlice";
-import Image from "next/image";
 import first from "../assets/images/messi-1-min.jpg";
 import second from "../assets/images/NikeMercurialDream.png";
 import third from "../assets/images/M181.jpeg";

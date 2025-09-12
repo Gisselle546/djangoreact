@@ -15,8 +15,7 @@ type Props = {
 
 function SliderCard({ data }: Props) {
   const router = useRouter();
-  const { name, primary_image, product_id, image_url, first_name, last_name } =
-    data;
+  const { name, primary_image, product_id } = data;
 
   const handleClick = () => {
     router.push(`/products/${product_id}`);

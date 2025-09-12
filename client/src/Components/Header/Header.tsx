@@ -7,7 +7,6 @@ import { FiShoppingCart } from "react-icons/fi";
 
 import { useStore } from "@/context/cart";
 import Link from "next/dist/client/link";
-import { Search } from "@/redux/reducer/filterSlice";
 import Searchbar from "../Searchbar/Searchbar";
 
 function HeaderContainer() {
@@ -22,9 +21,6 @@ function HeaderContainer() {
   const count = mounted
     ? state.cart.reduce((sum, item) => sum + item.quantity, 0)
     : 0;
-  const handleClick = (data: string) => {
-    router.push(`/${data}`);
-  };
 
   return (
     <header className="sticky top-0 z-40 border-b border-emerald-600 backdrop-blur">

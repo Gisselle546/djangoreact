@@ -3,12 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import {
-  Search, // <-- unified /products/search-results/?query=
-  filterSearch,
-  selectStatus,
-  error as selectError,
-} from "@/redux/reducer/filterSlice";
+import { Search, filterSearch } from "@/redux/reducer/filterSlice";
 import QueryList from "@/Components/QueryList/QueryList";
 
 export default function SearchAppPage() {
@@ -20,11 +15,9 @@ export default function SearchAppPage() {
 
   const dispatch = useAppDispatch();
   const data = useAppSelector(filterSearch);
-  const status = useAppSelector(selectStatus);
-  const err = useAppSelector(selectError);
 
   useEffect(() => {
-    if (q) dispatch(Search({ searchterm: q })); // <-- unified endpoint
+    if (q) dispatch(Search({ searchterm: q }));
   }, [dispatch, q]);
 
   const heading =
