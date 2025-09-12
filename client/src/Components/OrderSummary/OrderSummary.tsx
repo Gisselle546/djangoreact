@@ -2,9 +2,9 @@
 
 import { useStore } from "@/context/cart";
 
-const FREE_SHIP_THRESHOLD = 10000; // $100.00
-const FLAT_SHIP = 500; // $5.00
-const TAX_RATE = 0.085; // 8.5% (replace with your real rate or prop)
+const FREE_SHIP_THRESHOLD = 10000;
+const FLAT_SHIP = 500;
+const TAX_RATE = 0.085;
 
 const toNumber = (p: unknown) =>
   typeof p === "number" ? p : Number(String(p).replace(/[^0-9.-]/g, "")) || 0;
@@ -20,11 +20,10 @@ function OrderSummary() {
   const { state } = useStore();
 
   const subtotalCents = state.cart.reduce((sum, item) => {
-    const unit = toCents(item.data.price); // price can be string or number
+    const unit = toCents(item.data.price);
     return sum + unit * item.quantity;
   }, 0);
 
-  // Shipping: free over threshold, else flat; $0 for empty cart
   const shippingCents =
     subtotalCents === 0
       ? 0
@@ -32,14 +31,12 @@ function OrderSummary() {
       ? 0
       : FLAT_SHIP;
 
-  // Simple tax: subtotal * rate (adjust if you tax shipping too)
   const taxCents = Math.round(subtotalCents * TAX_RATE);
 
   const totalCents = subtotalCents + shippingCents + taxCents;
 
   return (
     <aside className="lg:col-span-4">
-      {/* Sticky on desktop */}
       <div className="lg:sticky lg:top-24">
         <div>
           <h2 className="mb-4 text-lg font-medium">Order Summary</h2>

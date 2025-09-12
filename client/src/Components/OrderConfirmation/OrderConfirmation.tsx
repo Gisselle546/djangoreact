@@ -8,7 +8,7 @@ type OrderItem = {
   name: string;
   sizeLabel?: string;
   quantity: number;
-  price: number; // unit price
+  price: number;
   image?: string;
 };
 

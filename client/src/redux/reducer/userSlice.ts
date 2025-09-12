@@ -11,12 +11,11 @@ import { register } from "../action/register";
 import { login } from "../action/login";
 
 export interface AuthState {
-  token: string; // always a string here
+  token: string;
   status: "idle" | "loading" | "failed";
   error: string | null;
 }
 
-// Normalize anything we might have stored previously (object/string/undefined)
 const readInitialToken = (): string => {
   const raw = getSessionValue("token");
   if (!raw) return "";
@@ -76,7 +75,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // register
+
       .addCase(registerUser.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -91,7 +90,6 @@ export const userSlice = createSlice({
         state.error = (action.payload as string) ?? "Registration failed";
       })
 
-      // login
       .addCase(loginUser.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -108,7 +106,6 @@ export const userSlice = createSlice({
   },
 });
 
-/* ---------------- Selectors ---------------- */
 export const selectAuthState = (state: AppState) => state.auth;
 export const selectAuthToken = (state: AppState) => state.auth.token;
 export const selectIsAuthenticated = (state: AppState) =>
@@ -116,10 +113,8 @@ export const selectIsAuthenticated = (state: AppState) =>
 export const selectAuthError = (state: AppState) => state.auth.error;
 export const selectAuthStatus = (state: AppState) => state.auth.status;
 
-// (kept for backward compatibility if you used tokenValue/error before)
 export const tokenValue = selectAuthToken;
 export const error = selectAuthError;
 
-/* ---------------- Exports ---------------- */
 export const { logout } = userSlice.actions;
 export default userSlice.reducer;

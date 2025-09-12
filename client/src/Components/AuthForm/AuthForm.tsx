@@ -37,7 +37,7 @@ export default function AuthForm({ type }: Props) {
     onSubmit: async (values) => {
       const thunk: any = isSignIn ? loginUser(values) : registerUser(values);
       await dispatch(thunk);
-      // Keep your existing behavior (navigate back then hard refresh).
+
       router.back();
       setTimeout(() => window.location.reload(), 1000);
     },
@@ -52,7 +52,6 @@ export default function AuthForm({ type }: Props) {
         aria-hidden
       />
 
-      {/* Page frame & gutters */}
       <div className="relative flex min-h-[100svh] items-center justify-center px-4 sm:px-6 lg:px-8">
         <form onSubmit={formik.handleSubmit} className="w-full max-w-md">
           {/* Card */}
@@ -63,7 +62,6 @@ export default function AuthForm({ type }: Props) {
               <span>{type}</span>
             </div>
 
-            {/* Global error (from Redux) */}
             {errorValue ? (
               <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
                 {typeof errorValue === "string"
@@ -72,7 +70,6 @@ export default function AuthForm({ type }: Props) {
               </div>
             ) : null}
 
-            {/* Form Body */}
             <div className="space-y-4">
               <div>
                 <label
@@ -152,7 +149,6 @@ export default function AuthForm({ type }: Props) {
             </div>
           </div>
 
-          {/* Small footer helper (optional) */}
           <p className="mt-4 text-center text-xs text-neutral-300">
             By continuing, you agree to our Terms & Privacy Policy.
           </p>

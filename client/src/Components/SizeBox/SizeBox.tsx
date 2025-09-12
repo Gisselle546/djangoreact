@@ -14,15 +14,8 @@ export type VariantInput = {
   size: SizeLike;
 };
 
-/**
- * Back-compat: ProductClient's handler can accept
- * - a string (legacy)
- * - an object that has `size` (preferred now)
- * - or a plain SizeLike
- */
 export type SizeOption = string | { size: SizeLike } | SizeLike;
 
-/** ---- Apparel ordering helpers ---- */
 const ORDER = ["XS", "S", "M", "L", "XL", "XXL"] as const;
 type ApparelCode = (typeof ORDER)[number];
 
@@ -37,46 +30,40 @@ function toApparelCode(str: string): ApparelCode | undefined {
   return undefined;
 }
 
-/** ---- Label + numeric parsing ---- */
 const rawLabel = (sz: SizeLike) =>
   sz.label ?? sz.size ?? sz.name ?? sz.slug ?? String(sz.id);
 
-// Replace your current toNumber with this:
 const toNumber = (label: string) => {
   const s = String(label).trim();
-  // If there are no digits at all, it's not numeric (e.g., "Small")
+
   if (!/[0-9]/.test(s)) return undefined;
 
-  // normalize unicode half "½" to ".5" (optional, nice for "7½")
   const normalized = s.replace(/½/g, ".5");
 
   const cleaned = normalized.replace(/[^0-9.]/g, "");
-  // guard weird cases like "." only
+
   if (cleaned === "" || cleaned === ".") return undefined;
 
   const n = Number(cleaned);
   return Number.isFinite(n) ? n : undefined;
 };
 
-/** ---- Build UI items (dedupe + sort) ---- */
 type Item = {
   id: number | string;
-  label: string; // what we display
-  norm?: ApparelCode; // normalized apparel code if applicable
-  value?: number; // numeric value if it's a shoe size
+  label: string;
+  norm?: ApparelCode;
+  value?: number;
   inventory: number;
-  size: SizeLike; // keep original for onChange/variant mapping
+  size: SizeLike;
 };
 
 function buildItems(variants: VariantInput[]): Item[] {
-  // Probe: are these mostly numeric sizes?
   const labels = variants.map((v) => rawLabel(v.size));
   const numericCount = labels
     .map(toNumber)
     .filter((n) => n !== undefined).length;
-  const isShoe = numericCount >= Math.ceil(labels.length * 0.6); // heuristic
+  const isShoe = numericCount >= Math.ceil(labels.length * 0.6);
 
-  // Group by key (apparel: normalized code; shoes: numeric string)
   const map = new Map<string, Item>();
 
   for (const v of variants) {
@@ -112,7 +99,6 @@ function buildItems(variants: VariantInput[]): Item[] {
 
   const items = Array.from(map.values());
 
-  // Sort: shoes by numeric asc; apparel by ORDER; fallback alpha
   if (items.some((i) => i.value !== undefined)) {
     items.sort(
       (a, b) =>
@@ -133,20 +119,18 @@ function buildItems(variants: VariantInput[]): Item[] {
   return items;
 }
 
-/** ---- Selection equality (supports string or object) ---- */
 function selectionEquals(sel: SizeOption | undefined, item: Item): boolean {
   if (!sel) return false;
 
-  // helper to compare any free-form label to the item (handles apparel & numeric)
   const matchesByLabel = (label: string) => {
     const a = label.toLowerCase();
     const b = item.label.toLowerCase();
-    // apparel-aware: "Small" -> "S"
+
     const codeA = toApparelCode(label);
     if (item.norm && codeA) {
-      return codeA === item.norm; // "Small" vs item.norm="S"
+      return codeA === item.norm;
     }
-    // fallback: direct label compare ("8.5" vs "8.5", or "L" vs "L")
+
     return a === b;
   };
 
@@ -154,23 +138,20 @@ function selectionEquals(sel: SizeOption | undefined, item: Item): boolean {
     return matchesByLabel(sel);
   }
 
-  // If it's the wrapped { size } shape
   const maybeWrap = (sel as any).size as SizeLike | undefined;
   if (maybeWrap) {
     if (maybeWrap.id != null && String(maybeWrap.id) === String(item.id)) {
-      return true; // fastest path when ids line up
+      return true;
     }
     const sLabel = rawLabel(maybeWrap);
     return matchesByLabel(sLabel);
   }
 
-  // Plain SizeLike
   const s = sel as SizeLike;
   if (s.id != null && String(s.id) === String(item.id)) return true;
   return matchesByLabel(rawLabel(s));
 }
 
-/** ---- Component ---- */
 export default function SizeBox({
   variants,
   selected,
@@ -221,7 +202,7 @@ export default function SizeBox({
                 disabled={soldOut}
               />
               <span
-                onClick={() => !soldOut && onChange({ size: item.size })} // return richer selection
+                onClick={() => !soldOut && onChange({ size: item.size })}
                 className={[
                   "inline-flex min-w-[3rem] items-center justify-center rounded-lg border px-3 py-2 text-sm select-none",
                   soldOut
@@ -230,7 +211,7 @@ export default function SizeBox({
                   checked
                     ? "border-emerald-600 ring-2 ring-emerald-600"
                     : "border-slate-300",
-                  // numeric sizes line up nicely
+
                   item.value !== undefined ? "tabular-nums" : "",
                 ].join(" ")}
                 aria-label={`${item.label}${soldOut ? " (Sold out)" : ""}`}

@@ -72,7 +72,6 @@ export default function Card({ data }: Props) {
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600
       "
     >
-      {/* Media */}
       <div className="relative overflow-hidden rounded-t-2xl">
         <div className="relative h-52 bg-emerald-50">
           <Image
@@ -85,7 +84,7 @@ export default function Card({ data }: Props) {
           />
         </div>
       </div>
-      {/* Body */}
+
       <div className="p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
@@ -99,7 +98,6 @@ export default function Card({ data }: Props) {
             )}
           </div>
 
-          {/* Minimal chevron (no label text) */}
           <span
             className="
               mt-1 inline-flex h-6 w-6 items-center justify-center
@@ -123,7 +121,6 @@ export default function Card({ data }: Props) {
         </div>
       </div>
 
-      {/* Subtle inset outline on hover */}
       <div
         className="
           pointer-events-none absolute inset-0 rounded-2xl

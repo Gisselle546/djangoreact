@@ -5,7 +5,7 @@ import Image, { StaticImageData } from "next/image";
 
 type BannerItem = {
   name: string;
-  image: string | StaticImageData; // allow hosted URLs or imported images
+  image: string | StaticImageData;
   heading: string;
   url?: string;
 };

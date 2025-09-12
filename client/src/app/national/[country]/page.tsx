@@ -14,7 +14,7 @@ function NationalQuery() {
 
   useEffect(() => {
     if (!country) return;
-    // Your backend filters products by team/country via ?q=
+
     dispatch(
       filterMethod({ filter_type: "products", team_type: "q", club: country })
     );

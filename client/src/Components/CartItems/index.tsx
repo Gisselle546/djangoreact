@@ -37,7 +37,6 @@ function CartItems() {
                 </tr>
               </thead>
 
-              {/* Card-like rows with gaps */}
               <tbody
                 className="
         [&>tr]:bg-white [&>tr]:shadow-sm [&>tr]:border [&>tr]:border-slate-200
@@ -74,12 +73,10 @@ function CartItems() {
                         </div>
                       </td>
 
-                      {/* Size (hidden on xs to save space) */}
                       <td className="hidden sm:table-cell text-slate-700">
                         {item.data.size?.label}
                       </td>
 
-                      {/* Quantity stepper */}
                       <td>
                         <div className="inline-flex items-center gap-2">
                           <button
@@ -102,17 +99,14 @@ function CartItems() {
                         </div>
                       </td>
 
-                      {/* Unit price */}
                       <td className="text-right tabular-nums">
                         ${unit.toFixed(2)}
                       </td>
 
-                      {/* Line total */}
                       <td className="text-right tabular-nums font-semibold">
                         ${(unit * item.quantity).toFixed(2)}
                       </td>
 
-                      {/* Actions */}
                       <td className="text-right">
                         <button
                           onClick={() => remove(item)}

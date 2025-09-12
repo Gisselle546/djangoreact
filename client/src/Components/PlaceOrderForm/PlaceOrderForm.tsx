@@ -17,7 +17,7 @@ import { getLocalValue } from "@/utils/storage";
 type Props = {
   paymentMethod: PaymentMethod;
   stripePromise: Promise<Stripe | null>;
-  onPlaced?: () => void; // parent uses this to advance to confirmation
+  onPlaced?: () => void;
 };
 
 const currency = (n: number) =>
@@ -37,7 +37,6 @@ export default function PlaceOrderForm({
   const [promoOk, setPromoOk] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // ---- order math from cart ----
   const summary = useMemo(() => {
     const items = state.cart ?? [];
     const subtotal = items.reduce(
@@ -51,12 +50,10 @@ export default function PlaceOrderForm({
     return { items, subtotal, shipping, tax, discount, total };
   }, [state.cart, promoOk]);
 
-  // ---- build payload your API expects ----
   const orderItems = useMemo(
     () =>
       summary.items.map((cur: any) => ({
-        // keep your previous shape (server expects product_variant + quantity)
-        product_variant: cur.data, // if server needs variant ID specifically, send { id: cur.data.variantId }
+        product_variant: cur.data,
         quantity: cur.quantity,
       })),
     [summary.items]

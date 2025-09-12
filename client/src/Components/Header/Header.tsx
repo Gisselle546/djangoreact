@@ -13,11 +13,9 @@ function HeaderContainer() {
   const router = useRouter();
   const { state } = useStore();
 
-  // 1) Only show client-derived values after mount
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  // 2) Use total quantity (or keep length if you prefer)
   const count = mounted
     ? state.cart.reduce((sum, item) => sum + item.quantity, 0)
     : 0;
@@ -28,7 +26,7 @@ function HeaderContainer() {
         <Link href="/" className="font-semibold">
           <img src={logo.src} alt="Logo" className="h-10 w-auto" />
         </Link>
-        <nav className="text-md text-slate-600 flex gap-4">
+        <nav className="text-sm md:text-md text-slate-600 flex gap-4">
           <Link className="font-head font-bold" href="/footwear">
             Footwear
           </Link>
@@ -42,7 +40,7 @@ function HeaderContainer() {
             National Teams
           </Link>
         </nav>
-        <Searchbar className="right-24 top-1/2 -translate-y-1/2" />
+        <Searchbar className="right-24 top-1/2 -translate-y-1/2 hidden md:block" />
         <button
           type="button"
           onClick={() => router.push("/cart")}

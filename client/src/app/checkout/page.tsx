@@ -17,18 +17,15 @@ import { getSessionValue } from "@/utils/storage";
 
 import { useStore } from "@/context/cart";
 
-// ---------- Stripe ----------
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_API_KEY as string
 );
 
-// ---------- Small helpers ----------
 const currency = (n: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
     n
   );
 
-// ---------- Progress UI ----------
 function CheckoutProgress({ step }: { step: number }) {
   const steps = [
     { id: 1, name: "Login" },
@@ -132,8 +129,7 @@ export default function Checkout() {
 
   // --- handlers passed to child forms ---
   const handleShipping = () => {
-    // your ShippingForm should update redux `shippingValue`
-    // after which the effect above will move to step 3
+    setStep(3);
   };
 
   const handlePaymentMethodUpdate = (pm: PaymentMethod) => {

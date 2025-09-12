@@ -3,20 +3,16 @@ import React, { useEffect, useState } from "react";
 type Img = { url?: string } | string;
 
 function ImageHandler({ images = [] as Img[] }) {
-  // 1) Hooks at the top
   const [active, setActive] = useState(0);
 
-  // 2) Normalize to a list of URLs (drop falsy)
   const urls = (images ?? [])
     .map((im) => (typeof im === "string" ? im : im?.url))
     .filter((u): u is string => Boolean(u));
 
-  // 3) If the list shrinks, keep "active" in range
   useEffect(() => {
     if (active >= urls.length) setActive(0);
   }, [urls.length, active]);
 
-  // 4) Render fallback _after_ hooks
   if (urls.length === 0) {
     return <div>No images available</div>;
   }

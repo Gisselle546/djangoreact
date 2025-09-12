@@ -12,10 +12,9 @@ import {
 import { useStore } from "@/context/cart";
 import ImageHandler from "@/Components/ImageHandler/ImageHandler";
 import SizeBox, { SizeOption } from "@/Components/SizeBox/SizeBox";
-import { buildSizeModel, NormalizedSize } from "@/utils/size"; // using the normalizer
+import { buildSizeModel, NormalizedSize } from "@/utils/size";
 import Reviews from "@/Components/ReviewForm/ReviewForm";
 
-// ---- helpers: currency + safe parsing ----
 const parsePrice = (p: unknown): number =>
   typeof p === "number" ? p : Number(String(p).replace(/[^0-9.-]/g, "")) || 0;
 
@@ -24,7 +23,6 @@ const currencyUSD = (n: number) =>
     n
   );
 
-// ---- bridge helpers (handle SizeOption unions safely) ----
 type SizeLike = {
   id?: string | number;
   label?: string;
@@ -96,8 +94,6 @@ export default function ProductClient() {
   if (error) return <div>Error: {error}</div>;
   if (!product) return <div>Product not found.</div>;
 
-  // ---- build arrays ----
-  // Your original array for SizeBox (keep as-is)
   const newArray = product?.product_options[0].product_variants.reduce(
     (acc: any, cur: any) => {
       acc.push({
@@ -109,11 +105,9 @@ export default function ProductClient() {
     []
   );
 
-  // Canonical sizes (works for jerseys and shoes)
   const sizesNorm = buildSizeModel(product);
   const normById = new Map(sizesNorm.map((s) => [String(s.id), s]));
 
-  // Bridge: map SizeBox row -> NormalizedSize
   const handleSizeChange = (row: SizeOption) => {
     setSelected(row);
     const { sid, slabel } = extractSize(row);
@@ -127,12 +121,10 @@ export default function ProductClient() {
     setSelectedNorm(norm);
   };
 
-  // Prefer images from the selected size's variant
   const variants = product?.product_options?.[0]?.product_variants ?? [];
   const galleryImages =
     (selectedNorm as any)?.variant?.images ?? variants?.[0]?.images;
 
-  // price (string → number), then format
   const unitPrice = parsePrice(product.price);
 
   const uiReviews = Array.isArray(product?.review)
@@ -183,7 +175,6 @@ export default function ProductClient() {
     setTimeout(() => setAdding(false), 900);
   };
 
-  // ----------------- UI (unchanged styling) -----------------
   return (
     <div className="min-h-dvh bg-white text-slate-900 antialiased">
       <div className="page-container">

@@ -22,7 +22,7 @@ const schema = Yup.object({
   state: Yup.string().trim().required("State is required"),
   zip_code: Yup.string()
     .trim()
-    // simple US ZIP (##### or #####-####)
+
     .matches(/^\d{5}(-\d{4})?$/, "Enter a valid ZIP code")
     .required("ZIP code is required"),
   country: Yup.string().required(),

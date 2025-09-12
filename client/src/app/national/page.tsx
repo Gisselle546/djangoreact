@@ -14,8 +14,8 @@ function NationalTeam() {
     dispatch(
       filterMethod({
         filter_type: "teams",
-        team_type: "national", // sets ?national=1
-        club: "", // no search param
+        team_type: "national",
+        club: "",
       })
     );
   }, [dispatch]);

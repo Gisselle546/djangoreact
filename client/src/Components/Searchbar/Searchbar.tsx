@@ -20,17 +20,9 @@ export default function Searchbar({ className, widthRem = 24 }: Props) {
     const clean = term.trim().replace(/\s+/g, " ");
     if (!clean) return;
 
-    // 1) Hit your unified /products/search-results/?query=<clean>
     await dispatch(setSearch({ searchterm: clean }));
 
-    // 2) Send the user to your results UI
-    // Pick ONE of these patterns, depending on what page you already have:
-
-    // a) Keep your existing dynamic route page:
     router.push(`/products/search/${encodeURIComponent(clean)}`);
-
-    // b) Or switch to a simple querystring page (if you have /products/search):
-    // router.push(`/products/search?query=${encodeURIComponent(clean)}`);
   }
 
   return (

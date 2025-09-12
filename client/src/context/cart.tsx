@@ -10,7 +10,7 @@ import React, {
 } from "react";
 
 enum ActionType {
-  INIT = "INIT", // ← add this
+  INIT = "INIT",
   ADDCART = "ADDCART",
   INCREMENT = "INCREMENT",
   DECREMENT = "DECREMENT",
@@ -22,11 +22,10 @@ type CartItem = {
   data: {
     id: string | number;
     name: string;
-    price: number; // store as number in the cart, not string
+    price: number;
     size: { id: string | number; label: string };
     image?: string;
     variantId?: string | number;
-    // ...anything else you keep
   };
   quantity: number;
 };
@@ -128,12 +127,10 @@ const CartContext = createContext<{
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  // 1) Lazy init from localStorage so first paint has data
   const [state, dispatch] = useReducer(reducer, { cart: [] }, () => ({
     cart: safeLoadCart(),
   }));
 
-  // 2) Skip the very first persist to avoid overwriting storage with []
   const didHydrateRef = useRef(false);
   useEffect(() => {
     if (!didHydrateRef.current) {
@@ -145,7 +142,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     } catch {}
   }, [state.cart]);
 
-  // 3) Optional: keep tabs/windows in sync
   useEffect(() => {
     const onStorage = (e: StorageEvent) => {
       if (e.key === "cart") {
