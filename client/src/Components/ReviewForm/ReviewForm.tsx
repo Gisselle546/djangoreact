@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { createReview, filterProductMethod } from "@/redux/reducer/filterSlice";
+import { createReview } from "@/redux/reducer/filterSlice";
 import { selectIsAuthenticated } from "@/redux/reducer/userSlice";
 
 /* ---------- Types (UI-facing) ---------- */

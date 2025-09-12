@@ -2,9 +2,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import { useAppDispatch } from "@/redux/hooks";
-import { filterProductMethod } from "@/redux/reducer/filterSlice";
-
 type Props = {
   data: {
     name: string;
@@ -26,18 +23,6 @@ function SliderCard({ data }: Props) {
   };
 
   return (
-    /*     <SliderContainer onClick={() => handleClick()}>
-      <ImageContainer img={primary_image || image_url} />
-      <Heading>
-        {name
-          ? name.length > 41
-            ? name.substring(0, 40)
-            : name
-          : `${first_name} ${last_name}`}
-      </Heading>
-      <ButtonContainer>Details</ButtonContainer>
-    </SliderContainer> */
-
     <article
       key={product_id}
       className="snap-start min-w-[16rem] sm:min-w-[20rem] md:min-w-[24rem] cursor-pointer"
@@ -52,14 +37,6 @@ function SliderCard({ data }: Props) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         <div className="absolute bottom-3 left-3 right-3 text-white drop-shadow">
           <h3 className="text-lg font-semibold">{name}</h3>
-          {/*           <p className="text-sm opacity-90">
-            {" "}
-            {name
-              ? name.length > 41
-                ? name.substring(0, 40)
-                : name
-              : `${first_name} ${last_name}`}
-          </p> */}
         </div>
       </div>
     </article>
