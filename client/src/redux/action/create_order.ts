@@ -17,7 +17,7 @@ type Props = {
 };
 
 export async function create_order({ data }: Props) {
-  let url = `/orders/create/`;
+  const url = `/orders/create/`;
 
   const response = await customFetch.post(url, data);
   return response;

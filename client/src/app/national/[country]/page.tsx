@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { filterMethod, filterValue } from "@/redux/reducer/filterSlice";
 import QueryList from "@/Components/QueryList/QueryList";

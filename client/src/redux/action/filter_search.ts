@@ -5,7 +5,7 @@ type Props = {
 };
 
 export async function ProductSearch({ searchterm }: Props) {
-  let url = `products/search-results/?query=${searchterm}`;
+  const url = `products/search-results/?query=${searchterm}`;
 
   const response = await customFetch.get(url);
   return response;

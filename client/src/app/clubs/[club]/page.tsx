@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { filterMethod, filterValue } from "@/redux/reducer/filterSlice";
 import QueryList from "@/Components/QueryList/QueryList";

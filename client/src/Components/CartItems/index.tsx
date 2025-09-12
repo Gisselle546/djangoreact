@@ -3,6 +3,7 @@
 import React from "react";
 import { useStore } from "@/context/cart";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 function CartItems() {
   const { state, clearAll, remove, increment, decrement } = useStore();
