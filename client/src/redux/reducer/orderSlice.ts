@@ -2,7 +2,7 @@ import { AppState } from "../store";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { create_order } from "../action/create_order";
-import { getLocalValue, setLocalValue } from "../../../utils/storage";
+import { getLocalValue, setLocalValue } from "../../utils/storage";
 
 export interface Order {
   data: {
@@ -91,6 +91,51 @@ export const orderSlice = createSlice({
       .addCase(createOrder.fulfilled, (state, action) => {
         state.status = "idle";
         state.data = action.payload;
+
+        // Build a compact snapshot for the confirmation page
+        try {
+          const req = action.meta?.arg?.data;
+          const payload = action.payload ?? {};
+
+          const lastOrder = {
+            id: payload?.id ?? payload?.order_id ?? String(Date.now()),
+            createdAt: new Date().toISOString(),
+            email: undefined, // if you have it, set here
+            total: Number(req?.total_price ?? 0),
+            tax: Number(req?.tax_price ?? 0),
+            shipping: Number(req?.shipping_price ?? 0),
+            payment: {
+              brand: String(req?.payment_method ?? "card"),
+              last4: undefined,
+            },
+            address: req?.shipping_address,
+            items: Array.isArray(req?.order_items)
+              ? req.order_items.map((it: any) => {
+                  const pv = it?.product_variant ?? {};
+                  return {
+                    name: pv?.name ?? "Item",
+                    sizeLabel:
+                      pv?.size?.label ??
+                      pv?.size?.name ??
+                      pv?.size?.size ??
+                      undefined,
+                    quantity: Number(it?.quantity ?? 1),
+                    price: Number(pv?.price ?? 0),
+                    image:
+                      pv?.image ??
+                      pv?.images?.[0]?.url ??
+                      pv?.images?.[0] ??
+                      undefined,
+                  };
+                })
+              : [],
+          };
+
+          // Persist for confirmation page
+          setLocalValue("last_order", lastOrder);
+        } catch {
+          /* ignore */
+        }
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.error = action.payload;

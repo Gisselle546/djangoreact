@@ -13,6 +13,7 @@ import first from "../assets/images/messi-1-min.jpg";
 import second from "../assets/images/NikeMercurialDream.png";
 import third from "../assets/images/M181.jpeg";
 import Banner from "@/Components/Banner/Banner";
+import Slider from "@/Components/Slider/Slider";
 
 const banner_image_data = [
   {
@@ -59,9 +60,6 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log("value", value);
-  console.log("player", player);
-
   return (
     <>
       <section className="section-y ">
@@ -70,10 +68,19 @@ export default function Home() {
         </div>
       </section>
       <section className="section-y">
-        <div className="page-container">
+        <div className="page-container space-y-10">
           <h2 className="font-head font-bold tracking-tight text-2xl md:text-3xl text-slate-900">
             Best Sellers
           </h2>
+          <Slider data={value} />
+        </div>
+      </section>
+      <section className="section-y">
+        <div className="page-container space-y-10">
+          <h2 className="font-head font-bold tracking-tight text-2xl md:text-3xl text-slate-900">
+            Player Kits
+          </h2>
+          <Slider data={player} />
         </div>
       </section>
     </>

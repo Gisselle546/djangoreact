@@ -1,3 +1,4 @@
+// Searchbar.tsx
 "use client";
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
@@ -6,30 +7,36 @@ import { useAppDispatch } from "@/redux/hooks";
 import { Search as setSearch } from "@/redux/reducer/filterSlice";
 
 type Props = {
-  className?: string; // e.g. "right-14 top-1/2 -translate-y-1/2"
-  widthRem?: number; // default 24rem (~w-96)
+  className?: string;
+  widthRem?: number;
 };
 
-export default function SearchbarAlwaysOpen({
-  className,
-  widthRem = 24,
-}: Props) {
+export default function Searchbar({ className, widthRem = 24 }: Props) {
   const [q, setQ] = useState("");
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  function submit(term: string) {
-    const s = term.trim();
-    if (!s) return;
-    dispatch(setSearch({ searchterm: s }));
-    router.push(`/products/search/${encodeURIComponent(s)}`);
+  async function submit(term: string) {
+    const clean = term.trim().replace(/\s+/g, " ");
+    if (!clean) return;
+
+    // 1) Hit your unified /products/search-results/?query=<clean>
+    await dispatch(setSearch({ searchterm: clean }));
+
+    // 2) Send the user to your results UI
+    // Pick ONE of these patterns, depending on what page you already have:
+
+    // a) Keep your existing dynamic route page:
+    router.push(`/products/search/${encodeURIComponent(clean)}`);
+
+    // b) Or switch to a simple querystring page (if you have /products/search):
+    // router.push(`/products/search?query=${encodeURIComponent(clean)}`);
   }
 
   return (
-    // Absolute = removed from layout; won’t push nav/cart
     <div
       className={`absolute z-50 ${className ?? ""}`}
-      style={{ width: `${widthRem}rem`, height: "2.5rem" }} // ≈ w-96, h-10
+      style={{ width: `${widthRem}rem`, height: "2.5rem" }}
       role="search"
       aria-label="Search products"
     >
@@ -48,7 +55,7 @@ export default function SearchbarAlwaysOpen({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Escape") setQ(""); // Esc clears
+            if (e.key === "Escape") setQ("");
           }}
           placeholder="Search products…"
           className="h-full flex-1 bg-transparent text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none"

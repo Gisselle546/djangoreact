@@ -1,9 +1,12 @@
+import re
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, viewsets, filters, status, serializers
 from django.db.models import Avg
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import Team, Product, SoccerPlayer, Review
+from django.core.exceptions import FieldDoesNotExist
 from .serializers import  ProductSerializer, TeamSerializer, SoccerPlayerSerializer, ReviewSerializer
 
     
@@ -42,18 +45,152 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 
+
+
 class ProductSearchView(generics.ListAPIView):
+    """
+    Unified, *forgiving* search:
+      - ?query=mercurial
+      - ?query=barcelona | club: fc barcelona
+      - ?query=argentina | nat: argentina
+      - ?query=lionel messi | player: lionel messi
+      - tokenized partials: "dream speed", "barc", "mbap"
+    """
     serializer_class = ProductSerializer
-    queryset = Product.objects.all()
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+    search_fields = ["name"]
+
+    def _normalize(self, s: str) -> str:
+        # collapse spaces & trim; we keep accents since DB collation handles case only
+        return re.sub(r"\s+", " ", s).strip()
+
+    def _tokens(self, s: str) -> list[str]:
+        # split into alnum tokens (barc, dream, speed, 9, etc.)
+        return re.findall(r"[A-Za-z0-9]+", s.lower())
 
     def get_queryset(self):
-        queryset = self.queryset
-        search_term = self.request.query_params.get('query')
-        if search_term:
-            queryset = queryset.filter(name__icontains=search_term)
-        return queryset
+        qs = (
+            Product.objects.select_related("brand")
+            .prefetch_related("product_options__colors", "product_options__sizes")
+        )
+
+        raw = (self.request.query_params.get("query") or "").strip()
+        if not raw:
+            return qs.none()
+
+        s = self._normalize(raw)
+        lower = s.lower()
+
+        # ------- explicit prefixes (optional) -------
+        mode = None  # 'club' | 'national' | 'player' | None
+        val = s
+        for pfx, m in [
+            ("club:", "club"),
+            ("team:", "club"),
+            ("nationality:", "national"),
+            ("country:", "national"),
+            ("nat:", "national"),
+            ("player:", "player"),
+        ]:
+            if lower.startswith(pfx):
+                mode = m
+                val = s[len(pfx) :].strip()
+                break
+
+        # ------- helpers -------
+        def q_club(v: str) -> Q:
+            return Q(
+                soccerplayerjersey__jersey__team__team_type="CLUB",
+                soccerplayerjersey__jersey__team__name__icontains=v,
+            )
+
+        def q_national(v: str) -> Q:
+            """
+            Safe national matching:
+            - always match by national team name
+            - if Team.country exists:
+                * CharField -> __country__icontains
+                * FK -> __country__name__icontains
+            """
+            base = Q(
+                soccerplayerjersey__jersey__team__team_type="NATIONAL_TEAM",
+                soccerplayerjersey__jersey__team__name__icontains=v,
+            )
+            try:
+                f = Team._meta.get_field("country")
+                if f.is_relation:
+                    return base | Q(
+                        soccerplayerjersey__jersey__team__country__name__icontains=v
+                    )
+                else:
+                    return base | Q(
+                        soccerplayerjersey__jersey__team__country__icontains=v
+                    )
+            except FieldDoesNotExist:
+                return base
+
+        def q_player(v: str) -> Q:
+            parts = v.split(" ", 1)
+            first = parts[0]
+            last = parts[1] if len(parts) > 1 else ""
+            qx = Q(soccerplayerjersey__player__first_name__icontains=first)
+            if last:
+                qx &= Q(soccerplayerjersey__player__last_name__icontains=last)
+            return qx
+
+        # ------- base query (product name contains whole string) -------
+        q = Q(name__icontains=s)
+
+        # ------- explicit-mode branch -------
+        if mode == "club" and val:
+            q |= q_club(val)
+        elif mode == "national" and val:
+            q |= q_national(val)
+        elif mode == "player" and val:
+            q |= q_player(val)
+        else:
+            # ------- free text heuristics -------
+            parts = s.split(" ", 1)
+            if len(parts) > 1:
+                # looks like "first last" -> try player
+                q |= q_player(s)
+            else:
+                # single token -> try team (club+national)
+                q |= q_club(s) | q_national(s)
+
+        # ------- NEW: tokenized fuzzy matching (AND-of-ORs) -------
+        # each token must match *one of* these fields; all tokens must match somewhere
+        toks = self._tokens(s)
+        if toks:
+            token_fields = [
+                "name__icontains",
+                "soccerplayerjersey__jersey__team__name__icontains",
+                "soccerplayerjersey__player__first_name__icontains",
+                "soccerplayerjersey__player__last_name__icontains",
+            ]
+            q_tokens = Q()
+            for t in toks:
+                per_token = Q()
+                for f in token_fields:
+                    per_token |= Q(**{f: t})
+                q_tokens &= per_token  # AND across tokens
+            q |= q_tokens  # OR with the earlier strategies
+
+        # ------- common aliases/synonyms to broaden match -------
+        aliases = {
+            "psg": "paris saint-germain",
+            "barca": "barcelona",
+            "man utd": "manchester united",
+            "manchester utd": "manchester united",
+            "man city": "manchester city",
+            "bayern": "bayern munich",
+            "rm": "real madrid",
+        }
+        for alias, canon in aliases.items():
+            if alias in lower:
+                q |= q_club(canon) | q_national(canon)
+
+        return qs.filter(q).distinct()
 
 
 class TeamViewSet(viewsets.ModelViewSet):

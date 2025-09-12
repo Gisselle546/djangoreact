@@ -6,9 +6,11 @@ import React, {
   useEffect,
   useContext,
   Reducer,
+  useRef,
 } from "react";
 
 enum ActionType {
+  INIT = "INIT", // ← add this
   ADDCART = "ADDCART",
   INCREMENT = "INCREMENT",
   DECREMENT = "DECREMENT",
@@ -16,7 +18,20 @@ enum ActionType {
   CLEAR = "CLEAR",
 }
 
-function safeLoadCart(): any[] {
+type CartItem = {
+  data: {
+    id: string | number;
+    name: string;
+    price: number; // store as number in the cart, not string
+    size: { id: string | number; label: string };
+    image?: string;
+    variantId?: string | number;
+    // ...anything else you keep
+  };
+  quantity: number;
+};
+
+function safeLoadCart(): CartItem[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem("cart");
@@ -29,7 +44,7 @@ function safeLoadCart(): any[] {
 }
 
 interface State {
-  cart: any[];
+  cart: CartItem[];
 }
 interface Action {
   type: ActionType;
@@ -38,10 +53,14 @@ interface Action {
 
 const reducer: Reducer<State, Action> = (state, action) => {
   switch (action.type) {
+    case ActionType.INIT: {
+      const items = Array.isArray(action.payload) ? action.payload : [];
+      return { ...state, cart: items };
+    }
     case ActionType.ADDCART: {
       const updated = [...state.cart];
       const existing = updated.find(
-        (c: any) =>
+        (c: CartItem) =>
           c.data.id === action.payload.data.id &&
           c.data.size.id === action.payload.data.size.id
       );
@@ -56,7 +75,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
       return {
         ...state,
         cart: state.cart.filter(
-          (item: any) =>
+          (item: CartItem) =>
             !(
               item.data.id === action.payload.data.id &&
               item.data.size.id === action.payload.data.size.id
@@ -66,7 +85,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
     case ActionType.INCREMENT:
       return {
         ...state,
-        cart: state.cart.map((item: any) =>
+        cart: state.cart.map((item: CartItem) =>
           item.data.id === action.payload.data.id &&
           item.data.size.id === action.payload.data.size.id
             ? { ...item, quantity: item.quantity + 1 }
@@ -77,13 +96,13 @@ const reducer: Reducer<State, Action> = (state, action) => {
       return {
         ...state,
         cart: state.cart
-          .map((item: any) =>
+          .map((item: CartItem) =>
             item.data.id === action.payload.data.id &&
             item.data.size.id === action.payload.data.size.id
               ? { ...item, quantity: item.quantity - 1 }
               : item
           )
-          .filter((i: any) => i.quantity > 0),
+          .filter((i: CartItem) => i.quantity > 0),
       };
     case ActionType.CLEAR:
       return { ...state, cart: [] };
@@ -94,10 +113,10 @@ const reducer: Reducer<State, Action> = (state, action) => {
 
 const CartContext = createContext<{
   state: State;
-  addCart: (item: any) => void;
-  increment: (item: any) => void;
-  decrement: (item: any) => void;
-  remove: (item: any) => void;
+  addCart: (item: CartItem) => void;
+  increment: (item: CartItem) => void;
+  decrement: (item: CartItem) => void;
+  remove: (item: CartItem) => void;
   clearAll: () => void;
 }>({
   state: { cart: [] },
@@ -109,26 +128,46 @@ const CartContext = createContext<{
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  // Lazy init so we only read localStorage on client
+  // 1) Lazy init from localStorage so first paint has data
   const [state, dispatch] = useReducer(reducer, { cart: [] }, () => ({
     cart: safeLoadCart(),
   }));
 
-  // Persist after any change
+  // 2) Skip the very first persist to avoid overwriting storage with []
+  const didHydrateRef = useRef(false);
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(state.cart));
+    if (!didHydrateRef.current) {
+      didHydrateRef.current = true;
+      return;
+    }
+    try {
+      localStorage.setItem("cart", JSON.stringify(state.cart));
+    } catch {}
   }, [state.cart]);
 
-  const addCart = (item: any) =>
+  // 3) Optional: keep tabs/windows in sync
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "cart") {
+        dispatch({ type: ActionType.INIT, payload: safeLoadCart() });
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  const addCart = (item: CartItem) =>
     dispatch({ type: ActionType.ADDCART, payload: item });
-  const increment = (item: any) =>
+  const increment = (item: CartItem) =>
     dispatch({ type: ActionType.INCREMENT, payload: item });
-  const decrement = (item: any) =>
+  const decrement = (item: CartItem) =>
     dispatch({ type: ActionType.DECREMENT, payload: item });
-  const remove = (item: any) =>
+  const remove = (item: CartItem) =>
     dispatch({ type: ActionType.REMOVE, payload: item });
   const clearAll = () => {
-    localStorage.removeItem("cart");
+    try {
+      localStorage.removeItem("cart");
+    } catch {}
     dispatch({ type: ActionType.CLEAR });
   };
 

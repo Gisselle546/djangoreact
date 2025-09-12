@@ -1,8 +1,6 @@
 import { StaticImageData } from "next/image";
 import React, { useState } from "react";
 
-import { useRouter } from "next/router";
-
 type imageData = {
   name: string;
   image: StaticImageData;

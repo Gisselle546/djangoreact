@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
-import { Router, useRouter } from "next/router";
-import {
-  ButtonContainer,
-  ImageContainer,
-  SliderContainer,
-  Heading,
-} from "./SliderCard.style";
+import { useRouter } from "next/navigation";
+
 import { useAppDispatch } from "@/redux/hooks";
 import { filterProductMethod } from "@/redux/reducer/filterSlice";
 
@@ -31,7 +26,7 @@ function SliderCard({ data }: Props) {
   };
 
   return (
-    <SliderContainer onClick={() => handleClick()}>
+    /*     <SliderContainer onClick={() => handleClick()}>
       <ImageContainer img={primary_image || image_url} />
       <Heading>
         {name
@@ -41,7 +36,33 @@ function SliderCard({ data }: Props) {
           : `${first_name} ${last_name}`}
       </Heading>
       <ButtonContainer>Details</ButtonContainer>
-    </SliderContainer>
+    </SliderContainer> */
+
+    <article
+      key={product_id}
+      className="snap-start min-w-[16rem] sm:min-w-[20rem] md:min-w-[24rem] cursor-pointer"
+      onClick={() => handleClick()}
+    >
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-slate-200">
+        <img
+          src={primary_image}
+          alt={name}
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        <div className="absolute bottom-3 left-3 right-3 text-white drop-shadow">
+          <h3 className="text-lg font-semibold">{name}</h3>
+          {/*           <p className="text-sm opacity-90">
+            {" "}
+            {name
+              ? name.length > 41
+                ? name.substring(0, 40)
+                : name
+              : `${first_name} ${last_name}`}
+          </p> */}
+        </div>
+      </div>
+    </article>
   );
 }
 
