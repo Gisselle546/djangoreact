@@ -174,6 +174,7 @@ export default function ProductClient() {
     setAdding(true);
     setTimeout(() => setAdding(false), 900);
   };
+  console.log("RENDER product", { selected, selectedNorm, product });
 
   return (
     <div className="min-h-dvh bg-white text-slate-900 antialiased">
