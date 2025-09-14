@@ -122,6 +122,7 @@ export default function ProductClient() {
   };
 
   const variants = product?.product_options?.[0]?.product_variants ?? [];
+  console.log({ variants, sizesNorm, normById });
   const galleryImages =
     (selectedNorm as any)?.variant?.images ?? variants?.[0]?.images;
 
