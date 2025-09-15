@@ -128,7 +128,7 @@ export default function ProductClient() {
   };
 
   const variants = product?.product_options?.[0]?.product_variants ?? [];
-  console.log({ variants, sizesNorm, normById });
+
   const galleryImages =
     (selectedNorm as any)?.variant?.images ?? variants?.[0]?.images;
 
@@ -181,7 +181,6 @@ export default function ProductClient() {
     setAdding(true);
     setTimeout(() => setAdding(false), 900);
   };
-  console.log("RENDER product", { selected, selectedNorm, product });
 
   return (
     <div className="min-h-dvh bg-white text-slate-900 antialiased">
