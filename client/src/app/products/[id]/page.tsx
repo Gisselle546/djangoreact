@@ -14,6 +14,7 @@ import ImageHandler from "@/Components/ImageHandler/ImageHandler";
 import SizeBox, { SizeOption } from "@/Components/SizeBox/SizeBox";
 import { buildSizeModel, NormalizedSize } from "@/utils/size";
 import Reviews from "@/Components/ReviewForm/ReviewForm";
+import Spinner from "@/Components/Spinner/Spinner";
 
 const parsePrice = (p: unknown): number =>
   typeof p === "number" ? p : Number(String(p).replace(/[^0-9.-]/g, "")) || 0;
@@ -90,7 +91,12 @@ export default function ProductClient() {
   }, [dispatch, id]);
 
   if (!id) return <div>No product ID provided.</div>;
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading")
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner size="lg" />
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
   if (!product) return <div>Product not found.</div>;
 
