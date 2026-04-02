@@ -55,7 +55,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${fontSans.variable} ${fontHead.variable} ${fontNum.variable} min-h-dvh bg-slate-50 text-slate-900 antialiased`}
       >
         <Providers>
-          <NotificationBar notification="✨ New: Fall deals live now. Free returns within 30 days." />
+          <NotificationBar notification="✨ New: Spring deals live now. Free returns within 30 days." />
           <HeaderContainer />
           {children}
         </Providers>
