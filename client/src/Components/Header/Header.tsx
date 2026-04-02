@@ -26,7 +26,7 @@ function HeaderContainer() {
         <Link href="/" className="font-semibold">
           <img src={logo.src} alt="Logo" className="h-10 w-auto" />
         </Link>
-        <nav className="text-sm md:text-md text-slate-600 flex gap-4">
+        <nav className="text-sm md:text-lg text-slate-600 flex gap-4">
           <Link className="font-head font-bold" href="/footwear">
             Footwear
           </Link>
