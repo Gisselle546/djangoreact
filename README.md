@@ -1,8 +1,12 @@
 ## Getting Started
 
-<img width="1792" alt="Screenshot 2023-04-14 at 11 29 34 AM" src="https://user-images.githubusercontent.com/25558018/232089487-7cb706e3-ea8d-4cf0-a9f2-bc57a0c09193.png">
-<img width="1792" alt="Screenshot 2023-04-14 at 11 29 56 AM" src="https://user-images.githubusercontent.com/25558018/232089529-f9829a88-3b8d-4f04-b47f-69a8d4ebca07.png">
-<img width="1792" alt="Screenshot 2023-04-14 at 11 30 15 AM" src="https://user-images.githubusercontent.com/25558018/232089556-2abf8185-e195-4b4d-9bb8-71679a5b8dfe.png">
+
+<img width="1728" height="961" alt="Screenshot 2026-04-02 at 8 37 01 AM" src="https://github.com/user-attachments/assets/52e105cb-df50-4152-8a9a-2b4a9414aa41" />
+
+<img width="1728" height="964" alt="Screenshot 2026-04-02 at 8 40 13 AM" src="https://github.com/user-attachments/assets/785fa264-ea78-4dbd-aaab-e676d8db4606" />
+
+<img width="1728" height="910" alt="Screenshot 2026-04-02 at 8 40 37 AM" src="https://github.com/user-attachments/assets/c2032f6a-2116-4b3b-b2c5-3f7ae05cfc56" />
+
 
 An e-commerce application that allows users to purchase soccer jerseys and footwear. The app is built with Next.js on the front-end and Django on the back-end, providing a robust and scalable platform for online transactions.
 
