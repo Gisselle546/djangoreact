@@ -10,8 +10,8 @@ ALLOWED_HOSTS = ['*']
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 
-CORS_ALLOWED_ORIGINS = ['https://djangoreact.vercel.app', 'https://ecommersefifa.netlify.app/']
-CSRF_TRUSTED_ORIGINS = ['https://djangoreact.vercel.app', 'https://ecommersefifa.netlify.app/']
+CORS_ALLOWED_ORIGINS = ['https://djangoreact.vercel.app', 'https://ecommersefifa.netlify.app']
+CSRF_TRUSTED_ORIGINS = ['https://djangoreact.vercel.app', 'https://ecommersefifa.netlify.app']
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 db_info = urlparse(DATABASE_URL)
